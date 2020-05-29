@@ -1,0 +1,79 @@
+---
+title: "read in data TCGAbiolinks"
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r}
+library(TCGAbiolinks)
+library(SummarizedExperiment)
+
+testquery = GDCquery(project = "TCGA-GBM", data.category = "Gene expression", data.type = "Gene expression quantification", platform = "Illumina HiSeq", file.type = "results", experimental.strategy = "RNA-Seq", legacy = TRUE)
+GDCdownload(testquery, method = "api", files.per.chunk = 10)
+testdata = GDCprepare(testquery, summarizedExperiment = F) #not raw counts
+
+testquery2 = GDCquery(project = "TCGA-GBM", data.category = "Transcriptome Profiling", data.type = "Gene Expression Quantification", workflow.type = "HTSeq - Counts")
+GDCdownload(testquery2, method = "api", files.per.chunk = 10)
+testdata2 = GDCprepare(testquery2, summarizedExperiment = F)
+
+
+projectsList = getGDCprojects()$project_id
+myProjects = projectsList[c(6:23, 25:32, 34:38, 40, 41)]
+
+aQuery1 = GDCquery(project = myProjects[1:5], data.category = "Transcriptome Profiling", data.type = "Gene Expression Quantification", workflow.type = "HTSeq - Counts")
+GDCdownload(aQuery1, method = "api", directory = "~/Fertig Lab/tcga_data/all cancers all cases/raw_counts", files.per.chunk = 15)
+CountData1 = GDCprepare(aQuery1, directory = "~/Fertig Lab/tcga_data/all cancers all cases/raw_counts", summarizedExperiment = F)
+
+
+for(i in 29:length(myProjects)) {
+  tmpQuery = GDCquery(project = myProjects[i], data.category = "Transcriptome Profiling", data.type = "Gene Expression Quantification", workflow.type = "HTSeq - Counts")
+GDCdownload(tmpQuery, method = "api", directory = "~/Fertig Lab/tcga_data/all cancers all cases/raw_counts", files.per.chunk = 15)
+CountDataTmp = as.data.frame(GDCprepare(tmpQuery, directory = "~/Fertig Lab/tcga_data/all cancers all cases/raw_counts",summarizedExperiment = F))
+if(i == 1){
+  countData = CountDataTmp
+}
+else{
+countData = cbind(countData, CountDataTmp)
+}
+}
+#error on 22, 28
+
+tmpQuery = GDCquery(project = myProjects[22], data.category = "Transcriptome Profiling", data.type = "Gene Expression Quantification", workflow.type = "HTSeq - Counts")
+GDCdownload(tmpQuery, method = "client", directory = "~/Fertig Lab/tcga_data/all cancers all cases/raw_counts", files.per.chunk = 15)
+CountDataTmp = as.data.frame(GDCprepare(tmpQuery, directory = "~/Fertig Lab/tcga_data/all cancers all cases/raw_counts",summarizedExperiment = F))
+countData = cbind(countData, CountDataTmp)
+
+tmpQuery = GDCquery(project = myProjects[28], data.category = "Transcriptome Profiling", data.type = "Gene Expression Quantification", workflow.type = "HTSeq - Counts")
+GDCdownload(tmpQuery, method = "client", directory = "~/Fertig Lab/tcga_data/all cancers all cases/raw_counts", files.per.chunk = 15)
+CountDataTmp = as.data.frame(GDCprepare(tmpQuery, directory = "~/Fertig Lab/tcga_data/all cancers all cases/raw_counts",summarizedExperiment = F))
+countData = cbind(countData, CountDataTmp)
+
+setwd("~/Fertig Lab/tcga_data/all cancers all cases/raw_counts")
+saveRDS(countData, "allCancerCountData.rds")
+
+rnaSeqIDs = as.character(countData[,1])
+rnaSeqIDs[60470:60488] #last 5 rows should be removed
+
+#remove versioning info for ease of checking gene identity
+library(stringr)
+simpIDs = c()
+rowsToRemove = c()
+for(i in 1:length(rnaSeqIDs)) {
+  tmpID = str_split(rnaSeqIDs[i], "[.]")[[1]][1]
+  if(str_sub(tmpID, 1,4) != "ENSG") {
+    rowsToRemove = c(rowsToRemove, i)
+  }
+  simpIDs = c(simpIDs, tmpID) 
+}
+
+rnaSeqCounts2 = countData[-rowsToRemove,]
+rownames(rnaSeqCounts2) = simpIDs[-rowsToRemove]
+rnaSeqCounts2 = rnaSeqCounts2[,-1]
+
+#removing excess columns from download
+cls = lapply(rnaSeqCounts2, class)
+rnaSeqCounts2 = rnaSeqCounts2[,-which(cls == "character")]
+
+saveRDS(rnaSeqCounts2, "cleaned_RNAseq_counts.rds")
+```

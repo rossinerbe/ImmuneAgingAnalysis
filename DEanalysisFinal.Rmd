@@ -6,7 +6,7 @@ editor_options:
 ---
 
 ```{r}
-#raw counts were downloaded using the TCGABioLinks R package, the cleaned rds object from which is uploaded to Figshare at :
+#raw counts were downloaded using the TCGABioLinks R package according to the included file TCGABiolinks_download_data
 #counts = readRDS("Data/cleaned_RNAseq_counts.rds")
 
 #get phenotype data
