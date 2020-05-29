@@ -222,7 +222,6 @@ rownames(TCGADETMBSub) = symbols3[,1]
 #ICB genes
 TCGADESub[which(rownames(TCGADESub) %in% c("PDCD1", "CD274", "CTLA4", "CD80", "CD86")),]
 
-
 TCGADETMBSub[which(rownames(TCGADETMBSub) %in% c("PDCD1", "CD274", "CTLA4", "CD80", "CD86")),]
 
 GTExDESub[which(rownames(GTExDESub) %in% c("PDCD1", "CD274", "CTLA4", "CD80", "CD86")),]
