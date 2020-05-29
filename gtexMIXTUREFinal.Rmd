@@ -1,0 +1,425 @@
+---
+title: "GTExMIXTUREFinal"
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r}
+# download GTEx version 8 at https://gtexportal.org/home/datasets ***
+# gtex = phantasus::read.gct(gzfile("Data/GTEx_Analysis_2017-06-05_v8_RNASeQCv1.1.9_gene_reads.gct.gz"))
+
+#read in phenotype data
+subjectAnn = data.table::fread("Data/GTEx_Analysis_v8_Annotations_SubjectPhenotypesDS.txt")
+summary(as.factor(subjectAnn$AGE))
+
+sampleAnn = data.table::fread("Data/GTEx_Analysis_v8_Annotations_SampleAttributesDS.txt")
+sampleAnnSub = sampleAnn[, c(1,6,7)]
+
+summary(as.factor(sampleAnn$SMAFRZE))
+sampleAnnSub = sampleAnnSub[which(sampleAnn$SMAFRZE == "RNASEQ"),]
+summary(as.factor(sampleAnnSub$SMTS))
+
+#format and normalize RNA-seq data
+#check row and column names
+library(SummarizedExperiment)
+gtexMatrix = exprs(gtex)
+colnames(gtexMatrix)[c(1, 45, 6000, 14444, 17382)]
+rownames(gtexMatrix)[1:5]
+
+
+library(edgeR)
+dge = DGEList(counts = gtexMatrix)
+#filter genes
+keep = filterByExpr(dge)
+dge = dge[keep, , keep.lib.sizes = FALSE]
+dim(dge$counts)
+#normalize
+cpm = cpm(dge)
+
+#convert ENSG IDs to HGNC gene symbols for use with LM22 signature gene matrix
+library(org.Hs.eg.db) 
+
+#ENSG ids contain version number; need to remove for matching
+gtexGenes = rownames(cpm)
+gtexGenes = unlist(lapply(gtexGenes, function(x) {stringr::str_split(x, stringr::coll("."))[[1]][1]}))
+
+symbols <- mapIds(org.Hs.eg.db, keys=gtexGenes, column="SYMBOL", keytype="ENSEMBL", multiVals="first")
+
+symbols = cbind(symbols, gtexGenes)
+
+sum(is.na(symbols[,1]))
+symbols2 = symbols[-which(is.na(symbols[,1])),]
+sum(duplicated(symbols2[,1]))
+symbols2[,1][duplicated(symbols2[,1])]
+
+#read in lm22 signature expression matrix for immune cell types
+lm22 = as.data.frame(data.table::fread("Data/LM22.txt"))
+rownames(lm22) = unlist(lm22[,1])
+lm22 = lm22[,-1]
+
+#are any duplicate genes in the genes used by lm22?
+sum(symbols2[,1][duplicated(symbols2[,1])] %in% rownames(lm22))
+dupsym = symbols2[,1][duplicated(symbols2[,1])][symbols2[,1][duplicated(symbols2[,1])] %in% rownames(lm22)] 
+#look specifically at HLA-DQA1
+symbols2[,1][symbols2[,1] == dupsym] #the two are subunits of MHCII, ENSG00000237541 is called HLA-DQA2 by ENSG
+sum(rownames(lm22) == "HLA-DQA2") # that one is not in lm22, so will remove 
+
+#remove duplicates
+symbols3 = symbols2[-which(duplicated(symbols2[,1])),]
+
+#subset to genes with HGNC symbol correspondence, so that this data can be used with lm22 file
+gtexCountsSym = cpm[which(gtexGenes %in% symbols3[,2]),]
+
+symbolList = symbols3[,1]
+names(symbolList) = NULL
+#add symbol names
+rownames(gtexCountsSym) = symbolList
+```
+
+Run MIXTURE
+```{r}
+source("MIXTURE/MIXTURE.R")
+
+mixResult = MIXTURE(gtexCountsSym, lm22, iter = 500, functionMixture = nu.svm.robust.RFE, useCores = 1, nullDist = "PopulationBased")
+saveRDS(mixResult, "Data/mixtureResultGTEX.rds")
+
+absMix = (mixResult$Subjects)$MIXabs
+
+#there are different length IDs so the subjIDs have to be specified by "-" split rather than string length
+subjIDs = unlist(lapply(rownames(absMix), function(x) {
+  strPieces = stringr::str_split(x,"-")[[1]][c(1,2)]
+  stringr::str_c(strPieces[1], strPieces[2], sep = "-")}))
+absMix = data.frame(absMix)
+absMix$SubjectID = subjIDs
+
+#filter by significant deconvolution of cell types
+pvals = mixResult$p.values
+
+rpFiltAbsMix = absMix[which(pvals[,4] < 0.05),]
+
+#remove NA observations
+nainds = which(is.na(rpFiltAbsMix[,1]))
+mixtureFiltered = rpFiltAbsMix[-nainds,]
+
+sum(is.na(mixtureFiltered))
+
+#add age
+ages = vector(mode = "character", length = nrow(mixtureFiltered))
+for(i in seq(nrow(mixtureFiltered))) {
+  ages[i] = subjectAnn$AGE[which(subjectAnn$SUBJID == mixtureFiltered$SubjectID[i])]
+}
+
+mixtureFiltered$Age = as.factor(ages)
+summary(mixtureFiltered$Age)
+
+#add Sex
+Sex = vector(mode = "character", length = nrow(mixtureFiltered))
+for(i in seq(nrow(mixtureFiltered))) {
+  Sex[i] = subjectAnn$SEX[which(subjectAnn$SUBJID == mixtureFiltered$SubjectID[i])]
+}
+
+mixtureFiltered$Sex = as.factor(Sex)
+summary(mixtureFiltered$Sex)
+
+#add tissue type
+tissues = vector(mode = "character", length = nrow(mixtureFiltered))
+for(i in seq(nrow(mixtureFiltered))) {
+  tissues[i] = sampleAnnSub$SMTS[which(sampleAnnSub$SAMPID == rownames(mixtureFiltered)[i])]
+}
+
+mixtureFiltered$Tissue = as.factor(tissues)
+summary(mixtureFiltered$Tissue)
+
+#filter to indvididuals age 30+ for comparison to TCGA samples used
+mixture2 = mixtureFiltered[-which(mixtureFiltered$Age == "20-29"),]
+```
+
+
+Immune Cell Modeling
+```{r}
+##T cells##
+TCellProps = apply(mixture2, 1, function(x) {sum(as.numeric(x[4:10]))})/apply(mixture2, 1, function(x) {sum(as.numeric(x[1:22]))})
+
+TcellAnova = anova(aov(TCellProps~mixture2$Age+mixture2$Tissue + mixture2$Sex))
+
+TcellAnova
+
+#plot by age group
+library(ggplot2)
+dfboxT = data.frame(age = mixture2$Age, TCells = TCellProps)
+
+ggplot(data = dfboxT, aes(x = age, y = TCells, fill = age)) +
+  geom_boxplot() +
+  theme_minimal()+
+  scale_fill_brewer(palette="Blues") +
+  theme(legend.position = "none")
+  
+
+##Macrophages
+MacrCellProps = apply(mixture2, 1, function(x) {sum(as.numeric(x[14:16]))})/apply(mixture2, 1, function(x) {sum(as.numeric(x[1:22]))})
+
+MacrcellAnova = anova(aov(MacrCellProps~mixture2$Age+mixture2$Tissue + mixture2$Sex))
+
+MacrcellAnova
+
+#plot by age group
+dfboxMacr = data.frame(age = mixture2$Age, Macrophages = MacrCellProps)
+
+ggplot(data = dfboxMacr, aes(x = age, y = Macrophages, fill = age)) +
+  geom_boxplot() +
+  theme_minimal()+
+  scale_fill_brewer(palette="Blues") +
+  theme(legend.position = "none")
+
+##B cells
+BCellProps = apply(mixture2, 1, function(x) {sum(as.numeric(x[1:3]))})/apply(mixture2, 1, function(x) {sum(as.numeric(x[1:22]))})
+
+BcellAnova = anova(aov(BCellProps~mixture2$Age+mixture2$Tissue + mixture2$Sex))
+
+BcellAnova
+
+#plot by age group
+dfboxB = data.frame(age = mixture2$Age, Bcells = BCellProps)
+
+ggplot(data = dfboxB, aes(x = age, y = Bcells, fill = age)) +
+  geom_boxplot() +
+  theme_minimal()+
+  scale_fill_brewer(palette="Blues") +
+  theme(legend.position = "none")
+
+##NK cells
+NKCellProps = apply(mixture2, 1, function(x) {sum(as.numeric(x[11:12]))})/apply(mixture2, 1, function(x) {sum(as.numeric(x[1:22]))})
+
+NKcellAnova = anova(aov(NKCellProps~mixture2$Age+mixture2$Tissue + mixture2$Sex))
+
+NKcellAnova
+
+
+#plot by age group
+dfboxNK = data.frame(age = mixture2$Age, NKcells = NKCellProps)
+
+ggplot(data = dfboxNK, aes(x = age, y = NKcells, fill = age)) +
+  geom_boxplot() +
+  theme_minimal()+
+  scale_fill_brewer(palette="Blues") +
+  theme(legend.position = "none")
+
+##Dendritic cells
+DCellProps = apply(mixture2, 1, function(x) {sum(as.numeric(x[17:18]))})/apply(mixture2, 1, function(x) {sum(as.numeric(x[1:22]))})
+
+DcellAnova = anova(aov(DCellProps~mixture2$Age+mixture2$Tissue + mixture2$Sex))
+
+DcellAnova
+
+
+#plot by age group
+dfboxD = data.frame(age = mixture2$Age, Dcells = DCellProps)
+
+ggplot(data = dfboxD, aes(x = age, y = Dcells, fill = age)) +
+  geom_boxplot() +
+  theme_minimal()+
+  theme(legend.position = "none")
+
+##Misc. Myeloid
+MMCellProps = apply(mixture2, 1, function(x) {sum(as.numeric(x[c(13,19:22)]))})/apply(mixture2, 1, function(x) {sum(as.numeric(x[1:22]))})
+
+MMcellAnova = anova(aov(MMCellProps~mixture2$Age+mixture2$Tissue + mixture2$Sex))
+
+MMcellAnova
+
+#plot by age group
+dfboxMM = data.frame(age = mixture2$Age, MMcells = MMCellProps)
+
+ggplot(data = dfboxMM, aes(x = age, y = MMcells, fill = age)) +
+  geom_boxplot() +
+  theme_minimal()+
+  theme(legend.position = "none")
+
+##summary stats
+AnovaList = list(TcellAnova, MacrcellAnova, BcellAnova, NKcellAnova, DcellAnova, MMcellAnova)
+
+ageStats = lapply(AnovaList, function(x){
+  x[1,]
+})
+
+names(ageStats) = c("T cells", "Macrophages", "B cells", "NK cells", "Dendritic cells", "Misc. Myeloid")
+
+ageStatsDf = do.call(rbind, ageStats)
+
+#adjusted pvals
+p.adjust(ageStatsDf[,5], "BH")
+
+ageStatsDf = cbind(ageStatsDf, p.adjust(ageStatsDf[,5], "BH"))
+colnames(ageStatsDf)[5] = "PAdj"
+
+
+ageStatsDf = as.data.frame(ageStatsDf)
+
+#add in direction of effect
+immuneList = list(TCellProps, MacrCellProps, BCellProps, NKCellProps, DCellProps, MMCellProps)
+meanList = vector('list', ncol(ageStatsDf))
+for(i in seq_along(immuneList)) {
+  means = aggregate(immuneList[[i]] ~ mixture2$Age, FUN = mean)
+  meanList[[i]] = means
+}
+meanList
+
+coef = unlist(lapply(meanList, function(x) {lm(x[,2]~c(1:5))$coefficients[2] }), use.names = F)
+
+for(i in seq_along(coef)){
+  if(coef[i] < 0) {
+    ageStatsDf$`F value`[i] = ageStatsDf$`F value`[i] * -1
+  }
+}
+
+#plot
+ggplot(ageStatsDf, aes(x=reorder(rownames(ageStatsDf), -`F value`), y=`F value`, fill = reorder(rownames(ageStatsDf), -`F value`)))+
+    geom_bar(stat="identity")+
+    labs(title="Age and Immune Infiltration in GTEx", x="Cell Type", y = "F Statistic")+
+    theme_minimal()+
+  theme(legend.position = "none")
+
+```
+
+
+Immune Subtypes
+```{r}
+immune_cells = colnames(mixture2)[1:22]
+anovaList2 = vector("list", length(immune_cells))
+for(i in seq_along(immune_cells)) {
+  formula = as.formula(paste(immune_cells[i], "~ Age + Tissue"))
+  anova = aov(formula, mixture2)
+  anovaList2[[i]] = anova
+}
+
+stats = lapply(anovaList2, function(x) {anova(x)[1,]})
+
+names(stats) = immune_cells
+ageStats= do.call(rbind, stats)
+
+ageStats$PAdj = p.adjust(ageStats$`Pr(>F)`, "BH")
+
+ageStats = ageStats[order(ageStats$PAdj),]
+ageStats
+
+
+#plot statistic
+statistics = unlist(lapply(anovaList2, function(x) {summary(x)[[1]][1,4]}))
+ageStatistics = data.frame(immune_cells, statistics)
+ageStatistics$statistics = as.numeric(ageStatistics$statistics)
+
+
+#add in direction of effect
+meanList = vector('list', length(immune_cells))
+for(i in seq_along(immune_cells)){
+  means = aggregate(mixture2[,i] ~ mixture2$Age, FUN = mean)
+  meanList[[i]] = means
+}
+meanList
+
+coef = unlist(lapply(meanList, function(x) {lm(x[,2]~c(1:5))$coefficients[2] }), use.names = F)
+
+for(i in seq_along(coef)){
+  if(coef[i] < 0) {
+    ageStatistics$statistics[i] = ageStatistics$statistics[i] * -1
+  }
+}
+
+#plot
+ggplot(ageStatistics, aes(x=reorder(immune_cells, -statistics), y=statistics, fill = reorder(immune_cells, -statistics))) +
+    geom_bar(stat="identity")+
+    labs(title="Relationship of Age and Immune Infiltration Across GTEx Tissues", x="Cell Type", y = "F Statistic")+
+    theme_minimal()+
+   scale_fill_hue(c=50) +
+    theme(legend.position = "none")
+```
+
+
+Immune cell proportions
+```{r}
+##CD8/Treg
+
+CD8TregCellProps = apply(mixture2, 1, function(x) {sum(as.numeric(x[4]))})/apply(mixture2, 1, function(x) {sum(as.numeric(x[c(4,9)]))})
+
+CD8TregAnova = anova(aov(CD8TregCellProps~mixture2$Age+mixture2$Tissue)) 
+
+CD8TregAnova
+
+means = aggregate(CD8TregCellProps~as.factor(mixture2$Age), FUN = mean)
+sds = unlist(lapply(split(CD8TregCellProps, as.factor(as.character(mixture2$Age))), sd, na.rm = TRUE))
+
+df = data.frame(age = as.factor(means[,1]), PC = means[,2])
+
+ggplot(data = df, aes(x = age, y = PC)) +
+  geom_col(fill = "steelblue")+
+  geom_errorbar(aes(ymin = 0, ymax = PC+sds), width = 0.2) +
+  labs(title="Proportion of CD8/Tregs cells with age", 
+         x="Age Group", y = "CD8 to Treg cell Proportion") +
+  theme_minimal()+
+  theme(legend.position = "none")
+
+##M1/M2
+
+M1M2CellProps = apply(mixture2, 1, function(x) {sum(as.numeric(x[15]))})/apply(mixture2, 1, function(x) {sum(as.numeric(x[c(15,16)]))})
+
+M1M2Anova = anova(aov(M1M2CellProps~mixture2$Age+mixture2$Tissue)) 
+
+M1M2Anova
+
+means = aggregate(M1M2CellProps~as.factor(mixture2$Age), FUN = mean)
+sds = aggregate(M1M2CellProps~as.factor(mixture2$Age), FUN = stats::sd)
+
+df = data.frame(age = as.factor(means[,1]), PC = means[,2])
+sd = sds[,2]
+
+ggplot(data = df, aes(x = age, y = PC, fill = age)) +
+  geom_col()+
+  geom_errorbar(aes(ymin = 0, ymax = PC+sd), width = 0.2) +
+  labs(title="Proportion of M1/M2 cells with age", 
+         x="Age Group", y = "M1 to M2 cell Proportion") +
+  theme_minimal() +
+  theme(legend.position = "none")
+
+##CD8/CD4T
+CD8CD4TCellProps = apply(mixture2, 1, function(x) {sum(as.numeric(x[4]))})/apply(mixture2, 1, function(x) {sum(as.numeric(x[4:7]))})
+
+CD8CD4Anova = anova(aov(CD8CD4TCellProps~mixture2$Age+mixture2$Tissue))
+CD8CD4Anova
+
+means = aggregate(CD8CD4TCellProps~as.factor(mixture2$Age), FUN = mean)
+sds = unlist(lapply(split(CD8CD4TCellProps, as.factor(as.character(mixture2$Age))), sd, na.rm = TRUE))
+
+df = data.frame(age = as.factor(means[,1]), PC = means[,2])
+
+ggplot(data = df, aes(x = age, y = PC, fill = age)) +
+  geom_col()+
+  geom_errorbar(aes(ymin = 0, ymax = PC+sds), width = 0.2) +
+  labs(title="Proportion of CD8/CD4 T cells with age", 
+         x="Age Group", y = "CD8 to CD4 T cell Proportion") +
+  theme_minimal() +
+  theme(legend.position = "none")
+
+##summary stats
+propAnovaList = list(CD8TregAnova, M1M2Anova, CD8CD4Anova)
+
+propAgeStats = lapply(propAnovaList, function(x){
+  x[1,]
+})
+
+names(propAgeStats) = c("CD8 to Treg", "M1 to M2", "CD8 to CD4")
+
+propAgeStatsDf = do.call(rbind, propAgeStats)
+
+#adjusted pvals
+p.adjust(propAgeStatsDf[,5], "BH")
+
+p.adjust(propAgeStatsDf[2:3,5], "BH")
+
+propAgeStatsDf = cbind(propAgeStatsDf, p.adjust(propAgeStatsDf[,5], "BH"))
+colnames(propAgeStatsDf)[6] = "PAdj"
+
+propAgeStatsDf
+
+```
+

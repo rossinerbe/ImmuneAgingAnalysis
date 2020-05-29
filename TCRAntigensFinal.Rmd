@@ -1,0 +1,215 @@
+---
+title: "TCRandImmunogenicMutationsFinal"
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r}
+miTCR = data.table::fread("Data/mitcr_sampleStatistics_20160714.tsv")
+head(miTCR)
+
+#format sampleID
+miTCR$SampleID = unlist(lapply(miTCR$SampleBarcode, stringr::str_sub, start = 1, end = 15))
+
+#add patient clinical data
+pheno = data.table::fread("Data/tcga_clinical_data.tsv")
+
+miTCR$DiagnosisAge = NA
+miTCR$CancerType = NA
+miTCR$MutationCount = NA
+miTCRSub = miTCR[which(miTCR$SampleID %in% pheno$`Sample ID`)]
+
+for(i in 1:nrow(miTCRSub)){
+  matched_pheno_ind = which(pheno$`Sample ID` == miTCRSub$SampleID[i])
+  miTCRSub$DiagnosisAge[i] = pheno$`Diagnosis Age`[matched_pheno_ind]
+  miTCRSub$CancerType[i] = pheno$`TCGA PanCanAtlas Cancer Type Acronym`[matched_pheno_ind]
+  miTCRSub$MutationCount[i] = pheno$`Mutation Count`[matched_pheno_ind]
+}
+
+#remove observations without known patient age or cancer type
+nainds = which(is.na(miTCRSub$DiagnosisAge))
+which(is.na(miTCRSub$CancerType))
+miTCRSub = miTCRSub[-nainds,]
+miTCRSub$CancerType = as.factor(miTCRSub$CancerType)
+
+#normalize number of TCR clones by total TCR reads
+miTCRSub$CPR = miTCRSub$numClones/miTCRSub$totTCR_reads
+
+
+#normalize Shannon by nClones/nTotReads
+miTCRSub$NormShannon = miTCRSub$shannon * (miTCRSub$numClones/miTCRSub$totTCR_reads)
+
+
+#we've been only using indviduals 30+ in age for other analyses, due to concerns about patients younger being highly abnormal in some regard that is not easy to account for, so filter those out
+miTCRSub = miTCRSub[which(miTCRSub$DiagnosisAge >= 30),]
+
+#plot histogram
+hist(miTCRSub$NormShannon, breaks = 50)
+
+miTCRAgeModel = lm(NormShannon~DiagnosisAge, miTCRSub)
+summary(miTCRAgeModel)
+
+#include cancer type
+miTCR2 = lm(NormShannon~DiagnosisAge+CancerType, miTCRSub)
+summary(miTCR2)
+
+jtools::effect_plot(miTCR2, pred = DiagnosisAge, interval = T)
+
+summary(miTCR2)$coefficients
+
+#plot
+miTCRSub$ageGroup = cut(miTCRSub$DiagnosisAge, c(29,39,49,59,69,79,90), labels = c("30-39", "40-49", "50-59", "60-69", "70-79", "80-90"))
+
+miTCRSub$ageGroup =as.factor(miTCRSub$ageGroup)
+
+means = aggregate(miTCRSub$NormShannon~miTCRSub$ageGroup, FUN = mean)
+
+df = data.frame(age = means[1:6,1], PC = means[1:6,2])
+
+library(ggplot2)
+ggplot(data = df, aes(x = age, y = PC)) +
+  geom_col(fill = "steelblue")+
+  labs(title="TCR Normalized Clonality", 
+         x="Age Group", y = "TCR Normalized Clonality") +
+  theme_minimal()
+
+dfbox = data.frame(age = miTCRSub$ageGroup, NormClonality = miTCRSub$NormShannon)
+
+ggplot(data = dfbox, aes(x = age, y = NormClonality)) +
+  geom_boxplot(fill = "steelblue")
+
+#examine where there has been expansion of TCR clones, indicating recognition of antigen
+miTCRSub$Expansion = miTCRSub$CPR < 1
+
+log = glm(Expansion ~ DiagnosisAge, family = binomial(link = "logit"), data = miTCRSub)
+summary(log)
+#p = 1.28e-04
+
+
+#plot
+countByAgeGroup = aggregate(miTCRSub$Expansion~miTCRSub$ageGroup, FUN = sum)
+
+#divide by total
+summary(miTCRSub$ageGroup)
+
+ggplot(as.data.frame(countByAgeGroup[,2]/summary(miTCRSub$ageGroup)), aes(x=names(summary(miTCRSub$ageGroup)), y=countByAgeGroup[,2]/summary(miTCRSub$ageGroup)))+
+    geom_bar(stat="identity", fill = "steelblue")+
+    labs(title="Proportion of TCR Clonal Expansion by Age", x="Age Group", y = "TCR Expansion Proportion")+
+    theme_classic()
+
+##cox hazards
+library(survival)
+#add survival data
+miTCRSub$OSS = NA
+miTCRSub$OSM = NA
+
+for(i in 1:nrow(miTCRSub)){
+  matched_pheno_ind = which(pheno$`Sample ID` == miTCRSub$SampleID[i])
+  miTCRSub$OSS[i] = pheno$`Overall Survival Status`[matched_pheno_ind]
+  miTCRSub$OSM[i] = pheno$`Overall Survival (Months)`[matched_pheno_ind]
+}
+
+liveinds = which(miTCRSub$OSS == "LIVING")
+deadinds = which(miTCRSub$OSS == "DECEASED")
+
+miTCRSub$OSS[liveinds] = 0
+miTCRSub$OSS[deadinds] = 1
+miTCRSub$OSS = as.numeric(miTCRSub$OSS)
+
+length(which(miTCRSub$OSS == 0 | miTCRSub$OSS == 1))
+miTCRSub3 = miTCRSub[-which(is.na(miTCRSub$OSS)),]
+
+
+#include cancer type
+cox = coxph(Surv(OSM, OSS)~NormShannon+ DiagnosisAge + strata(CancerType), miTCRSub3)
+
+cox
+
+
+#expansion cox
+miTCRSub3$Expansion = miTCRSub3$CPR < 1
+eCox = coxph(Surv(OSM, OSS)~Expansion + DiagnosisAge + strata(CancerType), miTCRSub3)
+
+eCox
+
+
+```
+
+
+TCR by cancer type
+```{r}
+summary(miTCRSub$CancerType)
+
+lmList = list()
+cancerTypes= list()
+for(i in seq_along(levels(miTCRSub$CancerType))) {
+  cancerObs = miTCRSub[which(miTCRSub$CancerType == levels(miTCRSub$CancerType)[i]),]
+  lm = lm(NormShannon~DiagnosisAge, cancerObs)
+  lmList[[i]] = lm
+  cancerTypes[[i]] = levels(miTCRSub$CancerType)[i]
+}
+
+unlist(cancerTypes)
+
+ageStats = lapply(lmList, function(x){
+  if(!is.null(x)){
+  return(summary(x)$coefficients[2,])
+  }
+})
+
+names(ageStats) = unlist(cancerTypes)
+
+ageStatsDf = do.call(rbind, ageStats)
+
+ageStatsDf = cbind(ageStatsDf, p.adjust(ageStatsDf[,4], "BH"))
+ageStatsDf = ageStatsDf[order(ageStatsDf[,5]),]
+colnames(ageStatsDf)[5] = "PAdj"
+
+ageStatsDf
+
+
+lmStats = ageStatsDf[,3]
+
+#plot
+cancerTypes = levels(miTCRSub$CancerType)
+ggplot(as.data.frame(lmStats), aes(x=reorder(cancerTypes, -lmStats), y=lmStats))+
+    geom_bar(stat="identity")+
+    labs(title="Linear Relationship of Normalized Clonality and Age", x="Cancer Type", y = "Statistic")+
+    theme_classic()
+
+
+##cox hazards
+coxphList = list()
+for(i in seq_along(levels(miTCRSub3$CancerType))) {
+  cancerObs = miTCRSub3[which(miTCRSub3$CancerType == levels(miTCRSub$CancerType)[i]),]
+  coxph = coxph(Surv(OSM, OSS)~NormShannon + DiagnosisAge, cancerObs)
+  coxphList[[i]] = coxph
+
+}
+
+coxStats = lapply(coxphList, function(x){
+  if(!is.null(x)){
+  return(summary(x)$coefficients[1,])
+  }
+})
+
+names(coxStats) = unlist(cancerTypes)
+
+coxStatsDf = do.call(rbind, coxStats)
+
+coxStatsDf = cbind(coxStatsDf, p.adjust(coxStatsDf[,5], "BH"))
+coxStatsDf = coxStatsDf[order(coxStatsDf[,6]),]
+colnames(coxStatsDf)[6] = "PAdj"
+
+coxStatsDf
+
+
+#plot
+cancerTypes = levels(miTCRSub3$CancerType)
+ggplot(as.data.frame(coxStatsDf), aes(x=reorder(cancerTypes, -z), y=z))+
+    geom_bar(stat="identity")+
+    labs(title="Cox Statistic for Normalized Clonality", x="Cancer Type", y = "Z Statistic")+
+    theme_classic()
+
+```

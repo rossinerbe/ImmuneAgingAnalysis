@@ -1,0 +1,383 @@
+---
+title: "TCGAmethylationAge"
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r}
+#download TCGA methylation data from https://gdc.cancer.gov/about-data/publications/panimmune
+# tcgaMethylation = data.table::fread("Data/jhu-usc.edu_PANCAN_merged_HumanMethylation27_HumanMethylation450.betaValue_whitelisted.tsv")
+
+cgIds = unlist(tcgaMethylation[,1])
+tcgaMethylation = tcgaMethylation[,-1]
+rownames(tcgaMethylation) = cgIds
+
+#get phenotype data
+pheno = data.table::fread("Data/tcga_clinical_data.tsv")
+
+colnames(tcgaMethylation) = unlist(lapply(colnames(tcgaMethylation), function(x){
+  stringr::str_sub(x, 1, 15)
+}))
+
+ages = vector("numeric", ncol(tcgaMethylation))
+ages[1:length(ages)] = NA
+
+for(i in seq(ncol(tcgaMethylation))) {
+  if(length(pheno$`Diagnosis Age`[which(pheno$`Sample ID` == colnames(tcgaMethylation)[i])]) == 1){
+    ages[i] = pheno$`Diagnosis Age`[which(pheno$`Sample ID` == colnames(tcgaMethylation)[i])]
+  }
+  else{next}
+}
+
+
+#remove no age
+noAge = which(is.na(ages))
+tcgaMethylationSub = as.data.frame(as.matrix(tcgaMethylation)[, -noAge])
+rownames(tcgaMethylationSub) = cgIds
+ageSub = ages[-noAge]
+
+#get cancer type
+cancerType = vector("character", ncol(tcgaMethylationSub))
+cancerType[1:length(cancerType)] = NA
+
+for(i in seq(ncol(tcgaMethylationSub))) {
+  if(length(pheno$`TCGA PanCanAtlas Cancer Type Acronym`[which(pheno$`Sample ID` == colnames(tcgaMethylationSub)[i])]) == 1){
+    cancerType[i] = pheno$`TCGA PanCanAtlas Cancer Type Acronym`[which(pheno$`Sample ID` == colnames(tcgaMethylationSub)[i])]
+  }
+  else{next}
+}
+
+sum(is.na(cancerType))
+
+```
+
+Linear models
+```{r}
+ageTermList = apply(tcgaMethylationSub, 1, function(x){
+  tmpLM = lm(x ~ ageSub + cancerType)
+  ageTmp = summary(tmpLM)$coefficients[2,]
+  return(ageTmp)
+})
+
+ageTermList = t(ageTermList)
+rownames(ageTermList) = rownames(tcgaMethylationSub)
+
+ageTermList = as.data.frame(ageTermList)
+ageTermList$PAdj = p.adjust(ageTermList$`Pr(>|t|)`, "BH")
+
+length(which(ageTermList$PAdj < 0.05))
+length(which(ageTermList$PAdj < 1e-5))
+
+library("IlluminaHumanMethylation27k.db")
+gene = IlluminaHumanMethylation27kENSEMBL
+mapped_probes <- mappedkeys(gene)
+genesList <- as.list(gene[mapped_probes])
+genesList[1:5]
+
+length(which(rownames(ageTermList) %in% names(genesList)))
+
+sigcpgsUp = rownames(ageTermList)[which(ageTermList$PAdj < 0.05 & ageTermList$Estimate > 0)]
+sigcpgsDn = rownames(ageTermList)[which(ageTermList$PAdj < 0.05 & ageTermList$Estimate < 0)]
+
+
+##read in list of immune genes from InnateDb
+immuneGenes = data.table::fread("Data/InnateDB_genes.csv")
+
+#get genes with age-related methylation changes
+sigGenesUpMethylated = genesList[which(names(genesList) %in% sigcpgsUp)]
+sigGenesDnMethylated = genesList[which(names(genesList) %in% sigcpgsDn)]
+
+ImmuneGenesUpMethylated = immuneGenes[which(immuneGenes$ensembl %in% sigGenesUpMethylated),]
+
+ImmuneGenesDnMethylated = immuneGenes[which(immuneGenes$ensembl %in% sigGenesDnMethylated),]
+
+##compare to gene expression up and down with age
+tcgaDE = readRDS("Data/ageDEGenesCTAdj.rds")
+genesUpWithAge = rownames(tcgaDE)[which(tcgaDE$adj.P.Val < 0.05 & tcgaDE$t > 0)]
+genesDnWithAge = rownames(tcgaDE)[which(tcgaDE$adj.P.Val < 0.05 & tcgaDE$t < 0)]
+
+ImmuneGenesUpMethylDnExpressed = ImmuneGenesUpMethylated[which(ImmuneGenesUpMethylated$ensembl %in% genesDnWithAge),]
+
+ImmuneGenesDnMethylUpExpressed = ImmuneGenesDnMethylated[which(ImmuneGenesDnMethylated$ensembl %in% genesUpWithAge),]
+
+nrow(ImmuneGenesUpMethylated[which(ImmuneGenesUpMethylated$ensembl %in% genesDnWithAge),])
+nrow(ImmuneGenesUpMethylated[which(ImmuneGenesUpMethylated$ensembl %in% genesUpWithAge),])
+nrow(ImmuneGenesDnMethylated[which(ImmuneGenesDnMethylated$ensembl %in% genesUpWithAge),])
+nrow(ImmuneGenesDnMethylated[which(ImmuneGenesDnMethylated$ensembl %in% genesDnWithAge),])
+
+
+#save
+write.table(ImmuneGenesUpMethylDnExpressed$name, "Data/ImmuneGenesUpMethylDnExpressedWithAge.txt", quote = F, row.names = F, col.names = F) #cell adhesion, cell differentiation, locomotion, ECM organization
+
+write.table(ImmuneGenesDnMethylUpExpressed$name, "Data/ImmuneGenesDnMethylUpExpressedWithAge.txt", quote = F, row.names = F, col.names = F) #still LAG3, CD274, CD80
+
+
+
+
+#get the stats for all genes in
+TcellGenes = c("PDCD1", "CD274", "CTLA4", "CD80", "EOMES", "LAG3", "HAVCR2", "IL4", "IL10", "TGFB1", "TNFA", "IFNG", "IFNGR1", "CD40", "CD28")
+
+library(org.Hs.eg.db)
+symbols <- mapIds(org.Hs.eg.db, keys=TcellGenes, column="ENSEMBL", keytype="SYMBOL", multiVals="first")
+symbols["TNFA"] = "ENSG00000232810" #added manually because was not found by db
+
+TcellGeneCpGs = vector("list", length(symbols))
+for(i in seq_along(symbols)) {
+  if(length(which(genesList == symbols[i])) == 0){
+    next
+  }
+  else{
+    TcellGeneCpGs[[i]] = genesList[which(genesList == symbols[i])]
+    #names(TcellGeneCpGs)[i] = names(genesList)[which(genesList == symbols[i])]
+  }
+}
+
+
+
+TCellAssCpGStats = as.data.frame(matrix(nrow = length(TcellGeneCpGs), ncol = ncol(ageTermList)))
+for(i in seq_along(TcellGeneCpGs)){
+  if(is.null(TcellGeneCpGs[[i]])){
+    next
+  }
+  else if(length(TcellGeneCpGs[[i]]) > 1){
+    tmp = ageTermList[which(rownames(ageTermList) %in% names(TcellGeneCpGs[[i]])),]
+    if(nrow(tmp) == 0){
+      next
+    }
+    TCellAssCpGStats[i,] = tmp[which(tmp$PAdj == min(tmp$PAdj)),]
+  }
+  else if(length(which(rownames(ageTermList) == names(TcellGeneCpGs[[i]]))) == 0){
+    next
+  }
+  else{
+    TCellAssCpGStats[i,] = ageTermList[which(rownames(ageTermList) == names(TcellGeneCpGs[[i]])),]
+  }
+}
+
+rownames(TCellAssCpGStats) = TcellGenes
+colnames(TCellAssCpGStats) = colnames(ageTermList)
+
+saveRDS(TCellAssCpGStats, "Data/TCellGeneAssociatedCpGStats.rds")
+```
+
+
+Methylation with TMB
+```{r}
+#get TMB
+TMB = vector("numeric", ncol(tcgaMethylationSub))
+TMB[1:length(TMB)] = NA
+
+for(i in seq(ncol(tcgaMethylationSub))) {
+  if(length(pheno$`Mutation Count`[which(pheno$`Sample ID` == colnames(tcgaMethylationSub)[i])]) == 1){
+    TMB[i] = pheno$`Mutation Count`[which(pheno$`Sample ID` == colnames(tcgaMethylationSub)[i])]
+  }
+  else{next}
+}
+
+noTMB = which(is.na(TMB))
+tcgaMethylationSub = as.data.frame(as.matrix(tcgaMethylationSub)[, -noTMB])
+TMBSub = TMB[-noTMB]
+
+ageSub = ageSub[-noTMB]
+cancerTypeSub = cancerType[-noTMB]
+
+
+ageTermList = apply(tcgaMethylationSub, 1, function(x){
+  tmpLM = lm(x ~ log(TMBSub) + ageSub +  cancerTypeSub)
+  ageTmp = summary(tmpLM)$coefficients[2,]
+  return(ageTmp)
+})
+
+ageTermList = t(ageTermList)
+rownames(ageTermList) = rownames(tcgaMethylationSub)
+
+ageTermList = as.data.frame(ageTermList)
+ageTermList$PAdj = p.adjust(ageTermList$`Pr(>|t|)`, "BH")
+
+gene = IlluminaHumanMethylation27kENSEMBL
+mapped_probes <- mappedkeys(gene)
+genesList <- as.list(gene[mapped_probes])
+genesList[1:5]
+
+length(which(rownames(ageTermList) %in% names(genesList)))
+
+##compare to gene expression up and down with age
+tcgaDE = readRDS("Data/DETCGA_TMB.rds")
+geneUpWithHighTMB = rownames(tcgaDE)[which(tcgaDE$adj.P.Val < 0.05 & tcgaDE$t > 0)]
+genesDnWithHighTMB = rownames(tcgaDE)[which(tcgaDE$adj.P.Val < 0.05 & tcgaDE$t < 0)]
+
+
+sigcpgsUp = rownames(ageTermList)[which(ageTermList$PAdj < 0.05 & ageTermList$Estimate > 0)]
+sigcpgsDn = rownames(ageTermList)[which(ageTermList$PAdj < 0.05 & ageTermList$Estimate < 0)]
+sigGenesUpMethylated = genesList[which(names(genesList) %in% sigcpgsUp)]
+sigGenesDnMethylated = genesList[which(names(genesList) %in% sigcpgsDn)]
+
+GenesUpMethylDnExpressed = sigGenesUpMethylated[which(sigGenesUpMethylated %in% genesDnWithHighTMB)]
+
+GenesDnMethylUpExpressed = sigGenesDnMethylated[which(sigGenesDnMethylated %in% geneUpWithHighTMB)]
+
+length(sigGenesUpMethylated[which(sigGenesUpMethylated %in% genesDnWithHighTMB)])
+length(sigGenesUpMethylated[which(sigGenesUpMethylated %in% geneUpWithHighTMB)])
+
+length(sigGenesDnMethylated[which(sigGenesDnMethylated %in% geneUpWithHighTMB)])
+length(sigGenesDnMethylated[which(sigGenesDnMethylated %in% genesDnWithHighTMB)])
+
+
+#save
+write.table(unlist(GenesUpMethylDnExpressed, use.names = F), "Data/GenesUpMethylDnExpressedWithHighTMB.txt", quote = F, row.names = F, col.names = F) 
+
+write.table(unlist(GenesDnMethylUpExpressed, use.names = F), "Data/GenesDnMethylUpExpressedWithHighTMB.txt", quote = F, row.names = F, col.names = F) 
+
+
+TcellGenes = c("PDCD1", "CD274", "CTLA4", "CD80", "EOMES", "LAG3", "HAVCR2", "IL4", "IL10", "TGFB1", "TNFA", "IFNG", "IFNGR1", "CD40", "CD28")
+
+
+symbols <- mapIds(org.Hs.eg.db, keys=TcellGenes, column="ENSEMBL", keytype="SYMBOL", multiVals="first")
+symbols["TNFA"] = "ENSG00000232810" #added manually because was not found by db
+
+TcellGeneCpGs = vector("list", length(symbols))
+for(i in seq_along(symbols)) {
+  if(length(which(genesList == symbols[i])) == 0){
+    next
+  }
+  else{
+    TcellGeneCpGs[[i]] = genesList[which(genesList == symbols[i])]
+    #names(TcellGeneCpGs)[i] = names(genesList)[which(genesList == symbols[i])]
+  }
+}
+
+TCellAssCpGStats = as.data.frame(matrix(nrow = length(TcellGeneCpGs), ncol = ncol(ageTermList)))
+for(i in seq_along(TcellGeneCpGs)){
+  if(is.null(TcellGeneCpGs[[i]])){
+    next
+  }
+  else if(length(TcellGeneCpGs[[i]]) > 1){
+    tmp = ageTermList[which(rownames(ageTermList) %in% names(TcellGeneCpGs[[i]])),]
+    if(nrow(tmp) == 0){
+      next
+    }
+    TCellAssCpGStats[i,] = tmp[which(tmp$PAdj == min(tmp$PAdj)),]
+  }
+  else if(length(which(rownames(ageTermList) == names(TcellGeneCpGs[[i]]))) == 0){
+    next
+  }
+  else{
+    TCellAssCpGStats[i,] = ageTermList[which(rownames(ageTermList) == names(TcellGeneCpGs[[i]])),]
+  }
+}
+
+rownames(TCellAssCpGStats) = TcellGenes
+colnames(TCellAssCpGStats) = colnames(ageTermList)
+```
+
+
+Age association corrected for TMB
+```{r}
+ageTermList = apply(tcgaMethylationSub, 1, function(x){
+  tmpLM = lm(x ~ ageSub + log(TMBSub) + cancerTypeSub)
+  ageTmp = summary(tmpLM)$coefficients[2,]
+  return(ageTmp)
+})
+
+ageTermList = t(ageTermList)
+rownames(ageTermList) = rownames(tcgaMethylationSub)
+
+ageTermList = as.data.frame(ageTermList)
+ageTermList$PAdj = p.adjust(ageTermList$`Pr(>|t|)`, "BH")
+
+length(which(ageTermList$PAdj < 0.05))
+length(which(ageTermList$PAdj < 1e-5))
+
+gene = IlluminaHumanMethylation27kENSEMBL
+mapped_probes <- mappedkeys(gene)
+genesList <- as.list(gene[mapped_probes])
+genesList[1:5]
+
+length(which(rownames(ageTermList) %in% names(genesList)))
+
+sigcpgsUp = rownames(ageTermList)[which(ageTermList$PAdj < 0.05 & ageTermList$Estimate > 0)]
+sigcpgsDn = rownames(ageTermList)[which(ageTermList$PAdj < 0.05 & ageTermList$Estimate < 0)]
+
+
+##read in list of immune genes from InnateDb
+immuneGenes = data.table::fread("Data/InnateDB_genes.csv")
+
+#get genes with age-related methylation changes
+sigGenesUpMethylated = genesList[which(names(genesList) %in% sigcpgsUp)]
+sigGenesDnMethylated = genesList[which(names(genesList) %in% sigcpgsDn)]
+
+
+ImmuneGenesUpMethylated = immuneGenes[which(immuneGenes$ensembl %in% sigGenesUpMethylated),]
+
+ImmuneGenesDnMethylated = immuneGenes[which(immuneGenes$ensembl %in% sigGenesDnMethylated),]
+
+##compare to gene expression up and down with age
+tcgaDE = readRDS("Data/ageDEGenesCTAdjTMBAdj.rds")
+genesUpWithAge = rownames(tcgaDE)[which(tcgaDE$adj.P.Val < 0.05 & tcgaDE$t > 0)]
+genesDnWithAge = rownames(tcgaDE)[which(tcgaDE$adj.P.Val < 0.05 & tcgaDE$t < 0)]
+
+ImmuneGenesUpMethylDnExpressed = ImmuneGenesUpMethylated[which(ImmuneGenesUpMethylated$ensembl %in% genesDnWithAge),]
+
+ImmuneGenesDnMethylUpExpressed = ImmuneGenesDnMethylated[which(ImmuneGenesDnMethylated$ensembl %in% genesUpWithAge),]
+
+nrow(ImmuneGenesUpMethylated[which(ImmuneGenesUpMethylated$ensembl %in% genesDnWithAge),])
+nrow(ImmuneGenesUpMethylated[which(ImmuneGenesUpMethylated$ensembl %in% genesUpWithAge),])
+nrow(ImmuneGenesDnMethylated[which(ImmuneGenesDnMethylated$ensembl %in% genesUpWithAge),])
+nrow(ImmuneGenesDnMethylated[which(ImmuneGenesDnMethylated$ensembl %in% genesDnWithAge),])
+
+
+#save
+write.table(ImmuneGenesUpMethylDnExpressed$name, "Data/ImmuneGenesUpMethylDnExpressedWithAgeTMBAdj.txt", quote = F, row.names = F, col.names = F) #cell adhesion, cell differentiation, locomotion, ECM organization
+
+write.table(ImmuneGenesDnMethylUpExpressed$name, "Data/ImmuneGenesDnMethylUpExpressedWithAgeTMBAdj.txt", quote = F, row.names = F, col.names = F) #still LAG3, CD274, CD80
+
+
+
+
+#get the stats for all genes in
+TcellGenes = c("PDCD1", "CD274", "CTLA4", "CD80", "EOMES", "LAG3", "HAVCR2", "IL4", "IL10", "TGFB1", "TNFA", "IFNG", "IFNGR1", "CD40", "CD28")
+
+library(org.Hs.eg.db)
+symbols <- mapIds(org.Hs.eg.db, keys=TcellGenes, column="ENSEMBL", keytype="SYMBOL", multiVals="first")
+symbols["TNFA"] = "ENSG00000232810" #added manually because was not found by db
+
+TcellGeneCpGs = vector("list", length(symbols))
+for(i in seq_along(symbols)) {
+  if(length(which(genesList == symbols[i])) == 0){
+    next
+  }
+  else{
+    TcellGeneCpGs[[i]] = genesList[which(genesList == symbols[i])]
+    #names(TcellGeneCpGs)[i] = names(genesList)[which(genesList == symbols[i])]
+  }
+}
+
+
+
+TCellAssCpGStats = as.data.frame(matrix(nrow = length(TcellGeneCpGs), ncol = ncol(ageTermList)))
+for(i in seq_along(TcellGeneCpGs)){
+  if(is.null(TcellGeneCpGs[[i]])){
+    next
+  }
+  else if(length(TcellGeneCpGs[[i]]) > 1){
+    tmp = ageTermList[which(rownames(ageTermList) %in% names(TcellGeneCpGs[[i]])),]
+    if(nrow(tmp) == 0){
+      next
+    }
+    TCellAssCpGStats[i,] = tmp[which(tmp$PAdj == min(tmp$PAdj)),]
+  }
+  else if(length(which(rownames(ageTermList) == names(TcellGeneCpGs[[i]]))) == 0){
+    next
+  }
+  else{
+    TCellAssCpGStats[i,] = ageTermList[which(rownames(ageTermList) == names(TcellGeneCpGs[[i]])),]
+  }
+}
+
+rownames(TCellAssCpGStats) = TcellGenes
+colnames(TCellAssCpGStats) = colnames(ageTermList)
+
+saveRDS(TCellAssCpGStats, "Data/TCellGeneAssociatedCpGStatsTMBAdj.rds")
+```
+

@@ -1,0 +1,1170 @@
+---
+title: "TCGAMIXTUREAnalysisFinal"
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r}
+# *** downloaded version of TCGA RNA-seq data are available at https://figshare.com/articles/TCGARNA-seq/12030318 
+# retrieved from GDC on August 8th, 2019
+#read in with:
+# rna_seq_data = data.table::fread("Data/all_cancers_rnaseq.txt")
+
+rna_seq_data_2 = rna_seq_data[,-1]
+#remove character columns describing each cancer type
+clsList = as.factor(as.character(lapply(rna_seq_data_2, class)))
+summary(clsList)
+rmCols = unlist(as.numeric(c(which(clsList == "character"), which(clsList == "integer"))))
+rna_seq_data_2 = rna_seq_data_2[,-c(642,1611,2152, 3061, 3946, 4831, 5681, 6496, 7345,  643, 1612, 2153, 3062, 3947, 4832, 5682, 6497, 7346, 8261)] 
+rownames(rna_seq_data_2) = as.character(unlist(rna_seq_data[,1]))
+
+#read in signature gene matrix for 22 immune cell types
+lm22 = as.data.frame(data.table::fread("Data/LM22.txt"))
+rownames(lm22) = unlist(lm22[,1])
+lm22 = lm22[,-1]
+
+source("MIXTURE/MIXTURE.R")
+#call MIXTURE
+mixResult = MIXTURE(rna_seq_data_2, lm22, iter = 500, functionMixture = nu.svm.robust.RFE, useCores = 1, nullDist = "PopulationBased")
+
+saveRDS(mixResult, "Data/MIXTURE_result.rds")
+
+#get absolute proportions
+absMix = (mixResult$Subjects)$MIXabs 
+sum(is.na(absMix))
+pvals = mixResult$p.values
+
+#filter to observations with significant deconvolution
+rpFiltAbsMix = absMix[which(pvals[,4] < 0.05),]
+nainds = which(is.na(rpFiltAbsMix[,1]))
+mixtureFiltered = rpFiltAbsMix[-nainds,]
+
+#remove samples that had received treatment prior to collection, as this could bias result
+mixtureIDs = rownames(mixtureFiltered)
+
+mixtureIDs = unlist(lapply(mixtureIDs, function(x){
+  stringr::str_sub(x, 1, 12)
+}))
+
+treatedIDs = readRDS("Data/treatedBeforeResectionIDs.rds")
+mixtureFiltered = mixtureFiltered[-which(mixtureIDs %in% treatedIDs),]
+
+#get phenotype data
+pheno = data.table::fread("Data/tcga_clinical_data.tsv")
+
+sampleIDs = rownames(mixtureFiltered)
+case_IDs = lapply(sampleIDs, stringr::str_sub, start = 1, end = 12)
+
+rownames(mixtureFiltered) = case_IDs
+mixtureFiltered = cbind(as.data.frame(mixtureFiltered), sampleIDs)
+
+#function to add phenotype data
+source("Functions/mixture_pheno_filter.R")
+
+all_surv_usable_cancer_types = c("ACC", "BLCA", "BRCA", "CESC", "CHOL", "COAD", 
+                                 "ESCA", "GBM", "HNSC", "KICH", "KIRC", "KIRP", 
+                                 "LGG", "LIHC", "LUAD", "LUSC", "MESO", "OV", 
+                                 "PAAD", "PRAD", "READ", "SARC", "SKCM", "STAD",                                   "THCA", "UCEC", "UCS", "UVM")
+
+mixtureWithPheno = mixture_pheno_filter(mixtureFiltered, pheno, cancer_types = all_surv_usable_cancer_types)
+
+#format OSS for eventual use with cox proportional hazards model
+liveinds = which(mixtureWithPheno$Overall.Survival.Status == "LIVING")
+deadinds = which(mixtureWithPheno$Overall.Survival.Status == "DECEASED")
+mixtureWithPheno$Overall.Survival.Status = as.numeric(mixtureWithPheno$Overall.Survival.Status)
+mixtureWithPheno$Overall.Survival.Status[liveinds] = 0
+mixtureWithPheno$Overall.Survival.Status[deadinds] = 1
+
+#remove samples with NA values for Age
+mixtureData = mixtureWithPheno[-which(is.na(mixtureWithPheno$Diagnosis.Age)), ]
+
+
+#add cancer type and smoking years
+cancerType = vector("character", length(nrow(mixtureData)))
+notPrimary = c()
+for(i in seq(nrow(mixtureData))) {
+  cancerType[i] = pheno$`TCGA PanCanAtlas Cancer Type Acronym`[which(pheno$`Sample ID` == mixtureData$Sample.ID[i])]
+  if(pheno$`Sample Type`[which(pheno$`Sample ID` == mixtureData$Sample.ID[i])] != "Primary") {
+    notPrimary = c(notPrimary, i)
+    }
+}
+
+mixtureData$Cancer.Type = as.factor(cancerType)
+summary(mixtureData$Cancer.Type)
+
+#remove those that are not primary samples
+mixDataSub = mixtureData[-notPrimary,]
+
+#add smoking years
+smokingData = readRDS("Data/smokingData.rds")
+
+mixDataSub$Smoking.Years = NA
+for(i in seq(nrow(mixDataSub))) {
+  if(length(which(smokingData$submitter_id == mixDataSub$Patient.ID[i])) == 0){
+    next
+  }
+ mixDataSub$Smoking.Years[i] = smokingData$years_smoked[which(smokingData$submitter_id == mixDataSub$Patient.ID[i])]
+}
+
+#add age group variable
+mixDataSub$ageGroup = cut(mixDataSub$Diagnosis.Age, c(29,39,49,59,69,79,90), labels = c("30-39", "40-49", "50-59", "60-69", "70-79", "80-90"))
+```
+
+
+
+Test if higher order cell types are associated with age
+```{r}
+##T cells##
+TCellProps = apply(mixDataSub, 1, function(x) {sum(as.numeric(x[4:10]))})/apply(mixDataSub, 1, function(x) {sum(as.numeric(x[1:22]))})
+
+TcellLm = lm(TCellProps~Diagnosis.Age+Sex+Cancer.Type, data = mixDataSub)
+
+summary(TcellLm)
+
+TcellLmTMB = lm(TCellProps~Diagnosis.Age+Sex+Cancer.Type+log(Mutation.Count), data = mixDataSub)
+
+summary(TcellLmTMB)
+
+
+#plot lm
+jtools::effect_plot(TcellLm, pred = Diagnosis.Age, interval = T)
+
+#plot by age group
+library(ggplot2)
+dfboxT = data.frame(age = mixDataSub$ageGroup, TCells = TCellProps)
+
+ggplot(data = dfboxT, aes(x = age, y = TCells, fill = age)) +
+  geom_violin(trim=FALSE) +
+  geom_boxplot(width=0.2) +
+  scale_fill_brewer(palette="Blues") +
+  theme_minimal()
+
+ggplot(data = dfboxT, aes(x = age, y = TCells, fill = age)) +
+  geom_violin(trim=FALSE) +
+  geom_boxplot(width=0.2) +
+  theme_minimal() + 
+  theme(legend.position = "none")
+
+##Macrophages
+MacrCellProps = apply(mixDataSub, 1, function(x) {sum(as.numeric(x[14:16]))})/apply(mixDataSub, 1, function(x) {sum(as.numeric(x[1:22]))})
+
+MacrophageLm = lm(MacrCellProps~Diagnosis.Age+Sex+Cancer.Type, data = mixDataSub)
+
+summary(MacrophageLm)
+
+MacrophageLmTMB = lm(MacrCellProps~Diagnosis.Age+Sex+Cancer.Type+log(Mutation.Count), data = mixDataSub)
+
+summary(MacrophageLmTMB)
+
+
+#plot lm
+jtools::effect_plot(MacrophageLm, pred = Diagnosis.Age, interval = T)
+
+#plot by age group
+dfboxMacr = data.frame(age = mixDataSub$ageGroup, Macrophages = MacrCellProps)
+
+ggplot(data = dfboxMacr, aes(x = age, y = Macrophages, fill = age)) +
+  geom_violin(trim=FALSE) +
+  geom_boxplot(width=0.2) +
+  scale_fill_brewer(palette="Blues") +
+  theme_minimal()
+
+ggplot(data = dfboxMacr, aes(x = age, y = Macrophages, fill = age)) +
+  geom_violin(trim=FALSE) +
+  geom_boxplot(width=0.2) +
+  theme_minimal()+
+  theme(legend.position = "none")
+
+##B cells
+BCellProps = apply(mixDataSub, 1, function(x) {sum(as.numeric(x[1:3]))})/apply(mixDataSub, 1, function(x) {sum(as.numeric(x[1:22]))})
+
+BcellLm = lm(BCellProps~Diagnosis.Age+Sex+Cancer.Type, data = mixDataSub)
+
+summary(BcellLm)
+
+BcellLmTMB = lm(BCellProps~Diagnosis.Age+Sex+Cancer.Type+log(Mutation.Count), data = mixDataSub)
+
+summary(BcellLmTMB)
+
+#plot lm
+jtools::effect_plot(BcellLm, pred = Diagnosis.Age, interval = T)
+
+#plot by age group
+dfboxB = data.frame(age = mixDataSub$ageGroup, BCells = BCellProps)
+
+ggplot(data = dfboxB, aes(x = age, y = BCells, fill = age)) +
+  geom_violin(trim=FALSE) +
+  geom_boxplot(width=0.2) +
+  scale_fill_brewer(palette="Dark2") +
+  theme_minimal()
+
+##NK cells
+NKCellProps = apply(mixDataSub, 1, function(x) {sum(as.numeric(x[11:12]))})/apply(mixDataSub, 1, function(x) {sum(as.numeric(x[1:22]))})
+
+NKcellLm = lm(NKCellProps~Diagnosis.Age+Sex+Cancer.Type, data = mixDataSub)
+
+summary(NKcellLm)
+
+NKcellLmTMB = lm(NKCellProps~Diagnosis.Age+Sex+Cancer.Type + log(Mutation.Count), data = mixDataSub)
+
+summary(NKcellLmTMB)
+
+
+#plot lm
+jtools::effect_plot(NKcellLm, pred = Diagnosis.Age, interval = T)
+
+#plot by age group
+dfboxNK = data.frame(age = mixDataSub$ageGroup, NKCells = NKCellProps)
+
+ggplot(data = dfboxNK, aes(x = age, y = NKCells, fill = age)) +
+  geom_violin(trim=FALSE) +
+  geom_boxplot(width=0.2) +
+  scale_fill_brewer(palette="Dark2") +
+  theme_minimal()
+
+##Dendritic cells
+DCellProps = apply(mixDataSub, 1, function(x) {sum(as.numeric(x[17:18]))})/apply(mixDataSub, 1, function(x) {sum(as.numeric(x[1:22]))})
+
+DcellLm = lm(DCellProps~Diagnosis.Age+Sex+Cancer.Type, data = mixDataSub)
+
+summary(DcellLm)
+
+DcellLmTMB = lm(DCellProps~Diagnosis.Age+Sex+Cancer.Type+log(Mutation.Count), data = mixDataSub)
+
+summary(DcellLmTMB)
+
+
+#plot lm
+jtools::effect_plot(DcellLm, pred = Diagnosis.Age, interval = T)
+
+#plot by age group
+dfboxD = data.frame(age = mixDataSub$ageGroup, DCells = DCellProps)
+
+ggplot(data = dfboxD, aes(x = age, y = DCells, fill = age)) +
+  geom_violin(trim=FALSE) +
+  geom_boxplot(width=0.2) +
+  scale_fill_brewer(palette="Dark2") +
+  theme_minimal()
+
+##Misc. Myeloid
+MMCellProps = apply(mixDataSub, 1, function(x) {sum(as.numeric(x[c(13,19:22)]))})/apply(mixDataSub, 1, function(x) {sum(as.numeric(x[1:22]))})
+
+MMcellLm = lm(MMCellProps~Diagnosis.Age+Sex+Cancer.Type, data = mixDataSub)
+
+summary(MMcellLm)
+
+MMcellLmTMB = lm(MMCellProps~Diagnosis.Age+Sex+Cancer.Type+log(Mutation.Count), data = mixDataSub)
+
+summary(MMcellLmTMB)
+
+
+
+#plot lm
+jtools::effect_plot(MMcellLm, pred = Diagnosis.Age, interval = T)
+
+#plot by age group
+dfboxMM = data.frame(age = mixDataSub$ageGroup, MMCells = MMCellProps)
+
+ggplot(data = dfboxMM, aes(x = age, y = MMCells, fill = age)) +
+  geom_violin(trim=FALSE) +
+  geom_boxplot(width=0.2) +
+  scale_fill_brewer(palette="Dark2") +
+  theme_minimal()
+
+##summary stats
+lmList = list(TcellLm, MacrophageLm, BcellLm, NKcellLm, DcellLm, MMcellLm)
+
+ageStats = lapply(lmList, function(x){
+  summary(x)$coefficients[2,]
+})
+
+names(ageStats) = c("T cells", "Macrophages", "B cells", "NK cells", "Dendritic cells", "Misc. Myeloid")
+
+ageStatsDf = do.call(rbind, ageStats)
+
+#adjusted pvals
+p.adjust(ageStatsDf[,4], "BH")
+
+ageStatsDf = as.data.frame(cbind(ageStatsDf, p.adjust(ageStatsDf[,4], "BH")))
+colnames(ageStatsDf)[5] = "PAdj"
+
+
+
+ageStatsDf = as.data.frame(ageStatsDf)
+
+#plot
+ggplot(ageStatsDf, aes(x=reorder(rownames(ageStatsDf), -`t value`), y=`t value`, fill = reorder(rownames(ageStatsDf), -`t value`)))+
+    geom_bar(stat="identity")+
+    labs(title="Linear Relationship of Age and Immune Infiltration Pan-Cancer", x="Cell Type", y = "T Statistic")+
+    scale_fill_hue(c=50) +
+    theme_minimal()+
+    theme(legend.position = "none")
+
+ggplot(CCStats, aes(x=reorder(xnames, -CCstats), y=CCstats, fill = reorder(xnames, -CCstats))) +
+    geom_bar(stat="identity")+
+    labs(title="Relationship of Age and Immune Infiltration for COAD patients", x="Cell Type", y = "F Statistic")+
+    theme_minimal()+
+     scale_fill_hue(c=60) +
+    theme(legend.position = "none")
+
+
+##Cox proportional hazards model
+library(survival)
+
+Tcox = coxph(Surv(Overall.Survival..Months., Overall.Survival.Status)~ TCellProps + Sex +Diagnosis.Age +strata(Cancer.Type) + Smoking.Years, data = mixDataSub)
+
+Mcox = coxph(Surv(Overall.Survival..Months., Overall.Survival.Status)~ MacrCellProps+ Sex +Diagnosis.Age +strata(Cancer.Type) + Smoking.Years, data = mixDataSub)
+
+Bcox = coxph(Surv(Overall.Survival..Months., Overall.Survival.Status)~ BCellProps + Sex +Diagnosis.Age + strata(Cancer.Type) + Smoking.Years, data = mixDataSub)
+
+NKcox = coxph(Surv(Overall.Survival..Months., Overall.Survival.Status)~ NKCellProps + Sex +Diagnosis.Age + strata(Cancer.Type) + Smoking.Years, data = mixDataSub)
+
+Dcox = coxph(Surv(Overall.Survival..Months., Overall.Survival.Status)~ DCellProps + Sex +Diagnosis.Age + strata(Cancer.Type) + Smoking.Years, data = mixDataSub)
+
+MMcox = coxph(Surv(Overall.Survival..Months., Overall.Survival.Status)~ MMCellProps + Sex +Diagnosis.Age + strata(Cancer.Type) + Smoking.Years, data = mixDataSub)
+
+#summary stats
+coxList = list(Tcox, Mcox, Bcox, NKcox, Dcox, MMcox)
+
+coxStats = lapply(coxList, function(x){
+  summary(x)$coefficients[1,]
+})
+
+names(coxStats) = c("T cells", "Macrophages", "B cells", "NK cells", "Dendritic cells", "Misc. Myeloid")
+
+coxStatsDf = do.call(rbind, coxStats)
+
+#adjusted pvals
+p.adjust(coxStatsDf[,5], "BH")
+
+coxStatsDf = cbind(coxStatsDf, p.adjust(coxStatsDf[,5], "BH"))
+colnames(coxStatsDf)[6] = "PAdj"
+
+
+coxStatsDf
+
+coxStatsDf = as.data.frame(coxStatsDf)
+
+ggplot(coxStatsDf, aes(x=reorder(rownames(coxStatsDf), -z), y=z))+
+    geom_bar(stat="identity")+
+    labs(title="Cox Statistic for Immune Infiltration Pan-Cancer", x="Cell Type", y = "Z-Statistic")+
+    theme_classic()
+```
+
+Look for associations with age among immune cell subtypes
+```{r}
+#iterate through the 22 immune cell types and fit linear model for each to age
+immune_cells = colnames(mixDataSub)[1:22]
+mixLMSummary = data.frame(matrix(NA, 22, 5))
+for(i in 1:22) {
+  lmFormula = paste(immune_cells[i], "~ Diagnosis.Age + Sex + Cancer.Type")
+  tmpLM = lm(lmFormula, data = mixDataSub)
+  t= broom::tidy(tmpLM)
+  mixLMSummary[i,] = t[2,]
+}
+
+
+mixLMSummary[,1] = immune_cells
+colnames(mixLMSummary) = colnames(t)
+bh_adjusted_sig = mixLMSummary$term[p.adjust(mixLMSummary$p.value, method = "BH") < 0.05]
+bh_adjusted_sig
+
+mixLMSummary = mixLMSummary[order(mixLMSummary$p.value),]
+mixLMSummary$PAdj = p.adjust(mixLMSummary$p.value, method = "BH")
+
+
+#plot statistic
+ggplot(mixLMSummary, aes(x=reorder(mixLMSummary[,1], -mixLMSummary[, 4]), y=mixLMSummary[, 4]))+
+    geom_bar(stat="identity")+
+    labs(title="Linear Relationship of Age and Immune Infiltration Pan-Cancer", x="Cell Type", y = "Statistic")+
+    theme_classic()
+
+
+##cox hazards
+source('Functions/coxph_model_mixture.R')
+cox = coxph_model_mixture(mixDataSub, time = "Overall.Survival..Months.", event = "Overall.Survival.Status", covars = "Sex + Diagnosis.Age + strata(Cancer.Type) + Smoking.Years")
+
+cox
+
+
+#plot
+#plot statistic
+ggplot(cox$`Ordered Cell Types`, aes(x=reorder(cox$`Ordered Cell Types`[,1], -cox$`Ordered Cell Types`[, 4]), y=cox$`Ordered Cell Types`[, 4]))+
+    geom_bar(stat="identity")+
+    labs(title="Cox Statistic for Immune Infiltration Pan-Cancer", x="Cell Type", y = "Z-Statistic")+
+    theme_classic()
+
+mixDataSub$logTMB = log(mixDataSub$Mutation.Count)
+
+##add TMB
+mixLMSummary = data.frame(matrix(NA, 22, 5))
+for(i in 1:22) {
+  lmFormula = paste(immune_cells[i], "~ Diagnosis.Age + Sex + Cancer.Type + logTMB")
+  tmpLM = lm(lmFormula, data = mixDataSub)
+  t= broom::tidy(tmpLM)
+  mixLMSummary[i,] = t[2,]
+}
+
+
+mixLMSummary[,1] = immune_cells
+colnames(mixLMSummary) = colnames(t)
+bh_adjusted_sig = mixLMSummary$term[p.adjust(mixLMSummary$p.value, method = "BH") < 0.05]
+bh_adjusted_sig
+
+mixLMSummary = mixLMSummary[order(mixLMSummary$p.value),]
+mixLMSummary$PAdj = p.adjust(mixLMSummary$p.value, method = "BH")
+
+```
+
+
+Investigate age association of proportions of immune cells thought to be good/bad prognostics
+```{r}
+##CD8T/Tregs
+CD8_Tregprop = apply(mixDataSub, 1, function(x) {sum(as.numeric(x[c(4)]))})/apply(mixDataSub, 1, function(x) {sum(as.numeric(x[c(4,9)]))})
+
+CD8TregLm = lm(CD8_Tregprop~Diagnosis.Age+Sex+Cancer.Type, data = mixDataSub)
+
+summary(CD8TregLm)
+
+jtools::effect_plot(CD8TregLm, pred = Diagnosis.Age, interval = T)
+
+
+
+#plot by age group
+means = aggregate(CD8_Tregprop~as.factor(mixDataSub$ageGroup), FUN = mean)
+sds = aggregate(CD8_Tregprop~as.factor(mixDataSub$ageGroup), FUN = stats::sd)
+
+df = data.frame(age = as.factor(means[,1]), PC = means[,2])
+sd = sds[,2]
+
+ggplot(data = df, aes(x = age, y = PC)) +
+  geom_col(fill = "steelblue")+
+  geom_errorbar(aes(ymin = 0, ymax = PC+sd), width = 0.2) +
+  labs(title="Proportion of CD8/Tregs with age", 
+         x="Age Group", y = "CD8 to Treg cell Proportion") +
+  theme_minimal() +
+  theme(legend.position = "none")
+
+## M1/M2
+M1_M2prop = apply(mixDataSub, 1, function(x) {sum(as.numeric(x[15]))})/apply(mixDataSub, 1, function(x) {sum(as.numeric(x[c(15,16)]))})
+
+M1M2Lm = lm(M1_M2prop~Diagnosis.Age+Sex+Cancer.Type, data = mixDataSub)
+summary(M1M2Lm)
+
+jtools::effect_plot(M1M2Lm, pred = Diagnosis.Age, interval = T)
+
+
+means = aggregate(M1_M2prop~as.factor(mixDataSub$ageGroup), FUN = mean)
+sds = aggregate(M1_M2prop~as.factor(mixDataSub$ageGroup), FUN = stats::sd)
+
+df = data.frame(age = as.factor(means[,1]), PC = means[,2])
+sd = sds[,2]
+
+ggplot(data = df, aes(x = age, y = PC, fill = age)) +
+  geom_col()+
+  geom_errorbar(aes(ymin = 0, ymax = PC+sd), width = 0.2) +
+  labs(title="Proportion of M1/M2 cells with age", 
+         x="Age Group", y = "M1 to M2 cell Proportion") +
+  theme_minimal() +
+  theme(legend.position = "none")
+
+##CD8T/CD4T
+CD8_CD4prop = apply(mixDataSub, 1, function(x) {sum(as.numeric(x[4]))})/apply(mixDataSub, 1, function(x) {sum(as.numeric(x[c(4:7)]))})
+
+CD8CD4Lm = lm(CD8_CD4prop~Diagnosis.Age+Sex+Cancer.Type, data = mixDataSub)
+summary(CD8CD4Lm)
+
+jtools::effect_plot(CD8CD4Lm, pred = Diagnosis.Age, interval = T)
+
+means = aggregate(CD8_CD4prop~as.factor(mixDataSub$ageGroup), FUN = mean)
+sds = aggregate(CD8_CD4prop~as.factor(mixDataSub$ageGroup), FUN = stats::sd)
+
+df = data.frame(age = as.factor(means[,1]), PC = means[,2])
+sd = sds[,2]
+
+ggplot(data = df, aes(x = age, y = PC, fill = age)) +
+  geom_col()+
+  geom_errorbar(aes(ymin = 0, ymax = PC+sd), width = 0.2) +
+  labs(title="Proportion of CD8/CD4 cells with age", 
+         x="Age Group", y = "CD8 to CD4 T cell Proportion") +
+  theme_minimal() +
+  theme(legend.position = "none")
+
+##summary stats
+propLmList = list(CD8TregLm, M1M2Lm, CD8CD4Lm)
+
+propAgeStats = lapply(propLmList, function(x){
+  summary(x)$coefficients[2,]
+})
+
+names(propAgeStats) = c("CD8 to Treg", "M1 to M2", "CD8 to CD4")
+
+propAgeStatsDf = do.call(rbind, propAgeStats)
+
+#adjusted pvals
+p.adjust(propAgeStatsDf[,4], "BH")
+
+propAgeStatsDf = cbind(propAgeStatsDf, p.adjust(propAgeStatsDf[,4], "BH"))
+colnames(propAgeStatsDf)[5] = "PAdj"
+
+propAgeStatsDf
+
+
+##cox hazards
+
+CD8TregCox = coxph(Surv(mixDataSub$Overall.Survival..Months., mixDataSub$Overall.Survival.Status)~ CD8_Tregprop + mixDataSub$Diagnosis.Age + strata(mixDataSub$TCGA.PanCanAtlas.Cancer.Type.Acronym) + mixDataSub$Sex + mixDataSub$Smoking.Years)
+
+M1M2Cox = coxph(Surv(mixDataSub$Overall.Survival..Months., mixDataSub$Overall.Survival.Status)~M1_M2prop + mixDataSub$Diagnosis.Age + strata(mixDataSub$TCGA.PanCanAtlas.Cancer.Type.Acronym) + mixDataSub$Sex + mixDataSub$Smoking.Years)
+
+CD8CD4Cox = coxph(Surv(mixDataSub$Overall.Survival..Months., mixDataSub$Overall.Survival.Status)~CD8_CD4prop + mixDataSub$Diagnosis.Age + strata(mixDataSub$TCGA.PanCanAtlas.Cancer.Type.Acronym) + mixDataSub$Sex + mixDataSub$Smoking.Years)
+
+propCoxList = list(CD8TregCox, M1M2Cox, CD8CD4Cox)
+
+propCoxStats = lapply(propCoxList, function(x){
+  summary(x)$coefficients[1,]
+})
+
+names(propCoxStats) = c("CD8 to Treg", "M1 to M2", "CD8 to CD4")
+
+propCoxStatsDf = do.call(rbind, propCoxStats)
+
+#adjusted pvals
+p.adjust(propCoxStatsDf[,5], "BH")
+
+propCoxStatsDf = cbind(propCoxStatsDf, p.adjust(propCoxStatsDf[,5], "BH"))
+colnames(propCoxStatsDf)[6] = "PAdj"
+
+propCoxStatsDf
+
+```
+
+
+changes in ICB related genes with age
+```{r}
+colnames(rna_seq_data_2) = unlist(lapply(colnames(rna_seq_data_2), function(x){
+  stringr::str_sub(x, 1, 15)
+}))
+inds = which(colnames(rna_seq_data_2) %in% pheno$`Sample ID`)
+rna_seq_data_3 = rna_seq_data_2[,..inds]
+
+
+rna_seq_data_3 = log(rna_seq_data_3 + 1)
+rownames(rna_seq_data_3) = rownames(rna_seq_data_2)
+
+#remove pre-treated patients
+toRemove = which(unlist(lapply(colnames(rna_seq_data_3), function(x){
+  stringr::str_sub(x, 1, 12)
+})) %in% treatedIDs)
+
+rna_seq_data_3 = dplyr::select(rna_seq_data_3, -all_of(toRemove))
+
+#get vector of age corresponding to columns of the rnaseq matrix
+age = unlist(lapply(colnames(rna_seq_data_3), function(x){
+  pheno$`Diagnosis Age`[which(pheno$`Sample ID` == x)]
+}))
+
+cancerType = unlist(lapply(colnames(rna_seq_data_3), function(x){
+  pheno$`TCGA PanCanAtlas Cancer Type Acronym`[which(pheno$`Sample ID` == x)]
+}))
+
+Sex = unlist(lapply(colnames(rna_seq_data_3), function(x){
+  pheno$Sex[which(pheno$`Sample ID` == x)]
+}))
+
+
+#PD1
+PD1 = unlist(rna_seq_data_3[which(rownames(rna_seq_data_3)== "PDCD1"),])
+
+PD1Lm = lm(PD1~age+ cancerType + Sex)
+summary(PD1Lm)
+
+#PDL1
+PDL1 = unlist(rna_seq_data_3[which(rownames(rna_seq_data_3)== "CD247"),])
+PDL1Lm = lm(PDL1~age+ cancerType + Sex) 
+summary(PDL1Lm)
+
+#CTLA4
+CTLA4 = unlist(rna_seq_data_3[which(rownames(rna_seq_data_3)== "CTLA4"),])
+CTLA4Lm = lm(CTLA4~age+ cancerType + Sex)
+summary(CTLA4Lm)
+
+#CD80
+CD80 = unlist(rna_seq_data_3[which(rownames(rna_seq_data_3)== "CD80"),])
+CD80Lm = lm(CD80~age+ cancerType + Sex)
+summary(CD80Lm)
+
+
+##summary stats
+ICBGeneLms = list(PD1Lm, PDL1Lm, CTLA4Lm, CD80Lm)
+
+ICBGeneStats = lapply(ICBGeneLms, function(x){
+  summary(x)$coefficients[2,]
+})
+
+names(ICBGeneStats) = c("PD1", "PDL1", "CTLA4", "CD80")
+
+ICBGeneStatsDf = do.call(rbind, ICBGeneStats)
+
+#adjusted pvals
+p.adjust(ICBGeneStatsDf[,4], "BH")
+
+ICBGeneStatsDf = cbind(ICBGeneStatsDf, p.adjust(ICBGeneStatsDf[,4], "BH"))
+colnames(ICBGeneStatsDf)[5] = "PAdj"
+
+ICBGeneStatsDf
+
+```
+
+
+Examine age and survival association by individual cancer type
+```{r}
+mixtureDataNP = mixtureFiltered
+
+
+cancerTypeList = c("ACC", "BLCA", "BRCA", "CESC", "CHOL", "COAD", 
+                   "ESCA", "GBM", "HNSC", "KICH", "KIRC", "KIRP", 
+                   "LGG", "LIHC", "LUAD", "LUSC", "MESO", "OV", 
+                   "PAAD", "PRAD", "READ", "SARC", "SKCM", "STAD", 
+                   "THCA", "UCEC", "UCS", "UVM")
+
+indvCancerDataList = list()
+
+for(i in 1:length(cancerTypeList)){
+  tmpDataFilter = mixture_pheno_filter(mixtureDataNP, pheno, cancer_types = cancerTypeList[i])
+  indvCancerDataList[[i]] = tmpDataFilter
+}
+names(indvCancerDataList) = cancerTypeList
+
+#how many samples in each group
+dims = lapply(indvCancerDataList, dim)
+nsamples = unlist(lapply(dims, function(l) l[[1]]))
+nsamples
+
+#remove groups that have less than 100 samples
+indvCancerDataList2 = indvCancerDataList[which(nsamples>=100)]
+
+#add smoking years
+indvCancerDataList2 = lapply(indvCancerDataList2, function(x){
+  x$SmokingYears = NA
+  for(i in seq(nrow(x))) {
+    if(length(which(smokingData$submitter_id == x$Patient.ID[i])) == 0){
+      next
+    }
+   x$SmokingYears[i] = smokingData$years_smoked[which(smokingData$submitter_id == x$Patient.ID[i])]
+  }
+  return(x)
+})
+
+#what are the age distributions of each of the cancers
+lapply(indvCancerDataList2, function(x) {
+  summary(x$Diagnosis.Age)
+})
+
+#boxplot
+mixtureHighSampleCancers = mixture_pheno_filter(mixtureFiltered, pheno, cancer_types = names(indvCancerDataList2))
+
+mixtureHighSampleCancers$TCGA.PanCanAtlas.Cancer.Type.Acronym = as.factor(mixtureHighSampleCancers$TCGA.PanCanAtlas.Cancer.Type.Acronym)
+newOrder = with(mixtureHighSampleCancers, reorder(TCGA.PanCanAtlas.Cancer.Type.Acronym, Diagnosis.Age, median))
+
+boxplot(mixtureHighSampleCancers$Diagnosis.Age ~ newOrder)
+
+#format survival data
+for(i in 1:length(indvCancerDataList2)){
+liveinds = which(indvCancerDataList2[[i]]$Overall.Survival.Status == "LIVING")
+deadinds = which(indvCancerDataList2[[i]]$Overall.Survival.Status == "DECEASED")
+indvCancerDataList2[[i]]$Overall.Survival.Status = as.numeric(indvCancerDataList2[[i]]$Overall.Survival.Status)
+indvCancerDataList2[[i]]$Overall.Survival.Status[liveinds] = 0
+indvCancerDataList2[[i]]$Overall.Survival.Status[deadinds] = 1
+}
+
+#remove SARC due to heterogeneity of samples
+indvCancerDataList3 = indvCancerDataList2[-8]
+
+#create higher order cell types then run lm
+runLmAgeImmune = function(mixtureData){
+  mixtureData$Bcells = apply(mixtureData, 1, function(x) {sum(as.numeric(x[1:3]))})/apply(mixtureData, 1, function(x) {sum(as.numeric(x[1:22]))})
+  mixtureData$Tcells = apply(mixtureData, 1, function(x) {sum(as.numeric(x[4:10]))})/apply(mixtureData, 1, function(x) {sum(as.numeric(x[1:22]))})
+  mixtureData$NKcells = apply(mixtureData, 1, function(x) {sum(as.numeric(x[11:12]))})/apply(mixtureData, 1, function(x) {sum(as.numeric(x[1:22]))})
+  mixtureData$MiscMyeloid = apply(mixtureData, 1, function(x) {sum(as.numeric(x[c(13,19:22)]))})/apply(mixtureData, 1, function(x) {sum(as.numeric(x[1:22]))})
+  mixtureData$Macrophages = apply(mixtureData, 1, function(x) {sum(as.numeric(x[14:16]))})/apply(mixtureData, 1, function(x) {sum(as.numeric(x[1:22]))})
+  mixtureData$Dendriticcells = apply(mixtureData, 1, function(x) {sum(as.numeric(x[17:18]))})/apply(mixtureData, 1, function(x) {sum(as.numeric(x[1:22]))})
+  mixLMSummary = data.frame(matrix(NA, 6, 5))
+  colnames(mixLMSummary) = c("Immune.Cell", "estimate", "std.error", "statistic", "p.value")
+  celltypes = colnames(mixtureData[c("Bcells", "Tcells", "NKcells", "MiscMyeloid", "Macrophages", "Dendriticcells")])
+for(i in 1:6) {
+  lmFormula = paste(celltypes[i], "~ Diagnosis.Age")
+  tmpLM = lm(lmFormula, data = mixtureData)
+  t= tidy(tmpLM)
+  mixLMSummary[i,] = t[2,]
+  mixLMSummary[i,1] = celltypes[i]
+}
+  return(mixLMSummary)
+}
+
+byCancerLMs = lapply(indvCancerDataList3, runLmAgeImmune)
+
+#save
+for(i in seq_along(byCancerLMs)){
+  fileName = paste("~/Fertig Lab/csv/", names(byCancerLMs)[i], "cancerAgeLMStats.csv", sep = "")
+  write.csv(byCancerLMs[[i]], fileName)
+}
+
+lmStats = lapply(byCancerLMs, function(x){x[,4]})
+lmStatsMatrix = matrix(unlist(lmStats), nrow = length(lmStats[[1]]))
+lmStatsMatrix[which(is.na(lmStatsMatrix))] = 0
+
+colnames(lmStatsMatrix) = names(indvCancerDataList3)
+rownames(lmStatsMatrix) = c("B cells", "T cells", "NK cells", "Misc. Myeloid", "Macrophages", "Dendritic Cells")
+
+#heatmap
+library(gplots)
+library(RColorBrewer)
+my_palette = colorRampPalette(c("blue", "white", "darkgreen"))(n = 299)
+heatmap.2(lmStatsMatrix, density.info="none", trace="none", dendrogram='both', Rowv=T, Colv=T, margins =c(6,12), col=my_palette)
+
+
+##cox model
+
+higherOrderImmuneTypes = function(mixtureData){
+  mixtureData$Bcells = apply(mixtureData, 1, function(x) {sum(as.numeric(x[1:3]))})/apply(mixtureData, 1, function(x) {sum(as.numeric(x[1:22]))})
+  mixtureData$Tcells = apply(mixtureData, 1, function(x) {sum(as.numeric(x[4:10]))})/apply(mixtureData, 1, function(x) {sum(as.numeric(x[1:22]))})
+  mixtureData$NKcells = apply(mixtureData, 1, function(x) {sum(as.numeric(x[11:12]))})/apply(mixtureData, 1, function(x) {sum(as.numeric(x[1:22]))})
+  mixtureData$MiscMyeloid = apply(mixtureData, 1, function(x) {sum(as.numeric(x[c(13,19:22)]))})/apply(mixtureData, 1, function(x) {sum(as.numeric(x[1:22]))})
+  mixtureData$Macrophages = apply(mixtureData, 1, function(x) {sum(as.numeric(x[14:16]))})/apply(mixtureData, 1, function(x) {sum(as.numeric(x[1:22]))})
+  mixtureData$Dendriticcells = apply(mixtureData, 1, function(x) {sum(as.numeric(x[17:18]))})/apply(mixtureData, 1, function(x) {sum(as.numeric(x[1:22]))})
+  return(mixtureData)
+}
+
+higherOrder = lapply(indvCancerDataList3, higherOrderImmuneTypes)
+
+indvCancerProgs = lapply(higherOrder, coxph_model_mixture, time = "Overall.Survival..Months.", event = "Overall.Survival.Status", covars = "Diagnosis.Age", startcolumn = 46, endcolumn = 51)
+
+
+#order so all immune cells match and get statistics for each cancer type
+progStats = lapply(indvCancerProgs, function(x) {x[[3]][order(x[[3]][,1]),]$statistic})
+pS = as.data.frame(progStats)
+#cell types in order 
+pS = as.matrix(pS)
+rownames(pS) = indvCancerProgs[[1]][[3]][,1][order(indvCancerProgs[[1]][[3]][,1])]
+rownames(pS)
+rownames(pS) = c("B cells", "Dendritic cells", "Macrophages", "Misc. Myeloid", "NK cells", "T cells")
+
+my_palette = colorRampPalette(c("blue", "white", "red"))(n = 299)
+heatmap.2(pS, density.info="none", trace="none", dendrogram='both', Rowv=T, Colv=T, margins =c(6,12), col=my_palette)
+```
+
+ICB related genes across cancer types
+```{r}
+x=split(as.data.frame(t(rna_seq_data_3)), cancerType)
+rnaSeqbyCT = lapply(x, t)
+for(i in seq_along(rnaSeqbyCT)){
+  rownames(rnaSeqbyCT[[i]]) = rownames(rna_seq_data_3)
+}
+
+fitGeneLms = function(x) {
+  #get vector of age corresponding to columns of the rnaseq matrix
+  age = unlist(lapply(colnames(x), function(x){
+    pheno$`Diagnosis Age`[which(pheno$`Sample ID` == x)]
+  }))
+  
+  outData = as.data.frame(matrix(nrow = 4, ncol = 4))
+  rownames(outData) = c("PD1", "PDL1", "CTLA4", "CD80")
+  colnames(outData) = c("Estimate", "Std.err", "t.value", "pval")
+  
+  if(sum(is.na(age)) == length(age)){}
+  else{
+  
+  #PD1
+  PD1 = unlist(x[which(rownames(x)== "PDCD1"),])
+  outData[1,] = summary(lm(PD1~age))$coefficients[2,] 
+  
+  #PDL1
+  PDL1 = unlist(x[which(rownames(x)== "CD247"),])
+  outData[2,] = summary(lm(PDL1~age))$coefficients[2,] 
+  
+  #CTLA4
+  CTLA4 = unlist(x[which(rownames(x)== "CTLA4"),])
+  outData[3,] = summary(lm(CTLA4~age))$coefficients[2,]
+  
+  #CD80
+  CD80 = unlist(x[which(rownames(x)== "CD80"),])
+  outData[4,] = summary(lm(CD80~age))$coefficients[2,]
+  
+  
+  outData$padj = p.adjust(outData$pval, "BH")
+  }
+  
+  return(outData)
+}
+
+geneAgeAssociations = lapply(rnaSeqbyCT, fitGeneLms) 
+
+names(geneAgeAssociations) = names(rnaSeqbyCT)
+
+
+#make a heatmap
+tStats = as.matrix(dplyr::bind_cols(lapply(geneAgeAssociations, function(x) {
+  x$t.value
+})))
+
+rownames(tStats) = rownames(geneAgeAssociations$BRCA)
+#remove NA values
+tStats = tStats[,-c(14, 33)]
+
+my_palette = colorRampPalette(c("blue", "white", "darkgreen"))(n = 299)
+gplots::heatmap.2(tStats, density.info="none", trace="none", dendrogram='both', Rowv=T, Colv=T, margins =c(6,10), col=my_palette)
+```
+
+
+Compare tissue cancer immune changes with gtex tissue immune changes
+```{r}
+##Lung
+
+lungCancer = mixDataSub[which(mixDataSub$TCGA.PanCanAtlas.Cancer.Type.Acronym == "LUSC" | mixDataSub$TCGA.PanCanAtlas.Cancer.Type.Acronym == "LUAD") ,]
+
+Gtex = readRDS("Data/mixtureResultsOver29WithPheno.rds")
+summary(Gtex$Tissue)
+
+lungGtex = Gtex[which(Gtex$Tissue == "Lung"),]
+
+outLC = higherOrderImmuneTypes(lungCancer)
+outL = higherOrderImmuneTypes(lungGtex)
+
+higherOrderIC = c("Bcells", "Tcells", "NKcells", "MiscMyeloid", "Macrophages", "Dendriticcells")
+
+anovaListLC = vector("list", length(higherOrderIC))
+for(i in seq_along(higherOrderIC)) {
+  formula = as.formula(paste(higherOrderIC[i], "~ ageGroup"))
+  anova = aov(formula, outLC)
+  anovaListLC[[i]] = anova
+}
+
+LCdat = lapply(anovaListLC, function(x) {summary(x)[[1]][1,]})
+pvals = unlist(lapply(LCdat, function(x){x[5]}))
+agePvals = cbind(higherOrderIC, pvals, p.adjust(pvals, "BH"))
+agePvals[order(pvals),]
+
+names(LCdat) = higherOrderIC
+LCdf = do.call(rbind, LCdat)
+LCdf$PAdj = p.adjust(LCdf$`Pr(>F)`, "BH")
+LCdf
+
+
+anovaListL = vector("list", length(higherOrderIC))
+for(i in seq_along(higherOrderIC)) {
+  formula = as.formula(paste(higherOrderIC[i], "~ Age"))
+  anova = aov(formula, outL)
+  anovaListL[[i]] = anova
+}
+
+Ldat = lapply(anovaListL, function(x) {summary(x)[[1]][1,]})
+pvals = unlist(lapply(Ldat, function(x){x[5]}))
+agePvals = cbind(higherOrderIC, pvals, p.adjust(pvals, "BH"))
+agePvals[order(pvals),]
+
+names(Ldat) = higherOrderIC
+Ldf = do.call(rbind, Ldat)
+Ldf$PAdj = p.adjust(Ldf$`Pr(>F)`, "BH")
+Ldf
+
+
+#plot
+LCstats = unlist(lapply(LCdat, function(x){x[4]}))
+Lstats = unlist(lapply(Ldat, function(x){x[4]}))
+
+#add in direction of effect
+meanList = vector('list', length(higherOrderIC))
+j = 1
+for(i in higherOrderIC){
+  means = aggregate(outLC[,which(colnames(outLC) == i)] ~ outLC$ageGroup, FUN = mean)
+  meanList[[j]] = means
+  j = j +1
+}
+meanList
+
+coef = unlist(lapply(meanList, function(x) {lm(x[,2]~c(1:6))$coefficients[2] }), use.names = F)
+
+for(i in seq_along(coef)){
+  if(coef[i] < 0) {
+    LCstats[i] = LCstats[i] * -1
+  }
+}
+
+names(LCstats) = higherOrderIC
+
+
+meanList = vector('list', length(higherOrderIC))
+j=1
+for(i in higherOrderIC){
+  means = aggregate(outL[,which(colnames(outL) == i)] ~ outL$Age, FUN = mean)
+  meanList[[j]] = means
+  j = j+1
+}
+meanList
+
+coef = unlist(lapply(meanList, function(x) {lm(x[,2]~c(1:5))$coefficients[2] }), use.names = F)
+
+for(i in seq_along(coef)){
+  if(coef[i] < 0) {
+    Lstats[i] = Lstats[i] * -1
+  }
+}
+
+names(Lstats) = higherOrderIC
+
+LCStats = as.data.frame(LCstats)
+
+xnames = c("B cells", "T cells", "NK cells", "Misc. Myeloid", "Macrophages", "Dendritic cells")
+
+ggplot(LCStats, aes(x=reorder(xnames, -LCstats), y=LCstats)) +
+    geom_bar(stat="identity")+
+    labs(title="Relationship of Age and Immune Infiltration for LUAD and LUSC patients", x="Cell Type", y = "F Statistic")+
+    theme_classic()
+
+LStats = as.data.frame(Lstats)
+
+ggplot(LStats, aes(x=reorder(xnames, -Lstats), y=Lstats)) +
+    geom_bar(stat="identity")+
+    labs(title="Relationship of Age and Immune Infiltration for GTEx Lung Samples", x="Cell Type", y = "F Statistic")+
+    theme_classic()
+
+
+## Breast
+
+breastCancer = mixDataSub[which(mixDataSub$TCGA.PanCanAtlas.Cancer.Type.Acronym == "BRCA") ,]
+
+breastGtex = Gtex[which(Gtex$Tissue == "Breast"),]
+
+outBC = higherOrderImmuneTypes(breastCancer)
+outB = higherOrderImmuneTypes(breastGtex)
+
+anovaListBC = vector("list", length(higherOrderIC))
+for(i in seq_along(higherOrderIC)) {
+  formula = as.formula(paste(higherOrderIC[i], "~ ageGroup"))
+  anova = aov(formula, outBC)
+  anovaListBC[[i]] = anova
+}
+
+BCdat = lapply(anovaListBC, function(x) {summary(x)[[1]][1,]})
+pvals = unlist(lapply(BCdat, function(x){x[5]}))
+agePvals = cbind(higherOrderIC, pvals, p.adjust(pvals, "BH"))
+agePvals[order(pvals),]
+
+names(BCdat) = higherOrderIC
+BCdf = do.call(rbind, BCdat)
+BCdf$PAdj = p.adjust(BCdf$`Pr(>F)`, "BH")
+BCdf
+
+
+
+anovaListB = vector("list", length(higherOrderIC))
+for(i in seq_along(higherOrderIC)) {
+  formula = as.formula(paste(higherOrderIC[i], "~ Age"))
+  anova = aov(formula, outB)
+  anovaListB[[i]] = anova
+}
+
+Bdat = lapply(anovaListB, function(x) {summary(x)[[1]][1,]})
+pvals = unlist(lapply(Bdat, function(x){x[5]}))
+agePvals = cbind(higherOrderIC, pvals, p.adjust(pvals, "BH"))
+agePvals[order(pvals),]
+
+names(Bdat) = higherOrderIC
+Bdf = do.call(rbind, Bdat)
+Bdf$PAdj = p.adjust(Bdf$`Pr(>F)`, "BH")
+Bdf
+
+
+
+#plot
+BCstats = unlist(lapply(BCdat, function(x){x[4]}))
+Bstats = unlist(lapply(Bdat, function(x){x[4]}))
+
+#add in direction of effect
+meanList = vector('list', length(higherOrderIC))
+j = 1
+for(i in higherOrderIC){
+  means = aggregate(outBC[,which(colnames(outBC) == i)] ~ outBC$ageGroup, FUN = mean)
+  meanList[[j]] = means
+  j = j +1
+}
+meanList
+
+coef = unlist(lapply(meanList, function(x) {lm(x[,2]~c(1:6))$coefficients[2] }), use.names = F)
+
+for(i in seq_along(coef)){
+  if(coef[i] < 0) {
+    BCstats[i] = BCstats[i] * -1
+  }
+}
+
+names(BCstats) = higherOrderIC
+
+meanList = vector('list', length(higherOrderIC))
+j=1
+for(i in higherOrderIC){
+  means = aggregate(outB[,which(colnames(outB) == i)] ~ outB$Age, FUN = mean)
+  meanList[[j]] = means
+  j = j+1
+}
+meanList
+
+coef = unlist(lapply(meanList, function(x) {lm(x[,2]~c(1:2))$coefficients[2] }), use.names = F)
+
+for(i in seq_along(coef)){
+  if(coef[i] < 0) {
+    Bstats[i] = Bstats[i] * -1
+  }
+}
+
+names(Bstats) = higherOrderIC
+
+BCStats = as.data.frame(BCstats)
+
+ggplot(BCStats, aes(x=reorder(xnames, -BCstats), y=BCstats)) +
+    geom_bar(stat="identity")+
+    labs(title="Relationship of Age and Immune Infiltration for BRCA patients", x="Cell Type", y = "F Statistic")+
+    theme_classic()
+
+BStats = as.data.frame(Bstats)
+
+ggplot(BStats, aes(x=reorder(xnames, -Bstats), y=Bstats)) +
+    geom_bar(stat="identity")+
+    labs(title="Relationship of Age and Immune Infiltration for GTEx Breast Samples", x="Cell Type", y = "F Statistic")+
+    theme_classic()
+
+## Colon
+
+colonCancer = mixDataSub[which(mixDataSub$TCGA.PanCanAtlas.Cancer.Type.Acronym == "COAD") ,]
+
+colonGtex = Gtex[which(Gtex$Tissue == "Colon"),]
+
+outCC = higherOrderImmuneTypes(colonCancer)
+outC = higherOrderImmuneTypes(colonGtex)
+
+anovaListCC = vector("list", length(higherOrderIC))
+for(i in seq_along(higherOrderIC)) {
+  formula = as.formula(paste(higherOrderIC[i], "~ ageGroup"))
+  anova = aov(formula, outCC)
+  anovaListCC[[i]] = anova
+}
+
+CCdat = lapply(anovaListCC, function(x) {summary(x)[[1]][1,]})
+pvals = unlist(lapply(CCdat, function(x){x[5]}))
+agePvals = cbind(higherOrderIC, pvals, p.adjust(pvals, "BH"))
+agePvals[order(pvals),]
+
+names(CCdat) = higherOrderIC
+CCdf = do.call(rbind, CCdat)
+CCdf$PAdj = p.adjust(CCdf$`Pr(>F)`, "BH")
+CCdf
+
+
+anovaListC = vector("list", length(higherOrderIC))
+for(i in seq_along(higherOrderIC)) {
+  formula = as.formula(paste(higherOrderIC[i], "~ Age"))
+  anova = aov(formula, outC)
+  anovaListC[[i]] = anova
+}
+
+Cdat = lapply(anovaListC, function(x) {summary(x)[[1]][1,]})
+pvals = unlist(lapply(Cdat, function(x){x[5]}))
+agePvals = cbind(higherOrderIC, pvals, p.adjust(pvals, "BH"))
+agePvals[order(pvals),]
+
+names(Cdat) = higherOrderIC
+Cdf = do.call(rbind, Cdat)
+Cdf$PAdj = p.adjust(Cdf$`Pr(>F)`, "BH")
+Cdf
+
+
+#plot
+CCstats = unlist(lapply(CCdat, function(x){x[4]}))
+Cstats = unlist(lapply(Cdat, function(x){x[4]}))
+
+#add in direction of effect
+meanList = vector('list', length(higherOrderIC))
+j = 1
+for(i in higherOrderIC){
+  means = aggregate(outCC[,which(colnames(outCC) == i)] ~ outCC$ageGroup, FUN = mean)
+  meanList[[j]] = means
+  j = j +1
+}
+meanList
+
+coef = unlist(lapply(meanList, function(x) {lm(x[,2]~c(1:6))$coefficients[2] }), use.names = F)
+
+for(i in seq_along(coef)){
+  if(coef[i] < 0) {
+    CCstats[i] = CCstats[i] * -1
+  }
+}
+
+names(CCstats) = higherOrderIC
+
+meanList = vector('list', length(higherOrderIC))
+j=1
+for(i in higherOrderIC){
+  means = aggregate(outC[,which(colnames(outC) == i)] ~ outC$Age, FUN = mean)
+  meanList[[j]] = means
+  j = j+1
+}
+meanList
+
+coef = unlist(lapply(meanList, function(x) {lm(x[,2]~c(1:4))$coefficients[2] }), use.names = F)
+
+for(i in seq_along(coef)){
+  if(coef[i] < 0) {
+    Cstats[i] = Cstats[i] * -1
+  }
+}
+
+names(Cstats) = higherOrderIC
+
+CCStats = as.data.frame(CCstats)
+
+ggplot(CCStats, aes(x=reorder(xnames, -CCstats), y=CCstats, fill = reorder(xnames, -CCstats))) +
+    geom_bar(stat="identity")+
+    labs(title="Relationship of Age and Immune Infiltration for COAD patients", x="Cell Type", y = "F Statistic")+
+    theme_minimal()+
+     scale_fill_hue(c=60) +
+    theme(legend.position = "none")
+
+CStats = as.data.frame(Cstats)
+
+ggplot(CStats, aes(x=reorder(xnames, -Cstats), y=Cstats, fill = reorder(xnames, -CCstats))) +
+    geom_bar(stat="identity")+
+    labs(title="Relationship of Age and Immune Infiltration for GTEx colon Samples", x="Cell Type", y = "F Statistic")+
+    theme_minimal()+
+   scale_fill_hue(c=60) +
+    theme(legend.position = "none")
+
+```
+
+
+HNSC and HPV
+```{r}
+HNSC = indvCancerDataList3$HNSC
+
+hpvStatus = readRDS("Data/hpvHNSC.rds")
+
+length(which(HNSC$Patient.ID %in% hpvStatus$`HNSCC Barcode`))
+
+#remove HPV positive patients and see if results change
+HNSCnoHPV = HNSC[-which(HNSC$Patient.ID %in% hpvStatus$`HNSCC Barcode`),]
+
+HNSCHPV = HNSC[which(HNSC$Patient.ID %in% hpvStatus$`HNSCC Barcode`),]
+
+
+runLmAgeImmune(HNSCnoHPV)
+runLmAgeImmune(HNSCHPV)
+runLmAgeImmune(HNSC)
+
+coxph_model_mixture(higherOrderImmuneTypes(HNSCnoHPV), time = "Overall.Survival..Months.", event = "Overall.Survival.Status", covars = "Sex + Diagnosis.Age + SmokingYears", startcolumn = 46, endcolumn = 51)
+
+coxph_model_mixture(higherOrderImmuneTypes(HNSCHPV), time = "Overall.Survival..Months.", event = "Overall.Survival.Status", covars = "Sex + Diagnosis.Age", startcolumn = 46, endcolumn = 51)
+
+coxph_model_mixture(higherOrderImmuneTypes(HNSC), time = "Overall.Survival..Months.", event = "Overall.Survival.Status", covars = "Sex + Diagnosis.Age", startcolumn = 46, endcolumn = 51)
+```
+
