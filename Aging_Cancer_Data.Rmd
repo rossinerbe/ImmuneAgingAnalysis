@@ -1,0 +1,473 @@
+---
+title: "Age and the Immune System in Cancer"
+output: html_document
+runtime: shiny
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r include = FALSE}
+#load packages and data
+library(shiny)
+library(shinythemes)
+
+#age data
+pheno = data.table::fread("Data/tcga_clinical_data.tsv")
+demoData = pheno[,c(9, 12, 14, 20)]
+colnames(demoData) = c("Age", "Sex", "Race", "CancerType")
+
+#remove NA age
+demoData = demoData[-which(is.na(demoData$Age)),]
+
+demoData$CancerType = as.factor(demoData$CancerType)
+
+ageList = split(demoData, demoData$CancerType)
+means = unlist(lapply(ageList, function(x){mean(unlist(x[,1]))}))
+
+demoData$CancerType = factor(demoData$CancerType, levels = levels(demoData$CancerType)[order(means)])
+
+saveRDS(demoData, "Data/TCGADemoData.rds")
+
+
+
+#GO enrichment data
+GSEAList = readRDS("Data/CancerTypeGSEAList.rds")
+GSEATCGA = readRDS("Data/TCGAGSEA.rds")
+GSEAList[["Pan-cancer"]] = GSEATCGA
+names = names(GSEAList)
+GSEAList = lapply(GSEAList, function(x){
+  colnames(x)[1:5] = c("Pathway", "p-value", "adjusted p-value", "Effect Size", "Normalized Effect Size")
+  return(x)})
+names(GSEAList) = names
+
+saveRDS(GSEAList, "Data/TCGAGSEAList.rds")
+
+GTExGSEA = readRDS("Data/GTExGSEA.rds")
+colnames(GTExGSEA)[1:5] = c("Pathway", "p-value", "adjusted p-value", "Effect Size", "Normalized Effect Size")
+
+saveRDS(GTExGSEA, "Data/GTExGSEA.rds")
+
+#diferential expression data
+DEList = readRDS("Data/TCGA_DEResults_CT.rds")
+TCGADE = readRDS("Data/TCGADE_Symbols.rds")
+DEList[["Pan-cancer"]] = TCGADE
+names = names(DEList)
+DEList = lapply(DEList, function(x){
+  colnames(x) = c("log fold change", "Average Expression", "t-statistic", "p-value", "adjusted p-value", "Bayes Factor")
+  return(x)
+})
+names(DEList) = names
+
+saveRDS(DEList, "Data/TCGADEList.rds")
+
+GTExDE = readRDS("Data/GTExDE_Symbols.rds")
+colnames(GTExDE) = c("log fold change", "Average Expression", "t-statistic", "p-value", "adjusted p-value", "Bayes Factor")
+
+saveRDS(GTExDE, "Data/GTExDE.rds")
+
+#immune cell type data
+immuneList = readRDS("TCGAAgeImmuneLM_CT.rds")
+TCGAimmune = read.csv("Data/HOICsByAgeTCGA.csv")
+colnames(TCGAimmune) = colnames(immuneList[[1]])
+immuneList[["Pan-cancer"]] = TCGAimmune
+names = names(immuneList)
+immuneList = lapply(immuneList, function(x){
+  colnames(x) = c("Cell Type", "Effect Estimate (per year)", "Standard Error", "t-statistic", "p-value", "adjusted p-value")
+  x[,1] = c("B cells", "T cells", "NK cells", "Misc. Myeloid", "Macrophages", "Dendritic cells")
+  return(x)
+})
+names(immuneList) = names
+
+saveRDS(immuneList, "Data/TCGAimmuneList.rds")
+
+GTEximmune = read.csv("Data/HOICsByAgeGTEx.csv")
+colnames(GTEximmune) = colnames(immuneList[[1]])
+
+saveRDS(GTEximmune, "Data/GTEximmune.rds")
+
+#tmb data
+tmbList = readRDS("Data/tmbCT_LMResults.rds")
+tmbList = lapply(tmbList, function(x){as.data.frame(x[,-1])})
+
+TCGATMB = read.csv("Data/TCGAMutationsAgeLM.csv")[2,]
+TCGATMB = TCGATMB[,-1]
+colnames(TCGATMB) = colnames(tmbList[[1]])
+
+#add adjusted pvals
+adjPvals = p.adjust(unlist(lapply(tmbList, function(x){x[,4]})), "BH")
+for(i in seq_along(tmbList)){
+  tmp = tmbList[[i]]
+  tmp$p.adj = adjPvals[i]
+  tmbList[[i]] = tmp
+}
+
+names = names(tmbList)
+tmbList = lapply(tmbList, function(x){
+  names(x) = c("Effect Estimate (per year)", "Standard Error", "t-statistic", "p-value", "adjusted p-value")
+  return(x)
+})
+names(tmbList) = names
+
+names(TCGATMB) = c("Effect Estimate (per year)", "Standard Error", "t-statistic", "p-value")
+tmbList[["Pan-cancer"]] = TCGATMB
+
+saveRDS(tmbList, "Data/TCGATMBList.rds")
+
+#TCR data
+TCRList = readRDS("TCRLMAgeTerms_TCGA_CT.rds")
+TCGATCR = readRDS("Data/TCGA_TMB_LM_Age_term.rds")
+TCRList = lapply(TCRList, function(x){
+  y=data.frame(matrix(x, nrow = 1))
+  colnames(y) = c("Effect Estimate (per year)", "Standard Error", "t-statistic", "p-value", "adjusted p-value")
+  return(y)
+  })
+
+TCRList[["Pan-cancer"]] = data.frame(matrix(TCGATCR, nrow = 1))
+colnames(TCRList[["Pan-cancer"]]) = c("Effect Estimate (per year)", "Standard Error", "t-statistic", "p-value")
+
+saveRDS(TCRList, "Data/TCGATCRList.rds")
+
+
+
+#differential methylation data
+MethyList = readRDS("Data/TCGA_Promoter_methylation_results_CT.rds")
+TCGAMethyl = readRDS("Data/TCGA_Promoter_methylation_results.rds")
+MethyList[["Pan-cancer"]] = TCGAMethyl
+names = names(MethyList)
+MethyList = lapply(MethyList, function(x){
+  names(x) = c("Gene", "Effect Estimate (per year)", "Standard Error", "t-statistic", "p-value", "adjusted p-value")
+  return(x)
+})
+names(MethyList) = names
+
+saveRDS(MethyList, "Data/TCGAMethylList.rds")
+```
+
+
+```{r echo = FALSE}
+
+# Define UI for dataset viewer app ----
+ui <- fluidPage(theme = shinytheme("journal"),
+  
+  tabsetPanel(
+    tabPanel("TCGA GSEA", fluid = T,
+    # Sidebar layout with a input and output definitions ----
+  sidebarLayout(
+    
+    # Sidebar panel for inputs ----
+    sidebarPanel(
+      
+      # Input: Selector for choosing dataset ----
+      selectInput("TCGAStudy", "Select a TCGA Study", choices = names(GSEAList)),
+      
+      #Input: text for pathway of interest
+      textInput(inputId = "search",label = "GO Term Search",
+                value = "INTERFERON_GAMMA"),
+      
+      # Include clarifying text ----
+      helpText("Note: complete or partial GO terms can be searched. All",
+               "matching terms will be returned. Effect size and normalized",
+               "effect size are reported: positive values correspond to",
+               "increased enrichment in older patients.Results were                                 generated using the fgsea package.")
+      
+    ), 
+    # Main panel for displaying outputs ----
+    mainPanel(
+      
+      # Output: HTML table with requested study data ----
+      tableOutput("viewTCGAGSEA")
+      
+    )
+  )
+  ),
+  
+  tabPanel("GTEx GSEA", fluid = T,
+           sidebarLayout(
+             sidebarPanel(
+               #Input: text for pathway of interest
+                textInput(inputId = "search2",label = "GO Term Search",
+                          value = "INTERFERON_GAMMA"),
+                
+                # Include clarifying text ----
+                helpText("Note: complete or partial GO terms can be searched. All
+                         matching terms will be returned. Effect size and normalized
+                         effect size are reported: positive values correspond to
+                         increased enrichment in older individuals. Results were                             generated using the fgsea package.")
+             ),
+             mainPanel(
+               # Output: HTML table with requested study data ----
+              tableOutput("viewGTExGSEA")
+             )
+           )
+          ),
+  
+  tabPanel("TCGA DE", fluid = T,
+    # Sidebar layout with a input and output definitions ----
+  sidebarLayout(
+    
+    # Sidebar panel for inputs ----
+    sidebarPanel(
+      
+      # Input: Selector for choosing dataset ----
+      selectInput("TCGAStudy2", "Select a TCGA Study", choices = names(DEList)),
+      
+      #Input: text for pathway of interest
+      textInput(inputId = "searchGene",label = "Gene Symbol Search",
+                value = "CD274"),
+      
+      # Include clarifying text ----
+      helpText("Note: Differential expression was performed using the edgeR and limma-voom packages. Age was used as a continuous variable. The log fold change should therefore be read as expected log fold change for each year later in life the patient is diagnosed, with positive values indicating increases with increasing age.")
+      
+    ), 
+    # Main panel for displaying outputs ----
+    mainPanel(
+      
+      # Output: HTML table with requested study data ----
+      tableOutput("viewTCGADE")
+      
+    )
+  )
+  ),
+  
+  tabPanel("GTEx DE", fluid = T,
+    # Sidebar layout with a input and output definitions ----
+  sidebarLayout(
+    
+    # Sidebar panel for inputs ----
+    sidebarPanel(
+      
+      #Input: text for pathway of interest
+      textInput(inputId = "searchGene2",label = "Gene Symbol Search",
+                value = "CD274"),
+      
+      # Include clarifying text ----
+      helpText("Note: Differential expression was performed using the edgeR and limma-voom packages. Age was used as a continuous variable. The log fold change should therefore be read as expected log fold change for each year later in life the individual was at time of death, with positive values indicating increases with increasing age.")
+      
+    ), 
+    # Main panel for displaying outputs ----
+    mainPanel(
+      
+      # Output: HTML table with requested study data ----
+      tableOutput("viewGTExDE")
+      
+    )
+  )
+  ),
+  
+  tabPanel("TCGA Immune", fluid = T,
+    # Sidebar layout with a input and output definitions ----
+  sidebarLayout(
+    
+    # Sidebar panel for inputs ----
+    sidebarPanel(
+      
+      # Input: Selector for choosing dataset ----
+      selectInput("TCGAStudy3", "Select a TCGA Study", choices = names(immuneList)),
+      
+      # Include clarifying text ----
+      helpText("Note: Shows the data from the diagnosis age term of a multivariate linear model fit with the base R lm function including patient sex as a covariate for each immune cell type's relationship with age. Positive term estimates correspond to increasing abundance with age.")
+      
+    ), 
+    # Main panel for displaying outputs ----
+    mainPanel(
+      
+      # Output: HTML table with requested study data ----
+      tableOutput("viewTCGAImmune")
+      
+    )
+  )
+  ),
+  
+  tabPanel("GTEx Immune", fluid = T,
+    # Sidebar layout with a input and output definitions ----
+  sidebarLayout(
+    
+    # Sidebar panel for inputs ----
+    sidebarPanel(
+      
+      # Include clarifying text ----
+      helpText("Note: Displays the age term from a multivariate linear model fit with the base R lm function using tissue and sex as covariates for each immune cell type's relationship with age. Positive term estimates correspond to increasing abundance with age.")
+      
+    ), 
+    # Main panel for displaying outputs ----
+    mainPanel(
+      
+      # Output: HTML table with requested study data ----
+      tableOutput("viewGTExImmune")
+      
+    )
+  )
+  ),
+  
+  tabPanel("TCGA TMB", fluid = T,
+    # Sidebar layout with a input and output definitions ----
+  sidebarLayout(
+    
+    # Sidebar panel for inputs ----
+    sidebarPanel(
+      
+      # Input: Selector for choosing dataset ----
+      selectInput("TCGAStudy4", "Select a TCGA Study", choices = names(tmbList)),
+      
+      # Include clarifying text ----
+      helpText("Note: Shows the data from the diagnosis age term of a linear model fit with the base R lm function between patient diagnosis age and tumor mutational burden. Positive term estimates correspond to increasing mutations with age.")
+      
+    ), 
+    # Main panel for displaying outputs ----
+    mainPanel(
+      
+      # Output: HTML table with requested study data ----
+      tableOutput("viewTCGATMB")
+      
+    )
+  )
+  ),
+  
+  tabPanel("TCGA TCR", fluid = T,
+    # Sidebar layout with a input and output definitions ----
+  sidebarLayout(
+    
+    # Sidebar panel for inputs ----
+    sidebarPanel(
+      
+      # Input: Selector for choosing dataset ----
+      selectInput("TCGAStudy5", "Select a TCGA Study", choices = names(TCRList)),
+      
+      # Include clarifying text ----
+      helpText("Note: Shows the data from the diagnosis age term of a linear model fit with the base R lm function between patient diagnosis age and T cell receptor clonality. Positive term estimates correspond to increasing clonality with age.")
+      
+    ), 
+    # Main panel for displaying outputs ----
+    mainPanel(
+      
+      # Output: HTML table with requested study data ----
+      tableOutput("viewTCGATCR")
+      
+    )
+  )
+  ),
+  
+  tabPanel("TCGA Methylation", fluid = T,
+    # Sidebar layout with a input and output definitions ----
+  sidebarLayout(
+    
+    # Sidebar panel for inputs ----
+    sidebarPanel(
+      
+      # Input: Selector for choosing dataset ----
+      selectInput("TCGAStudy6", "Select a TCGA Study", choices = names(MethyList)),
+      
+      #Input: text for pathway of interest
+      textInput(inputId = "searchGene3",label = "Gene Symbol Search",
+                value = "CD274"),
+      
+      # Include clarifying text ----
+      helpText("Note: Differential methylation was performed using a base R linear model with patient diagnosis age as a continuous variable. The estimated change should therefore be read as expected change for each year later in life the patient is diagnosed, with positive values indicating increased methylation with increasing age. Rownames show the unique CpG identifier, as multiple may be annotated to a single gene.")
+      
+    ), 
+    # Main panel for displaying outputs ----
+    mainPanel(
+      
+      # Output: HTML table with requested study data ----
+      tableOutput("viewTCGAMethyl")
+      
+    )
+  )
+  )
+  
+  
+)
+)
+
+# Define server logic to summarize and view selected dataset ----
+server <- function(input, output) {
+  
+  # Return the requested datasets ----
+  TCGAGSEAInput <- reactive({
+    GSEAList[[input$TCGAStudy]][grep(input$search,
+                                     GSEAList[[input$TCGAStudy]]$Pathway,
+                                     ignore.case = T),1:5]
+  })
+  
+  GTExGSEAInput <- reactive({
+    GTExGSEA[grep(input$search2,GTExGSEA$Pathway,ignore.case = T),1:5]
+  })
+  
+  TCGADEInput <- reactive({
+    DEList[[input$TCGAStudy2]][grep(input$searchGene,
+                                     rownames(DEList[[input$TCGAStudy2]]),
+                                     ignore.case = T),]
+  })
+  
+  GTExDEInput <- reactive({
+    GTExDE[grep(input$searchGene2,rownames(GTExDE), ignore.case = T),]
+  })
+  
+  TCGAImmuneInput <- reactive({
+    immuneList[[input$TCGAStudy3]]
+  })
+  
+  GTExImmuneInput <- reactive({
+    GTEximmune
+  })
+  
+  
+  TCGATMBInput <- reactive({
+    tmbList[[input$TCGAStudy4]]
+  })
+  
+  TCGATCRInput <- reactive({
+    TCRList[[input$TCGAStudy5]]
+  })
+  
+  TCGADMInput <- reactive({
+    MethyList[[input$TCGAStudy6]][grep(input$searchGene3,
+                                     MethyList[[input$TCGAStudy2]]$Gene,
+                                     ignore.case = T),]
+  })
+  
+  # Show the data ----
+  output$viewTCGAGSEA <- renderTable({
+    print(TCGAGSEAInput())
+  }, digits = 3)
+  
+  output$viewGTExGSEA <- renderTable({
+    print(GTExGSEAInput())
+  }, digits = 3)
+  
+  output$viewTCGADE <- renderTable({
+    print(TCGADEInput())
+  }, rownames = T, digits = 3)
+  
+  output$viewGTExDE <- renderTable({
+    print(GTExDEInput())
+  }, rownames = T, digits = 3)
+  
+  output$viewTCGAImmune <- renderTable({
+    print(TCGAImmuneInput())
+  }, digits = 3)
+  
+  output$viewGTExImmune <- renderTable({
+    print(GTExImmuneInput())
+  }, digits = 3)
+  
+  output$viewTCGATMB <- renderTable({
+    print(TCGATMBInput())
+  }, digits = 3)
+  
+  output$viewTCGATCR <- renderTable({
+    print(TCGATCRInput())
+  }, digits = 3)
+  
+  output$viewTCGAMethyl <- renderTable({
+    print(TCGADMInput())
+  }, rownames = T, digits = 3)
+  
+}
+
+# Create Shiny app ----
+shinyApp(ui = ui, server = server)
+
+rsconnect::deployApp(appName = "AgeImmuneCancer", appTitle = "Age and the Immune System in Cancer")
+```
+

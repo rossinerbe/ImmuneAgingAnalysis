@@ -1,0 +1,280 @@
+---
+title: "TCGAmethylationAge"
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r}
+tcgaMethylation = data.table::fread("D:/FertigLabLargeData/tcga_data/jhu-usc.edu_PANCAN_merged_HumanMethylation27_HumanMethylation450.betaValue_whitelisted.tsv")
+
+cgIds = unlist(tcgaMethylation[,1])
+tcgaMethylation = tcgaMethylation[,-1]
+rownames(tcgaMethylation) = cgIds
+
+#get phenotype data
+pheno = data.table::fread("Data/tcga_clinical_data.tsv")
+
+colnames(tcgaMethylation) = unlist(lapply(colnames(tcgaMethylation), function(x){
+  stringr::str_sub(x, 1, 15)
+}))
+
+ages = vector("numeric", ncol(tcgaMethylation))
+ages[1:length(ages)] = NA
+
+for(i in seq(ncol(tcgaMethylation))) {
+  if(length(pheno$`Diagnosis Age`[which(pheno$`Sample ID` == colnames(tcgaMethylation)[i])]) == 1){
+    ages[i] = pheno$`Diagnosis Age`[which(pheno$`Sample ID` == colnames(tcgaMethylation)[i])]
+  }
+  else{next}
+}
+
+
+#remove no age
+noAge = which(is.na(ages))
+tcgaMethylationSub = as.data.frame(as.matrix(tcgaMethylation)[, -noAge])
+rownames(tcgaMethylationSub) = cgIds
+ageSub = ages[-noAge]
+
+#get cancer type
+cancerType = vector("character", ncol(tcgaMethylationSub))
+cancerType[1:length(cancerType)] = NA
+
+for(i in seq(ncol(tcgaMethylationSub))) {
+  if(length(pheno$`TCGA PanCanAtlas Cancer Type Acronym`[which(pheno$`Sample ID` == colnames(tcgaMethylationSub)[i])]) == 1){
+    cancerType[i] = pheno$`TCGA PanCanAtlas Cancer Type Acronym`[which(pheno$`Sample ID` == colnames(tcgaMethylationSub)[i])]
+  }
+  else{next}
+}
+
+sum(is.na(cancerType))
+
+```
+
+Linear models
+```{r}
+ageTermList = apply(tcgaMethylationSub, 1, function(x){
+  tmpLM = lm(x ~ ageSub + cancerType)
+  ageTmp = summary(tmpLM)$coefficients[2,]
+  return(ageTmp)
+})
+
+ageTermList = t(ageTermList)
+rownames(ageTermList) = rownames(tcgaMethylationSub)
+
+ageTermList = as.data.frame(ageTermList)
+ageTermList$PAdj = p.adjust(ageTermList$`Pr(>|t|)`, "BH")
+
+length(which(ageTermList$PAdj < 0.05))
+length(which(ageTermList$PAdj < 1e-5))
+
+#map to gene promoters
+library("IlluminaHumanMethylation27k.db")
+gene = IlluminaHumanMethylation27kENSEMBL
+mapped_probes <- mappedkeys(gene)
+genesList <- as.list(gene[mapped_probes])
+genesList[1:5]
+
+length(which(rownames(ageTermList) %in% names(genesList)))
+
+genePromoterData = ageTermList[which(rownames(ageTermList) %in% names(genesList)),]
+geneCorresponding = genesList[which(names(genesList) %in% rownames(ageTermList))]
+
+#how many CpGs correspond to more than one gene
+length(which(unlist(lapply(geneCorresponding, length)) > 1))
+
+#we will return only single annotated CpGs for ease of interpretation
+genePromoterData = genePromoterData[-which(unlist(lapply(geneCorresponding, length)) > 1),]
+geneCorresponding = geneCorresponding[-which(unlist(lapply(geneCorresponding, length)) > 1)]
+geneCorresponding=unlist(geneCorresponding)
+
+genePromoterData = cbind(geneCorresponding, genePromoterData)
+colnames(genePromoterData)[1] = "gene"
+
+#map to gene symbols
+library(org.Hs.eg.db)
+
+symbols = mapIds(org.Hs.eg.db, keys=genePromoterData$gene, column="SYMBOL", keytype="ENSEMBL", multiVals="first")
+  
+symbols = cbind(symbols, genePromoterData$gene)
+  
+genePromoterData$gene = symbols[,1]
+
+saveRDS(genePromoterData, "Data/TCGA_Promoter_methylation_results.rds")
+
+
+##by cancer type
+
+#split data by cancer type
+methylationDataCT = split(as.data.frame(t(as.matrix(tcgaMethylationSub))), as.factor(cancerType))
+methylationDataCT = lapply(methylationDataCT, t)
+ageCT = split(ageSub, as.factor(cancerType))
+
+#create list to store results
+ageTermListCT = vector("list", length(methylationDataCT))
+
+#some cpgs for some cancer types have only NA values
+#make example data structure
+tmpLM = lm(methylationDataCT[[1]][1,] ~ ageCT[[1]])
+ageTmp = summary(tmpLM)$coefficients[2,]
+ifNA = ageTmp
+ifNA[1:4] = NA
+
+#run lm for each cpg in each cancer type
+for(i in seq_along(methylationDataCT)){
+  ageTerms = apply(methylationDataCT[[i]], 1, function(x){
+    if(sum(is.na(x)) == length(x)){
+    return(ifNA)
+    }
+    else{
+       tmpLM = lm(x ~ ageCT[[i]])
+       if(dim(summary(tmpLM)$coefficients)[1] != 2){
+        return(ifNA)
+       }
+       else{
+         ageTmp = summary(tmpLM)$coefficients[2,]
+         return(ageTmp)
+       }
+    }
+  })
+  
+  ageTerms = t(ageTerms)
+  rownames(ageTerms) = rownames(methylationDataCT[[i]])
+  
+  ageTerms = as.data.frame(ageTerms)
+  ageTerms$PAdj = p.adjust(ageTerms$`Pr(>|t|)`, "BH")
+  
+  ageTermListCT[[i]] = ageTerms
+}
+
+#map to gene promoters
+gene = IlluminaHumanMethylation27kENSEMBL
+mapped_probes <- mappedkeys(gene)
+genesList <- as.list(gene[mapped_probes])
+genesList[1:5]
+
+promoterCpGs = which(rownames(ageTermList) %in% names(genesList))
+
+promoterAgeTermList = lapply(ageTermListCT, function(x){x[promoterCpGs,]})
+
+#map to gene symbols
+geneCorresponding = genesList[which(names(genesList) %in% rownames(ageTermList))]
+
+#we will return only single annotated CpGs for ease of interpretation
+toRemove = which(unlist(lapply(geneCorresponding, length)) > 1)
+promoterAgeTermList = lapply(promoterAgeTermList, function(x){x[-toRemove,]})
+
+geneCorresponding = geneCorresponding[-toRemove]
+geneCorresponding=unlist(geneCorresponding)
+
+#add gene symbols
+
+promoterAgeTermList = lapply(promoterAgeTermList, function(x){
+  tmp = cbind(symbols[,1], x)
+  colnames(tmp)[1] = "gene"
+  return(tmp)
+})
+
+names(promoterAgeTermList) = levels(as.factor(cancerType))
+
+saveRDS(promoterAgeTermList, "Data/TCGA_Promoter_methylation_results_CT.rds")
+
+#plot ICB genes for each cancer type
+
+#remove SARC
+promoterAgeTermList = promoterAgeTermList[-which(names(promoterAgeTermList) == "SARC")]
+
+#subset to ICB genes
+ICBGenes = c("PDCD1", "CD274", "CTLA4", "CD80", "CD86", "LAG3", "HAVCR2", "TGFB1", "JAK2", "PDCD1LG2")
+
+ICBGenePromoterList = lapply(promoterAgeTermList, function(x){
+  x[which(x$gene %in% ICBGenes),]
+})
+
+#create pval data frame
+pvalList = lapply(ICBGenePromoterList, function(x){x[,5]}) 
+pvalDF = do.call(cbind, pvalList)
+neglog10pvals = -log10(pvalDF)
+
+colors <- c(min(neglog10pvals),seq(2,max(neglog10pvals),by=0.1))
+
+my_palette = c("blue", colorRampPalette(c("lightgreen", "darkgreen"))(n = length(colors)-2))
+gplots::heatmap.2(neglog10pvals, density.info="none", trace="none", dendrogram='both', Rowv=T, Colv=T, margins =c(6,12), col = my_palette, labRow = ICBGenePromoterList[[1]]$gene, breaks = colors)
+
+#effect sizes
+ESList = lapply(ICBGenePromoterList, function(x){x[,2]}) 
+ESDF = do.call(cbind, ESList)
+
+pvalList = lapply(ICBGenePromoterList, function(x){x[,6]}) 
+pvalDF = do.call(cbind, pvalList)
+pvalDF[which(pvalDF < 0.05)] = "*"
+pvalDF[which(pvalDF >= 0.05)] = ""
+
+my_palette = c(colorRampPalette(c("blue", "white", "darkgreen"))(n = 299))
+gplots::heatmap.2(ESDF, density.info="none", trace="none", dendrogram='both', Rowv=T, Colv=T, margins =c(6,12), col = my_palette, labRow = ICBGenePromoterList[[1]]$gene, cellnote = pvalDF, notecol = "black", notecex = 2.0)
+
+
+# T cell genes
+sigcpgsUp = rownames(ageTermList)[which(ageTermList$PAdj < 0.05 & ageTermList$Estimate > 0)]
+sigcpgsDn = rownames(ageTermList)[which(ageTermList$PAdj < 0.05 & ageTermList$Estimate < 0)]
+
+
+
+
+#get genes with age-related methylation changes
+sigGenesUpMethylated = genesList[which(names(genesList) %in% sigcpgsUp)]
+sigGenesDnMethylated = genesList[which(names(genesList) %in% sigcpgsDn)]
+
+##compare to gene expression up and down with age
+tcgaDE = readRDS("D:/FertigLabLargeData/tcga_data/ageDEGenesCTAdj.rds")
+genesUpWithAge = rownames(tcgaDE)[which(tcgaDE$adj.P.Val < 0.05 & tcgaDE$t > 0)]
+genesDnWithAge = rownames(tcgaDE)[which(tcgaDE$adj.P.Val < 0.05 & tcgaDE$t < 0)]
+
+
+#get the stats for all genes in
+ICBGenes = c("PDCD1", "CD274", "CTLA4", "CD80", "CD86", "EOMES", "LAG3", "HAVCR2", "TGFB1", "JAK2", "PDCD1LG2")
+
+
+symbols <- mapIds(org.Hs.eg.db, keys=ICBGenes, column="ENSEMBL", keytype="SYMBOL", multiVals="first")
+
+
+TcellGeneCpGs = vector("list", length(symbols))
+for(i in seq_along(symbols)) {
+  if(length(which(genesList == symbols[i])) == 0){
+    next
+  }
+  else{
+    TcellGeneCpGs[[i]] = genesList[which(genesList == symbols[i])]
+    #names(TcellGeneCpGs)[i] = names(genesList)[which(genesList == symbols[i])]
+  }
+}
+
+
+
+TCellAssCpGStats = as.data.frame(matrix(nrow = length(TcellGeneCpGs), ncol = ncol(ageTermList)))
+for(i in seq_along(TcellGeneCpGs)){
+  if(is.null(TcellGeneCpGs[[i]])){
+    next
+  }
+  else if(length(TcellGeneCpGs[[i]]) > 1){
+    tmp = ageTermList[which(rownames(ageTermList) %in% names(TcellGeneCpGs[[i]])),]
+    if(nrow(tmp) == 0){
+      next
+    }
+    TCellAssCpGStats[i,] = tmp[which(tmp$PAdj == min(tmp$PAdj)),]
+  }
+  else if(length(which(rownames(ageTermList) == names(TcellGeneCpGs[[i]]))) == 0){
+    next
+  }
+  else{
+    TCellAssCpGStats[i,] = ageTermList[which(rownames(ageTermList) == names(TcellGeneCpGs[[i]])),]
+  }
+}
+
+rownames(TCellAssCpGStats) = ICBGenes
+colnames(TCellAssCpGStats) = colnames(ageTermList)
+
+saveRDS(TCellAssCpGStats, "Data/TCellGeneAssociatedCpGStats.rds")
+```
+
+

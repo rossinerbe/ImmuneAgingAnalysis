@@ -1,0 +1,484 @@
+---
+title: "METABRIC_MIXTURE"
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
+
+Load in METABRIC data and run MIXTURE
+```{r}
+mb = data.table::fread("D:/FertigLabLargeData/ImmuneAging/data_expression_median.txt")
+
+genes = unlist(mb[,1])
+
+mb = mb[,-c(1,2)]
+
+mb = as.data.frame(mb)
+rownames(mb) = genes
+
+#read in signature gene matrix for 22 immune cell types
+lm22 = as.data.frame(data.table::fread("Data/LM22.txt"))
+rownames(lm22) = unlist(lm22[,1])
+lm22 = lm22[,-1]
+
+source("MIXTURE/MIXTURE.R")
+#call MIXTURE
+mixResult = MIXTURE(mb, lm22, iter = 500, functionMixture = nu.svm.robust.RFE, useCores = 1, nullDist = "PopulationBased")
+
+saveRDS(mixResult, "Data/METABRIC_MIXTURE_result.rds")
+
+#get absolute proportions
+absMix = (mixResult$Subjects)$MIXabs 
+sum(is.na(absMix))
+pvals = mixResult$p.values
+
+#filter to observations with significant deconvolution
+mixture = as.data.frame(absMix[which(pvals[,3] < 0.05),])
+
+```
+
+
+Add phenotype data
+```{r}
+pheno = data.table::fread("D:/FertigLabLargeData/ImmuneAging/data_clinical_patient.txt")
+
+pheno = pheno[-c(1:4),]
+
+pheno$`Age at Diagnosis` = as.numeric(pheno$`Age at Diagnosis`)
+summary(pheno$`Age at Diagnosis`) #there are NAs, check to make sure we filter out cases without age data
+
+hist(pheno$`Age at Diagnosis`)
+
+
+mixture$DiagnosisAge = NA
+mixture$OSM = NA
+mixture$OSS = NA
+mixture$Chemotherapy = NA
+mixture$HormoneTherapy = NA
+mixture$RadioTherapy = NA
+
+
+for(i in 1:nrow(mixture)){
+  matched_pheno_ind = which(pheno$`#Patient Identifier` == rownames(mixture)[i])
+  mixture$DiagnosisAge[i] = pheno$`Age at Diagnosis`[matched_pheno_ind]
+  mixture$OSM[i] = pheno$`Overall Survival (Months)`[matched_pheno_ind]
+  mixture$OSS[i] = pheno$`Overall Survival Status`[matched_pheno_ind]
+  mixture$Chemotherapy[i] = pheno$Chemotherapy[matched_pheno_ind]
+  mixture$HormoneTherapy[i] = pheno$`Hormone Therapy`[matched_pheno_ind]
+  mixture$RadioTherapy[i] = pheno$`Radio Therapy`[matched_pheno_ind]
+}
+
+length(which(is.na(mixture$DiagnosisAge))) #all have age
+
+mixture$OSM = as.numeric(mixture$OSM)
+
+mixture$OSS = as.numeric(unlist(lapply(mixture$OSS, function(x){stringr::str_split(x, ":")[[1]][1]})))
+
+#add age group variable
+mixture$ageGroup = cut(mixture$DiagnosisAge, c(20,39,49,59,69,79,150), labels = c("39-", "40-49", "50-59", "60-69", "70-79", "80+"))
+
+#add subtype
+subtypeData = data.table::fread("Data/Cancer_Type_Detailed.txt")
+
+mixture$subtype = NA
+
+for(i in 1:nrow(mixture)){
+  matched_pheno_ind = which(subtypeData$`Patient ID` == rownames(mixture)[i])
+  if(length(matched_pheno_ind) == 0){
+    mixture$subtype[i] = NA
+  }
+  else{
+    mixture$subtype[i] = subtypeData$`Cancer Type Detailed`[matched_pheno_ind]
+  }
+}
+
+mixture$subtype = as.factor(mixture$subtype)
+summary(mixture$subtype)
+```
+
+
+Immune infiltration analysis
+```{r}
+##T cells##
+TCellProps = apply(mixture, 1, function(x) {sum(as.numeric(x[4:10]))})/apply(mixture, 1, function(x) {sum(as.numeric(x[1:22]))})
+
+TcellLm = lm(TCellProps~DiagnosisAge+Chemotherapy+HormoneTherapy+RadioTherapy, data = mixture)
+
+summary(TcellLm)
+
+#save info for table
+write.csv(summary(TcellLm)$coefficients, "~/Fertig Lab/csv/METABRIC_TcellLM.csv")
+
+
+#plot lm
+jtools::effect_plot(TcellLm, pred = DiagnosisAge, interval = T, plot.points = T)
+
+#plot by age group
+library(ggplot2)
+dfboxT = data.frame(age = mixture$ageGroup, TCells = TCellProps)
+
+ggplot(data = dfboxT, aes(x = age, y = TCells, fill = age)) +
+  geom_violin(trim=FALSE) +
+  geom_boxplot(width=0.2) +
+  scale_fill_brewer(palette="Blues") +
+  theme_minimal()+
+  theme(legend.position = "none")
+
+
+##Macrophages
+MacrCellProps = apply(mixture, 1, function(x) {sum(as.numeric(x[14:16]))})/apply(mixture, 1, function(x) {sum(as.numeric(x[1:22]))})
+
+MacrophageLm = lm(MacrCellProps~DiagnosisAge+Chemotherapy+HormoneTherapy+RadioTherapy, data = mixture)
+
+summary(MacrophageLm)
+
+#save info for table
+write.csv(summary(MacrophageLm)$coefficients, "~/Fertig Lab/csv/METABRIC_MacrophageLM.csv")
+
+#plot lm
+jtools::effect_plot(MacrophageLm, pred = DiagnosisAge, interval = T, plot.points = T)
+
+#plot by age group
+dfboxMacr = data.frame(age = mixture$ageGroup, Macrophages = MacrCellProps)
+
+ggplot(data = dfboxMacr, aes(x = age, y = Macrophages, fill = age)) +
+  geom_violin(trim=FALSE) +
+  geom_boxplot(width=0.2) +
+  scale_fill_brewer(palette="Blues") +
+  theme_minimal()+
+  theme(legend.position = "none")
+
+##B cells
+BCellProps = apply(mixture, 1, function(x) {sum(as.numeric(x[1:3]))})/apply(mixture, 1, function(x) {sum(as.numeric(x[1:22]))})
+
+BcellLm = lm(BCellProps~DiagnosisAge+Chemotherapy+HormoneTherapy+RadioTherapy, data = mixture)
+
+summary(BcellLm)
+
+
+#save info for table
+write.csv(summary(BcellLm)$coefficients, "~/Fertig Lab/csv/METABRIC_BcellLM.csv")
+
+#plot lm
+jtools::effect_plot(BcellLm, pred = DiagnosisAge, interval = T, plot.points = T)
+
+#plot by age group
+dfboxB = data.frame(age = mixture$ageGroup, BCells = BCellProps)
+
+ggplot(data = dfboxB, aes(x = age, y = BCells, fill = age)) +
+  geom_violin(trim=FALSE) +
+  geom_boxplot(width=0.2) +
+  scale_fill_brewer(palette="Blues") +
+  theme_minimal()+
+  theme(legend.position = "none")
+
+##NK cells
+NKCellProps = apply(mixture, 1, function(x) {sum(as.numeric(x[11:12]))})/apply(mixture, 1, function(x) {sum(as.numeric(x[1:22]))})
+
+NKcellLm = lm(NKCellProps~DiagnosisAge+Chemotherapy+HormoneTherapy+RadioTherapy, data = mixture)
+
+summary(NKcellLm)
+
+#save info for table
+write.csv(summary(NKcellLm)$coefficients, "~/Fertig Lab/csv/METABRIC_NKcellLM.csv")
+
+#plot lm
+jtools::effect_plot(NKcellLm, pred = DiagnosisAge, interval = T)
+
+#plot by age group
+dfboxNK = data.frame(age = mixture$ageGroup, NKCells = NKCellProps)
+
+ggplot(data = dfboxNK, aes(x = age, y = NKCells, fill = age)) +
+  geom_boxplot() +
+  scale_fill_brewer(palette="Blues") +
+  theme_minimal()
+
+##Dendritic cells
+DCellProps = apply(mixture, 1, function(x) {sum(as.numeric(x[17:18]))})/apply(mixture, 1, function(x) {sum(as.numeric(x[1:22]))})
+
+DcellLm = lm(DCellProps~DiagnosisAge+Chemotherapy+HormoneTherapy+RadioTherapy, data = mixture)
+
+summary(DcellLm)
+
+#save info for table
+write.csv(summary(DcellLm)$coefficients, "~/Fertig Lab/csv/METABRIC_DcellLM.csv")
+
+#plot lm
+jtools::effect_plot(DcellLm, pred = DiagnosisAge, interval = T)
+
+#plot by age group
+dfboxD = data.frame(age = mixture$ageGroup, DCells = DCellProps)
+
+ggplot(data = dfboxD, aes(x = age, y = DCells, fill = age)) +
+  geom_boxplot() +
+  scale_fill_brewer(palette="Blues") +
+  theme_minimal()
+
+##Misc. Myeloid
+MMCellProps = apply(mixture, 1, function(x) {sum(as.numeric(x[c(13,19:22)]))})/apply(mixture, 1, function(x) {sum(as.numeric(x[1:22]))})
+
+MMcellLm = lm(MMCellProps~DiagnosisAge+Chemotherapy+HormoneTherapy+RadioTherapy, data = mixture)
+
+summary(MMcellLm)
+
+#save info for table
+write.csv(summary(MMcellLm)$coefficients, "~/Fertig Lab/csv/METABRIC_MMcellLM.csv")
+
+#plot lm
+jtools::effect_plot(MMcellLm, pred = DiagnosisAge, interval = T)
+
+#plot by age group
+dfboxMM = data.frame(age = mixture$ageGroup, MMCells = MMCellProps)
+
+ggplot(data = dfboxMM, aes(x = age, y = MMCells, fill = age)) +
+  geom_boxplot() +
+  scale_fill_brewer(palette="Blues") +
+  theme_minimal()
+
+##summary stats
+lmList = list(TcellLm, MacrophageLm, BcellLm, NKcellLm, DcellLm, MMcellLm)
+
+ageStats = lapply(lmList, function(x){
+  summary(x)$coefficients[2,]
+})
+
+names(ageStats) = c("T cells", "Macrophages", "B cells", "NK cells", "Dendritic cells", "Misc. Myeloid")
+
+ageStatsDf = do.call(rbind, ageStats)
+
+#adjusted pvals
+p.adjust(ageStatsDf[,4], "BH")
+
+ageStatsDf = as.data.frame(cbind(ageStatsDf, p.adjust(ageStatsDf[,4], "BH")))
+colnames(ageStatsDf)[5] = "PAdj"
+
+write.csv(ageStatsDf, "~/Fertig Lab/csv/HOICsByAgeMETABRIC.csv")
+
+
+ageStatsDf = as.data.frame(ageStatsDf)
+
+#plot
+ggplot(ageStatsDf, aes(x=reorder(rownames(ageStatsDf), -`t value`), y=`t value`, fill = reorder(rownames(ageStatsDf), -`t value`)))+
+    geom_bar(stat="identity")+
+    labs(title="Linear Relationship of Age and Immune Infiltration METABRIC", x="Cell Type", y = "T Statistic")+
+    scale_fill_hue(c=50) +
+    theme_minimal()+
+    theme(legend.position = "none")
+
+```
+
+Cox hazards model for immune infiltration
+```{r}
+library(survival)
+
+Tcox = coxph(Surv(OSM, OSS)~ TCellProps + DiagnosisAge + Chemotherapy + HormoneTherapy + RadioTherapy, data = mixture)
+
+Mcox = coxph(Surv(OSM, OSS)~ MacrCellProps + DiagnosisAge + Chemotherapy + HormoneTherapy + RadioTherapy, data = mixture)
+
+Bcox = coxph(Surv(OSM, OSS)~ BCellProps + DiagnosisAge + Chemotherapy + HormoneTherapy + RadioTherapy, data = mixture)
+
+NKcox = coxph(Surv(OSM, OSS)~ NKCellProps + DiagnosisAge + Chemotherapy + HormoneTherapy + RadioTherapy, data = mixture)
+
+Dcox = coxph(Surv(OSM, OSS)~ DCellProps + DiagnosisAge + Chemotherapy + HormoneTherapy + RadioTherapy, data = mixture)
+
+MMcox = coxph(Surv(OSM, OSS)~ MMCellProps + DiagnosisAge + Chemotherapy + HormoneTherapy + RadioTherapy, data = mixture)
+
+#summary stats
+coxList = list(Tcox, Mcox, Bcox, NKcox, Dcox, MMcox)
+
+coxStats = lapply(coxList, function(x){
+  summary(x)$coefficients[1,]
+})
+
+names(coxStats) = c("T cells", "Macrophages", "B cells", "NK cells", "Dendritic cells", "Misc. Myeloid")
+
+coxStatsDf = do.call(rbind, coxStats)
+
+#adjusted pvals
+p.adjust(coxStatsDf[,5], "BH")
+
+coxStatsDf = cbind(coxStatsDf, p.adjust(coxStatsDf[,5], "BH"))
+colnames(coxStatsDf)[6] = "PAdj"
+
+write.csv(coxStatsDf, "~/Fertig Lab/csv/HOICsCoxMETABRIC.csv")
+
+coxStatsDf
+
+coxStatsDf = as.data.frame(coxStatsDf)
+
+ggplot(coxStatsDf, aes(x=reorder(rownames(coxStatsDf), -z), y=z))+
+    geom_bar(stat="identity")+
+    labs(title="Cox Statistic for Immune Infiltration Pan-Cancer", x="Cell Type", y = "Z-Statistic")+
+    theme_classic()
+```
+
+
+repeat with subtype
+```{r}
+#remove NA for subtype patients
+mixtureSub = mixture[-which(is.na(mixture$subtype)),]
+
+summary(mixtureSub$subtype)
+
+#seems statistically irresponsible to have a category of size 1
+mixtureSub = mixtureSub[-which(mixtureSub$subtype == "Metaplastic Breast Cancer"),]
+
+mixtureSub$subtype = as.factor(as.character(mixtureSub$subtype))
+summary(mixtureSub$subtype)
+
+
+##T cells##
+TCellProps = apply(mixtureSub, 1, function(x) {sum(as.numeric(x[4:10]))})/apply(mixtureSub, 1, function(x) {sum(as.numeric(x[1:22]))})
+
+TcellLm = lm(TCellProps~DiagnosisAge+Chemotherapy+HormoneTherapy+RadioTherapy+subtype, data = mixtureSub)
+
+summary(TcellLm)
+
+write.csv(summary(TcellLm)$coefficients, "~/Fertig Lab/csv/METABRIC_TcellLM_subtypeAdj.csv")
+
+
+#plot lm
+jtools::effect_plot(TcellLm, pred = DiagnosisAge, interval = T, plot.points = T)
+
+#plot by age group
+dfboxT = data.frame(age = mixtureSub$ageGroup, TCells = TCellProps)
+
+ggplot(data = dfboxT, aes(x = age, y = TCells, fill = age)) +
+  geom_boxplot() +
+  scale_fill_brewer(palette="Blues") +
+  theme_minimal()
+
+
+##Macrophages
+MacrCellProps = apply(mixtureSub, 1, function(x) {sum(as.numeric(x[14:16]))})/apply(mixtureSub, 1, function(x) {sum(as.numeric(x[1:22]))})
+
+MacrophageLm = lm(MacrCellProps~DiagnosisAge+Chemotherapy+HormoneTherapy+RadioTherapy+subtype, data = mixtureSub)
+
+summary(MacrophageLm)
+
+write.csv(summary(MacrophageLm)$coefficients, "~/Fertig Lab/csv/METABRIC_MarcophageLM_subtypeAdj.csv")
+
+#plot lm
+jtools::effect_plot(MacrophageLm, pred = DiagnosisAge, interval = T)
+
+#plot by age group
+dfboxMacr = data.frame(age = mixtureSub$ageGroup, Macrophages = MacrCellProps)
+
+ggplot(data = dfboxMacr, aes(x = age, y = Macrophages, fill = age)) +
+  geom_boxplot() +
+  scale_fill_brewer(palette="Blues") +
+  theme_minimal()
+
+##B cells
+BCellProps = apply(mixtureSub, 1, function(x) {sum(as.numeric(x[1:3]))})/apply(mixtureSub, 1, function(x) {sum(as.numeric(x[1:22]))})
+
+BcellLm = lm(BCellProps~DiagnosisAge+Chemotherapy+HormoneTherapy+RadioTherapy+subtype, data = mixtureSub)
+
+summary(BcellLm)
+
+write.csv(summary(BcellLm)$coefficients, "~/Fertig Lab/csv/METABRIC_BcellLM_subtypeAdj.csv")
+
+
+#plot lm
+jtools::effect_plot(BcellLm, pred = DiagnosisAge, interval = T)
+
+#plot by age group
+dfboxB = data.frame(age = mixtureSub$ageGroup, BCells = BCellProps)
+
+ggplot(data = dfboxB, aes(x = age, y = BCells, fill = age)) +
+  geom_boxplot() +
+  scale_fill_brewer(palette="Blues") +
+  theme_minimal()
+
+##NK cells
+NKCellProps = apply(mixtureSub, 1, function(x) {sum(as.numeric(x[11:12]))})/apply(mixtureSub, 1, function(x) {sum(as.numeric(x[1:22]))})
+
+NKcellLm = lm(NKCellProps~DiagnosisAge+Chemotherapy+HormoneTherapy+RadioTherapy+subtype, data = mixtureSub)
+
+summary(NKcellLm)
+
+write.csv(summary(NKcellLm)$coefficients, "~/Fertig Lab/csv/METABRIC_NKcellLM_subtypeAdj.csv")
+
+#plot lm
+jtools::effect_plot(NKcellLm, pred = DiagnosisAge, interval = T)
+
+#plot by age group
+dfboxNK = data.frame(age = mixtureSub$ageGroup, NKCells = NKCellProps)
+
+ggplot(data = dfboxNK, aes(x = age, y = NKCells, fill = age)) +
+  geom_boxplot() +
+  scale_fill_brewer(palette="Blues") +
+  theme_minimal()
+
+##Dendritic cells
+DCellProps = apply(mixtureSub, 1, function(x) {sum(as.numeric(x[17:18]))})/apply(mixtureSub, 1, function(x) {sum(as.numeric(x[1:22]))})
+
+DcellLm = lm(DCellProps~DiagnosisAge+Chemotherapy+HormoneTherapy+RadioTherapy+subtype, data = mixtureSub)
+
+summary(DcellLm)
+
+write.csv(summary(DcellLm)$coefficients, "~/Fertig Lab/csv/METABRIC_DendriticcellLM_subtypeAdj.csv")
+
+#plot lm
+jtools::effect_plot(DcellLm, pred = DiagnosisAge, interval = T)
+
+#plot by age group
+dfboxD = data.frame(age = mixtureSub$ageGroup, DCells = DCellProps)
+
+ggplot(data = dfboxD, aes(x = age, y = DCells, fill = age)) +
+  geom_boxplot() +
+  scale_fill_brewer(palette="Blues") +
+  theme_minimal()
+
+##Misc. Myeloid
+MMCellProps = apply(mixtureSub, 1, function(x) {sum(as.numeric(x[c(13,19:22)]))})/apply(mixtureSub, 1, function(x) {sum(as.numeric(x[1:22]))})
+
+MMcellLm = lm(MMCellProps~DiagnosisAge+Chemotherapy+HormoneTherapy+RadioTherapy+subtype, data = mixtureSub)
+
+summary(MMcellLm)
+
+write.csv(summary(MMcellLm)$coefficients, "~/Fertig Lab/csv/METABRIC_MiscMyeloidcellLM_subtypeAdj.csv")
+
+#plot lm
+jtools::effect_plot(MMcellLm, pred = DiagnosisAge, interval = T)
+
+#plot by age group
+dfboxMM = data.frame(age = mixtureSub$ageGroup, MMCells = MMCellProps)
+
+ggplot(data = dfboxMM, aes(x = age, y = MMCells, fill = age)) +
+  geom_boxplot() +
+  scale_fill_brewer(palette="Blues") +
+  theme_minimal()
+
+##summary stats
+lmList = list(TcellLm, MacrophageLm, BcellLm, NKcellLm, DcellLm, MMcellLm)
+
+ageStats = lapply(lmList, function(x){
+  summary(x)$coefficients[2,]
+})
+
+names(ageStats) = c("T cells", "Macrophages", "B cells", "NK cells", "Dendritic cells", "Misc. Myeloid")
+
+ageStatsDf = do.call(rbind, ageStats)
+
+#adjusted pvals
+p.adjust(ageStatsDf[,4], "BH")
+
+ageStatsDf = as.data.frame(cbind(ageStatsDf, p.adjust(ageStatsDf[,4], "BH")))
+colnames(ageStatsDf)[5] = "PAdj"
+
+write.csv(ageStatsDf, "~/Fertig Lab/csv/HOICsByAgeMETABRIC_SubtypeAdj.csv")
+
+
+ageStatsDf = as.data.frame(ageStatsDf)
+
+#plot
+ggplot(ageStatsDf, aes(x=reorder(rownames(ageStatsDf), -`t value`), y=`t value`, fill = reorder(rownames(ageStatsDf), -`t value`)))+
+    geom_bar(stat="identity")+
+    labs(title="Linear Relationship of Age and Immune Infiltration METABRIC Subtype Adj", x="Cell Type", y = "T Statistic")+
+    scale_fill_hue(c=50) +
+    theme_minimal()+
+    theme(legend.position = "none")
+
+```
+

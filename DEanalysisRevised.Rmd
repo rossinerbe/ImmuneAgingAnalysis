@@ -1,0 +1,627 @@
+---
+title: "DE analysis revised"
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r}
+counts = readRDS("D:/FertigLabLargeData/tcga_data/all cancers all cases/raw_counts/cleaned_RNAseq_counts.rds")
+#get phenotype data
+pheno = data.table::fread("Data/tcga_clinical_data.tsv")
+
+#filter to observations with phenotype data
+colnames(counts) = unlist(lapply(colnames(counts), function(x){
+  stringr::str_sub(x, 1, 15)
+}))
+
+inds = which(colnames(counts) %in% pheno$`Sample ID`)
+counts2 = counts[,inds]
+```
+
+EdgeR
+```{r}
+library(edgeR)
+
+d = DGEList(counts2)
+
+#filter low expressed genes
+keep = filterByExpr(d)
+d = d[keep, , keep.lib.sizes = FALSE]
+
+d = calcNormFactors(d)
+
+#sort phenotype information to make age groups
+PhenoFilt = pheno[which(pheno$`Sample ID` %in% colnames(counts2)),]
+PhenoSorted = PhenoFilt[match(colnames(counts2), PhenoFilt$`Sample ID`),]
+
+
+#remove observations without age data
+d1 = d[, -which(is.na(PhenoSorted$`Diagnosis Age`))]
+
+
+PhenoSorted = PhenoSorted[-which(is.na(PhenoSorted$`Diagnosis Age`)),]
+
+mm = model.matrix(~PhenoSorted$`Diagnosis Age` + PhenoSorted$`TCGA PanCanAtlas Cancer Type Acronym`)
+
+y = voom(d1, mm, plot = T)
+
+fit = lmFit(y, mm)
+
+tmp = contrasts.fit(fit, coef = 2) 
+tmp = eBayes(tmp)
+top.table = topTable(tmp, sort.by = "P", n = Inf)
+head(top.table, 20)
+
+saveRDS(top.table, "D:/FertigLabLargeData/tcga_data/ageDEGenesCTAdj.rds")
+saveRDS(y, "D:/FertigLabLargeData/tcga_data/limmaVoomResultsDiagnosisAgeCTAdj.rds")
+
+```
+
+
+GTex
+
+```{r}
+gtexCounts = phantasus::read.gct(gzfile("~/Fertig Lab/gTex data/GTEx_Analysis_2017-06-05_v8_RNASeQCv1.1.9_gene_reads.gct.gz"))
+
+#read in phenotype data
+subjectAnn = data.table::fread("Data/phs000424.v8.pht002742.v8.p2.c1.GTEx_Subject_Phenotypes.GRU.txt")
+colnames(subjectAnn) = unlist(subjectAnn[1,])
+subjectAnn = subjectAnn[-1,]
+subjectAnn$AGE = as.numeric(subjectAnn$AGE)
+
+summary(subjectAnn$AGE)
+
+sampleAnn = data.table::fread("Data/GTEx_Analysis_v8_Annotations_SampleAttributesDS.txt")
+sampleAnnSub = sampleAnn[, c(1,6,7)]
+
+summary(as.factor(sampleAnn$SMAFRZE))
+sampleAnnSub = sampleAnnSub[which(sampleAnn$SMAFRZE == "RNASEQ"),]
+summary(as.factor(sampleAnnSub$SMTS))
+
+sampleAnnSub$SubjectID = unlist(lapply(sampleAnnSub$SAMPID, function(x){
+  strs = stringr::str_split(x, "-")[[1]][c(1,2)]
+  out = paste(strs[1], strs[2], sep = "-")
+  return(out)
+}))
+
+sampleAnnSub$Age = subjectAnn$AGE[match(sampleAnnSub$SubjectID, subjectAnn$SUBJID)]
+
+#format and normalize RNA-seq data
+#check row and column names
+library(SummarizedExperiment)
+gtexMatrix = exprs(gtexCounts)
+
+#remove 20-29 ages
+sampleAnnSorted = sampleAnnSub[match(colnames(gtexMatrix), sampleAnnSub$SAMPID),]
+gtexMatrix2 = gtexMatrix[,-which(sampleAnnSorted$Age < 30)]
+sampleAnnSorted = sampleAnnSorted[-which(sampleAnnSorted$Age < 30),]
+
+
+dge = DGEList(counts = gtexMatrix2)
+#filter genes
+keep = filterByExpr(dge)
+dge = dge[keep, , keep.lib.sizes = FALSE]
+
+dge = calcNormFactors(dge)
+
+
+mm = model.matrix(~sampleAnnSorted$Age + sampleAnnSorted$SMTS)
+
+y = voom(dge, mm, plot = T)
+
+fit = lmFit(y, mm)
+
+tmp = contrasts.fit(fit, coef = 2) 
+tmp = eBayes(tmp)
+top.table = topTable(tmp, sort.by = "P", n = Inf)
+head(top.table, 20)
+
+rownames(top.table) = unlist(lapply(rownames(top.table), function(x){
+  stringr::str_split(x, stringr::coll("."))[[1]][1]
+}))
+
+
+saveRDS(top.table, "D:/FertigLabLargeData/tcga_data/ageDEGenesTAdjGTex.rds")
+saveRDS(y, "D:/FertigLabLargeData/tcga_data/limmaVoomResultsDiagnosisAgeTAdjGTex.rds")
+```
+
+
+```{r}
+GTexDE = readRDS("D:/FertigLabLargeData/tcga_data/ageDEGenesTAdjGTex.rds")
+
+TCGADE = readRDS("D:/FertigLabLargeData/tcga_data/ageDEGenesCTAdj.rds")
+
+
+library(org.Hs.eg.db)
+symbols <- mapIds(org.Hs.eg.db, keys=rownames(GTexDE), column="SYMBOL", keytype="ENSEMBL", multiVals="first")
+
+symbols = cbind(symbols, rownames(GTexDE))
+
+sum(is.na(symbols[,1]))
+symbols2 = symbols[-which(is.na(symbols[,1])),]
+sum(duplicated(symbols2[,1]))
+symbols2[,1][duplicated(symbols2[,1])]
+#remove duplicates
+symbols3 = symbols2[-which(duplicated(symbols2[,1])),]
+
+
+GTExDESub = GTexDE[which(rownames(GTexDE) %in% symbols3[,2]),]
+rownames(GTExDESub) = symbols3[,1]
+
+symbols <- mapIds(org.Hs.eg.db, keys=rownames(TCGADE), column="SYMBOL", keytype="ENSEMBL", multiVals="first")
+
+symbols = cbind(symbols, rownames(TCGADE))
+
+sum(is.na(symbols[,1]))
+symbols2 = symbols[-which(is.na(symbols[,1])),]
+sum(duplicated(symbols2[,1]))
+symbols2[,1][duplicated(symbols2[,1])]
+#remove duplicates
+symbols3 = symbols2[-which(duplicated(symbols2[,1])),]
+
+TCGADESub = TCGADE[which(rownames(TCGADE) %in% symbols3[,2]),]
+rownames(TCGADESub) = symbols3[,1]
+
+
+saveRDS(TCGADESub, "Data/TCGADE_Symbols.rds")
+saveRDS(GTExDESub, "Data/GTExDE_Symbols.rds")
+
+#ICB genes
+ICBGenes = c("PDCD1", "CD274", "CTLA4", "CD80", "CD86", "LAG3", "HAVCR2", "TGFB1", "JAK2", "PDCD1LG2", "CXCL9")
+
+TCGADESub[which(rownames(TCGADESub) %in% ICBGenes),]
+
+write.csv(TCGADESub[which(rownames(TCGADESub) %in% ICBGenes),], "Data/ICBGenesDEAge.csv")
+
+GTExDESub[which(rownames(GTExDESub) %in% ICBGenes),]
+
+write.csv(GTExDESub[which(rownames(GTExDESub) %in% ICBGenes),], "Data/ICBGenesDEAgeGTEx.csv")
+
+#volcano plots
+EnhancedVolcano::EnhancedVolcano(TCGADESub, lab = rownames(TCGADESub), x = 'logFC', y = 'adj.P.Val', FCcutoff = 0.004, title = NULL, subtitle = NULL, xlim = c(-0.035, 0.035))
+
+
+EnhancedVolcano::EnhancedVolcano(GTExDESub, lab = rownames(GTExDESub), x = 'logFC', y = 'adj.P.Val', FCcutoff = 0.004, title = NULL, subtitle = NULL, xlim = c(-0.06, 0.06))
+```
+
+GSEA
+```{r}
+runFGSEA <- function(pathways, geneStats) {
+  #rank based GSEA
+  pathways[,1] = as.factor(pathways[,1])
+  pathwayNames = levels(pathways[,1])
+  
+  #convert downloaded data frame to list for use with GeneOverlap package
+  pathgene_list = vector(mode = "list", length = length(pathwayNames))
+  for(i in seq_along(pathwayNames)){
+    tmpgene_list = pathways[which(pathways[,1]==pathwayNames[i]), 2]
+    pathgene_list[[i]] = tmpgene_list
+  }
+  names(pathgene_list) = pathwayNames
+  
+  pathways = pathgene_list
+  
+  fgsea = fgsea::fgsea(pathways, geneStats, nperm = 50000)
+  fgsea = fgsea[order(fgsea$padj)]
+  return(fgsea)
+}
+
+library(dplyr)
+gPathways =  msigdbr::msigdbr(species = "Homo sapiens", category ="C5") %>% dplyr::select(gs_name, gene_symbol) %>% as.data.frame()
+
+GTExStats = GTExDESub$t
+names(GTExStats) = rownames(GTExDESub)
+
+GTEXGSEAGO = runFGSEA(gPathways, GTExStats)
+
+data.table::fwrite(GTEXGSEAGO, "Data/GTExGSEA.csv")
+saveRDS(GTEXGSEAGO, "Data/GTExGSEA.rds")
+
+#top 20 pathways
+GTEXGSEAGO[order(GTEXGSEAGO$pval),][1:20, 1:5]
+
+#check interferon gamma signaling, JAK-STAT, TGFB, MAPK, WNT
+GTEXGSEAGO[grep("INTERFERON_GAMMA", GTEXGSEAGO$pathway, ignore.case = T),]
+
+GTEXGSEAGO[grep("JAK_STAT", GTEXGSEAGO$pathway, ignore.case = T),]
+
+GTEXGSEAGO[grep("transforming_growth_factor_beta", GTEXGSEAGO$pathway, ignore.case = T),]
+
+GTEXGSEAGO[grep("MAPK", GTEXGSEAGO$pathway, ignore.case = T),]
+
+GTEXGSEAGO[grep("WNT", GTEXGSEAGO$pathway, ignore.case = T),]
+
+
+##TCGA
+TCGAStats = TCGADESub$t
+names(TCGAStats) = rownames(TCGADESub)
+
+TCGAGSEAGO = runFGSEA(gPathways, TCGAStats)
+
+data.table::fwrite(TCGAGSEAGO, "Data/TCGAGSEA.csv")
+saveRDS(TCGAGSEAGO, "Data/TCGAGSEA.rds")
+
+#top 20 pathways
+TCGAGSEAGO[order(TCGAGSEAGO$pval),][1:20, 1:5]
+
+#check interferon gamma signaling, JAK-STAT, TGFB
+TCGAGSEAGO[grep("INTERFERON_GAMMA", TCGAGSEAGO$pathway, ignore.case = T),]
+
+TCGAGSEAGO[grep("JAK_STAT", TCGAGSEAGO$pathway, ignore.case = T),]
+
+TCGAGSEAGO[grep("transforming_growth_factor_beta", TCGAGSEAGO$pathway, ignore.case = T),]
+
+TCGAGSEAGO[grep("MAPK", TCGAGSEAGO$pathway, ignore.case = T),]
+
+TCGAGSEAGO[grep("WNT", TCGAGSEAGO$pathway, ignore.case = T),]
+
+
+#plot TCGA and GTEx results
+TCGAPathsToPlot = TCGAGSEAGO[which(TCGAGSEAGO$pathway %in% c("GO_RESPONSE_TO_INTERFERON_GAMMA", "GO_RESPONSE_TO_TRANSFORMING_GROWTH_FACTOR_BETA", "GO_CANONICAL_WNT_SIGNALING_PATHWAY", "GO_POSITIVE_REGULATION_OF_CANONICAL_WNT_SIGNALING_PATHWAY")),]
+GTExPathsToPlot = GTEXGSEAGO[which(GTEXGSEAGO$pathway %in% c("GO_RESPONSE_TO_INTERFERON_GAMMA", "GO_RESPONSE_TO_TRANSFORMING_GROWTH_FACTOR_BETA", "GO_CANONICAL_WNT_SIGNALING_PATHWAY", "GO_POSITIVE_REGULATION_OF_CANONICAL_WNT_SIGNALING_PATHWAY")),]
+
+
+toPlot = as.data.frame(matrix(nrow = 8, ncol = 4))
+j = 1
+for(i in seq(1, nrow(toPlot), 2)){
+  toPlot[i,] = TCGAPathsToPlot[j,1:4]
+  toPlot[i+1,] = GTExPathsToPlot[which(GTExPathsToPlot$pathway == TCGAPathsToPlot$pathway[j]),1:4]
+  j =j+1
+}
+
+colnames(toPlot) = colnames(TCGAPathsToPlot)[1:4]
+
+toPlot$db = NA
+toPlot$db[seq(1, nrow(toPlot), 2)] = "TCGA"
+toPlot$db[seq(2, nrow(toPlot), 2)] = "GTEx"
+
+colorPal = grDevices::colorRampPalette(c("brown1", 
+        "darkorchid1","dodgerblue"))
+
+#sort
+toPlot = toPlot[c(5,6,3,4,1,2,7,8),]
+toPlot$pathway = factor(toPlot$pathway, levels = levels(as.factor(toPlot$pathway))[c(2,1,4,3)])
+
+ggplot(data = toPlot, mapping = aes_string(x = as.factor(toPlot$db), y = toPlot$pathway)) + geom_point(mapping = aes_string(size = toPlot$ES, color = toPlot$padj)) + scale_radius(range = c(2, 10)) + scale_colour_gradientn(colors = colorPal(10)) + 
+theme_bw() +
+theme(axis.title.x = element_blank(), axis.title.y = element_blank(), axis.text.x = element_text(angle = 90, hjust = 1)) +
+labs(colour = "Adj. P-Value", size = "Effect Size")
+    
+
+#look at most significant pathways up and down in TCGA and GTEx
+PathwaysUpTCGA <- TCGAGSEAGO[ES > 0][which(padj < 0.05), ]
+PathwaysDownTCGA <- TCGAGSEAGO[ES < 0][which(padj < 0.05), ]
+PathwaysUpGTEx <- GTEXGSEAGO[ES > 0][which(padj < 0.05), ]
+PathwaysDownGTEx <- GTEXGSEAGO[ES < 0][which(padj < 0.05), ]
+
+
+PUpTCGAUpGTEx = PathwaysUpTCGA[PathwaysUpTCGA$pathway %in% PathwaysUpGTEx$pathway,]
+PUpGTExUpTCGA = PathwaysUpGTEx[PathwaysUpGTEx$pathway %in% PathwaysUpTCGA$pathway,]
+
+write.csv(PUpTCGAUpGTEx[,1:7], "Data/PathwaysUpTCGAUpGTEx.csv")
+
+PUpTCGADnNsGTEx = PathwaysUpTCGA[-c(which(PathwaysUpTCGA$pathway %in% PathwaysUpGTEx$pathway)),] 
+PDnNsGTExUpTCGA = GTEXGSEAGO[which(GTEXGSEAGO$pathway %in% PUpTCGADnNsGTEx$pathway),] 
+
+write.csv(PUpTCGADnNsGTEx[,1:7], "Data/PathwaysUpTCGADnNsGTEx.csv")
+
+PUpGTExDnNsTCGA = PathwaysUpGTEx[-c(which(PathwaysUpGTEx$pathway %in% PathwaysUpTCGA$pathway)),] 
+PDnNsTCGAUpGTEx = TCGAGSEAGO[which(TCGAGSEAGO$pathway %in% PUpGTExDnNsTCGA$pathway),] 
+
+write.csv(PDnNsTCGAUpGTEx[,1:7], "Data/PathwaysDnNsTCGAUpGTEx.csv")
+
+PDnTCGADnGTEx = PathwaysDownTCGA[PathwaysDownTCGA$pathway %in% PathwaysDownGTEx$pathway,] 
+PDnGTExDnTCGA = PathwaysDownGTEx[PathwaysDownGTEx$pathway %in% PathwaysDownTCGA$pathway,]
+
+write.csv(PDnTCGADnGTEx[,1:7], "Data/PathwaysDnTCGADnGTEx.csv")
+
+dotplotCompare = function(Pathways1, Pathways2, nPaths, P1Name, P2Name) {
+  Pathways1 = Pathways1[order(Pathways1$pval),]
+  Pathways2 = Pathways2[order(Pathways2$pval),]
+  
+  P1ToPlot = Pathways1[1:nPaths,]
+  P1Paths = P1ToPlot$pathway
+  
+  
+  P2ToPlot = Pathways2[which(Pathways2$pathway %in% P1Paths),]
+  P2Paths = P2ToPlot$pathway
+  
+  
+  toPlot = as.data.frame(matrix(nrow = 2*nPaths, ncol = 4))
+  j = 1
+  for(i in seq(1, nrow(toPlot), 2)){
+    toPlot[i,] = P1ToPlot[j,1:4]
+    toPlot[i+1,] = P2ToPlot[which(P2Paths == P1Paths[j]),1:4]
+    j =j+1
+  }
+  
+  colnames(toPlot) = colnames(P1ToPlot)[1:4]
+  
+  toPlot$db = NA
+  toPlot$db[seq(1, nrow(toPlot), 2)] = P1Name
+  toPlot$db[seq(2, nrow(toPlot), 2)] = P2Name
+  
+  colorPal = grDevices::colorRampPalette(c("brown1", 
+          "darkorchid1","dodgerblue"))
+  
+    p <- ggplot(data = toPlot, mapping = aes_string(x = as.factor(toPlot$db), y = as.factor(toPlot$pathway))) + geom_point(mapping = aes_string(size = toPlot$ES, color = toPlot$padj)) + scale_radius(range = c(2, 10)) + scale_colour_gradientn(colors = colorPal(10)) + 
+  theme_bw() +
+  theme(axis.title.x = element_blank(), axis.title.y = element_blank(), axis.text.x = element_text(angle = 90, hjust = 1)) +
+  labs(colour = "Adj. P-Value", size = "Effect Size")
+    
+    print(p)
+}
+
+dotplotCompare(PUpTCGAUpGTEx, PUpGTExUpTCGA, 6, "TCGA", "GTEx")
+dotplotCompare(PDnNsGTExUpTCGA, PUpTCGADnNsGTEx, 6, "GTEx", "TCGA")
+dotplotCompare(PDnNsTCGAUpGTEx, PUpGTExDnNsTCGA, 6, "TCGA", "GTEx")
+dotplotCompare(PDnGTExDnTCGA, PDnTCGADnGTEx, 6, "GTEx", "TCGA")
+```
+
+
+
+TCGA DE for each cancer type
+```{r}
+d = DGEList(counts2)
+
+#filter low expressed genes
+keep = filterByExpr(d)
+d = d[keep, , keep.lib.sizes = FALSE]
+
+d = calcNormFactors(d)
+
+#sort phenotype information to make age groups
+PhenoFilt = pheno[which(pheno$`Sample ID` %in% colnames(counts2)),]
+PhenoSorted = PhenoFilt[match(colnames(counts2), PhenoFilt$`Sample ID`),]
+
+#remove observations without age data
+d1 = d[, -which(is.na(PhenoSorted$`Diagnosis Age`))]
+PhenoSorted = PhenoSorted[-which(is.na(PhenoSorted$`Diagnosis Age`)),]
+
+dCancerTypeList = vector("list", length(levels(as.factor(PhenoSorted$`TCGA PanCanAtlas Cancer Type Acronym`))))
+for(i in seq_along(dCancerTypeList)){
+  dCancerTypeList[[i]] = d1[, which(PhenoSorted$`TCGA PanCanAtlas Cancer Type Acronym` == levels(as.factor(PhenoSorted$`TCGA PanCanAtlas Cancer Type Acronym`))[i]), keep.lib.sizes = FALSE]
+}
+
+PhenoCT = split(PhenoSorted, PhenoSorted$`TCGA PanCanAtlas Cancer Type Acronym`)
+
+
+DEREsultsList = vector("list", length(dCancerTypeList))
+
+for(i in seq_along(dCancerTypeList)){
+  mm = model.matrix(~PhenoCT[[i]]$`Diagnosis Age`)
+
+  y = voom(dCancerTypeList[[i]], mm, plot = F)
+  
+  fit = lmFit(y, mm)
+  
+  tmp = contrasts.fit(fit, coef = 2) 
+  tmp = eBayes(tmp)
+  top.table = topTable(tmp, sort.by = "P", n = Inf)
+  
+  symbols = mapIds(org.Hs.eg.db, keys=rownames(top.table), column="SYMBOL", keytype="ENSEMBL", multiVals="first")
+  
+  symbols = cbind(symbols, rownames(top.table))
+  
+  sum(is.na(symbols[,1]))
+  symbols2 = symbols[-which(is.na(symbols[,1])),]
+  sum(duplicated(symbols2[,1]))
+  symbols2[,1][duplicated(symbols2[,1])]
+  #remove duplicates
+  symbols3 = symbols2[-which(duplicated(symbols2[,1])),]
+  
+  top.tableSub = top.table[which(rownames(top.table) %in% symbols3[,2]),]
+  rownames(top.tableSub) = symbols3[,1]
+  
+  DEREsultsList[[i]] = top.tableSub
+}
+
+names(DEREsultsList) = levels(as.factor(PhenoSorted$`TCGA PanCanAtlas Cancer Type Acronym`))
+
+#remove cancers with less than 100 samples
+DEREsultsList = DEREsultsList[-which(lapply(PhenoCT, nrow) < 100)]
+
+saveRDS(DEREsultsList, "Data/TCGA_DEResults_CT.rds")
+
+#get ICB gene results
+ICBGenesStatsList = lapply(DEREsultsList, function(x){
+  tmpStats = as.data.frame(matrix(nrow = length(ICBGenes), ncol = ncol(x)))
+  for(i in seq_along(ICBGenes)){
+    if(length(which(rownames(x) == ICBGenes[i])) == 0){
+      next
+    }
+    else{
+      tmpStats[i,] = x[which(rownames(x) == ICBGenes[i]),]
+    }
+  }
+  return(tmpStats)
+})
+
+#remove sarc
+ICBGenesStatsList = ICBGenesStatsList[-which(names(ICBGenesStatsList) == "SARC")]
+
+#get pvals
+ICBGenesPvals = do.call(cbind, lapply(ICBGenesStatsList, function(x){x[,4]}))
+rownames(ICBGenesPvals) = ICBGenes
+
+#get -log10 pvals
+neglog10ICBGenesPvals = -log10(ICBGenesPvals)
+
+colors <- c(min(neglog10ICBGenesPvals),seq(2,max(neglog10ICBGenesPvals),by=0.1))
+my_palette = c("blue", colorRampPalette(c("lightgreen", "darkgreen"))(n = length(colors)-2))
+gplots::heatmap.2(neglog10ICBGenesPvals, density.info="none", trace="none", dendrogram="both", Rowv=T, Colv=T, margins =c(6,12), col = my_palette, breaks = colors)
+
+#t stats
+ICBTstats = do.call(cbind, lapply(ICBGenesStatsList, function(x){x[,3]}))
+rownames(ICBTstats) = ICBGenes
+
+my_palette = colorRampPalette(c("blue", " white", "darkgreen"))(n = 299)
+gplots::heatmap.2(ICBTstats, density.info="none", trace="none", dendrogram='both', Rowv=T, Colv=T, margins =c(6,12), col = my_palette)
+
+#logFC
+ICBGenesLFC = do.call(cbind, lapply(ICBGenesStatsList, function(x){x[,1]}))
+rownames(ICBGenesLFC) = ICBGenes
+
+#convert pvalues to symbols
+ICBGenesPvals = do.call(cbind, lapply(ICBGenesStatsList, function(x){x[,5]}))
+rownames(ICBGenesPvals) = ICBGenes
+ICBGenesPvals[which(ICBGenesPvals < 0.05)] = "*"
+ICBGenesPvals[which(ICBGenesPvals >= 0.05)] = ""
+
+gplots::heatmap.2(ICBGenesLFC, density.info="none", trace="none", dendrogram='both', Rowv=T, Colv=T, margins =c(6,12), col = my_palette, cellnote = ICBGenesPvals, notecol = "black", notecex = 2.0)
+
+
+#GSEA
+GSEAList = vector("list", length(DEREsultsList))
+
+for(i in seq_along(DEREsultsList)){
+  stats = DEREsultsList[[i]]$t
+  names(stats) = rownames(DEREsultsList[[i]])
+
+  GSEAGO = runFGSEA(gPathways, stats)
+  GSEAList[[i]] = GSEAGO
+}
+
+names(GSEAList) = names(DEREsultsList)
+
+saveRDS(GSEAList, "Data/CancerTypeGSEAList.rds")
+
+#can make this an interactive web app
+
+GSEAList[[i]][grep("INTERFERON_GAMMA", GSEAList[[i]]$pathway, ignore.case = T),1:5]
+GSEAList[[i]][grep("JAK_STAT", GSEAList[[i]]$pathway, ignore.case = T),1:5]
+GSEAList[[i]][grep("transforming_growth_factor_beta", GSEAList[[i]]$pathway, ignore.case = T),1:5]
+GSEAList[[i]][grep("MAPK", GSEAList[[i]]$pathway, ignore.case = T),1:5]
+GSEAList[[i]][grep("WNT", GSEAList[[i]]$pathway, ignore.case = T),1:5]
+
+#
+
+#plot heatmap of terms
+
+GSEAList = GSEAList[-which(names(GSEAList) == "SARC")]
+
+#IFNG related terms pvals
+IFNGPvals = lapply(GSEAList, function(x){
+  x[grep("INTERFERON_GAMMA", x$pathway, ignore.case = T),2]
+})
+
+IFNGPvalMatrix = do.call(cbind, IFNGPvals)
+IFNGLogPvalMatrix = -log10(IFNGPvalMatrix)
+IFNGLogPvalMatrix = as.matrix(IFNGLogPvalMatrix)
+colnames(IFNGLogPvalMatrix) = names(GSEAList)
+rownames(IFNGLogPvalMatrix) = GSEAList[[1]][grep("INTERFERON_GAMMA", GSEAList[[1]]$pathway, ignore.case = T)]$pathway
+
+colors <- c(min(IFNGLogPvalMatrix),seq(2,max(IFNGLogPvalMatrix),by=0.1))
+
+my_palette = c("blue", colorRampPalette(c("lightgreen", "darkgreen"))(n = length(colors)-2))
+gplots::heatmap.2(IFNGLogPvalMatrix, density.info="none", trace="none", dendrogram='col', Rowv=F, Colv=T, margins =c(6,12), col = my_palette, breaks = colors)
+
+#effect size
+IFNGES = lapply(GSEAList, function(x){
+  x[grep("INTERFERON_GAMMA", x$pathway, ignore.case = T),4]
+})
+
+IFNGESMatrix = do.call(cbind, IFNGES)
+IFNGESMatrix = as.matrix(IFNGESMatrix)
+colnames(IFNGESMatrix) = names(GSEAList)
+rownames(IFNGESMatrix) = GSEAList[[1]][grep("INTERFERON_GAMMA", GSEAList[[1]]$pathway, ignore.case = T)]$pathway
+
+
+IFNGPvals = lapply(GSEAList, function(x){
+  x[grep("INTERFERON_GAMMA", x$pathway, ignore.case = T),3]
+})
+
+IFNGPvalMatrix = do.call(cbind, IFNGPvals)
+IFNGPvalMatrix = as.matrix(IFNGPvalMatrix)
+colnames(IFNGPvalMatrix) = names(GSEAList)
+rownames(IFNGPvalMatrix) = GSEAList[[1]][grep("INTERFERON_GAMMA", GSEAList[[1]]$pathway, ignore.case = T)]$pathway
+IFNGPvalMatrix[which(IFNGPvalMatrix < 0.05)] = "*"
+IFNGPvalMatrix[which(IFNGPvalMatrix >= 0.05)] = ""
+
+my_palette = colorRampPalette(c("blue", " white", "darkgreen"))(n = 299)
+gplots::heatmap.2(IFNGESMatrix, density.info="none", trace="none", dendrogram='col', Rowv=F, Colv=T, margins =c(6,12), col = my_palette, cellnote = IFNGPvalMatrix, notecol = "black", notecex = 2.0)
+
+
+
+#TGFB
+TGFBPvals = lapply(GSEAList, function(x){
+  x[grep("transforming_growth_factor_beta", x$pathway, ignore.case = T),2]
+})
+
+TGFBPvalMatrix = do.call(cbind, TGFBPvals)
+TGFBLogPvalMatrix = -log10(TGFBPvalMatrix)
+TGFBLogPvalMatrix = as.matrix(TGFBLogPvalMatrix)
+colnames(TGFBLogPvalMatrix) = names(GSEAList)
+rownames(TGFBLogPvalMatrix) = GSEAList[[1]][grep("transforming_growth_factor_beta", GSEAList[[1]]$pathway, ignore.case = T)]$pathway
+
+colors <- c(min(TGFBLogPvalMatrix),seq(2,max(TGFBLogPvalMatrix),by=0.1))
+
+my_palette = c("blue", colorRampPalette(c("lightgreen", "darkgreen"))(n = length(colors)-2))
+gplots::heatmap.2(TGFBLogPvalMatrix, density.info="none", trace="none", dendrogram='col', Rowv=F, Colv=T, margins =c(6,12), col = my_palette, breaks = colors)
+
+
+#effect size
+TGFBES = lapply(GSEAList, function(x){
+  x[grep("transforming_growth_factor_beta", x$pathway, ignore.case = T),4]
+})
+
+TGFBESMatrix = do.call(cbind, TGFBES)
+TGFBESMatrix = as.matrix(TGFBESMatrix)
+colnames(TGFBESMatrix) = names(GSEAList)
+rownames(TGFBESMatrix) = GSEAList[[1]][grep("transforming_growth_factor_beta", GSEAList[[1]]$pathway, ignore.case = T)]$pathway
+
+TGFBPvals = lapply(GSEAList, function(x){
+  x[grep("transforming_growth_factor_beta", x$pathway, ignore.case = T),3]
+})
+
+TGFBPvalMatrix = do.call(cbind, TGFBPvals)
+TGFBPvalMatrix = as.matrix(TGFBPvalMatrix)
+colnames(TGFBPvalMatrix) = names(GSEAList)
+rownames(TGFBPvalMatrix) = GSEAList[[1]][grep("transforming_growth_factor_beta", GSEAList[[1]]$pathway, ignore.case = T)]$pathway
+TGFBPvalMatrix[which(TGFBPvalMatrix < 0.05)] = "*"
+TGFBPvalMatrix[which(TGFBPvalMatrix >= 0.05)] = ""
+
+my_palette = colorRampPalette(c("blue", " white", "darkgreen"))(n = 299)
+gplots::heatmap.2(TGFBESMatrix, density.info="none", trace="none", dendrogram='col', Rowv=F, Colv=T, margins =c(6,12), col = my_palette, cellnote = TGFBPvalMatrix, notecol = "black", notecex = 2.0)
+
+#WNT
+WNTPvals = lapply(GSEAList, function(x){
+  x[grep("WNT", x$pathway, ignore.case = T),2]
+})
+
+WNTPvalMatrix = do.call(cbind, WNTPvals)
+WNTLogPvalMatrix = -log10(WNTPvalMatrix)
+WNTLogPvalMatrix = as.matrix(WNTLogPvalMatrix)
+colnames(WNTLogPvalMatrix) = names(GSEAList)
+rownames(WNTLogPvalMatrix) = GSEAList[[1]][grep("WNT", GSEAList[[1]]$pathway, ignore.case = T)]$pathway
+
+colors <- c(min(WNTLogPvalMatrix),seq(2,max(WNTLogPvalMatrix),by=0.1))
+
+my_palette = c("blue", colorRampPalette(c("lightgreen", "darkgreen"))(n = length(colors)-2))
+gplots::heatmap.2(WNTLogPvalMatrix, density.info="none", trace="none", dendrogram='col', Rowv=F, Colv=T, margins =c(6,12), col = my_palette, breaks = colors)
+
+#effect size
+WNTES = lapply(GSEAList, function(x){
+  x[grep("WNT", x$pathway, ignore.case = T),4]
+})
+
+WNTESMatrix = do.call(cbind, WNTES)
+WNTESMatrix = as.matrix(WNTESMatrix)
+colnames(WNTESMatrix) = names(GSEAList)
+rownames(WNTESMatrix) = GSEAList[[1]][grep("WNT", GSEAList[[1]]$pathway, ignore.case = T)]$pathway
+
+WNTPvals = lapply(GSEAList, function(x){
+  x[grep("WNT", x$pathway, ignore.case = T),3]
+})
+
+WNTPvalMatrix = do.call(cbind, WNTPvals)
+WNTPvalMatrix = as.matrix(WNTPvalMatrix)
+colnames(WNTPvalMatrix) = names(GSEAList)
+rownames(WNTPvalMatrix) = GSEAList[[1]][grep("WNT", GSEAList[[1]]$pathway, ignore.case = T)]$pathway
+WNTPvalMatrix[which(WNTPvalMatrix < 0.05)] = "*"
+WNTPvalMatrix[which(WNTPvalMatrix >= 0.05)] = ""
+
+my_palette = colorRampPalette(c("blue", " white", "darkgreen"))(n = 299)
+gplots::heatmap.2(WNTESMatrix, density.info="none", trace="none", dendrogram='col', Rowv=F, Colv=T, margins =c(6,12), col = my_palette, cellnote = WNTPvalMatrix, notecol = "black", notecex = 2.0)
+```

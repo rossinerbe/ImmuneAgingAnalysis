@@ -1,0 +1,88 @@
+---
+title: "GENIE_TMB"
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
+Read in and clean data
+```{r}
+GENIEdata = data.table::fread("Data/genie_public_clinical_data.tsv")
+
+#remove NA mutation count  samples
+sum(is.na(GENIEdata$`Mutation Count`))
+
+GENIEdata2 = GENIEdata[-which(is.na(GENIEdata$`Mutation Count`)),]
+
+#filter to cancer types in which ICB therapies are commonly used
+summary(as.factor(GENIEdata2$`Cancer Type`))
+
+GENIEdata3 = GENIEdata2[which(GENIEdata2$`Cancer Type` %in% c("Bladder Cancer", "Breast Cancer", "Colorectal Cancer", "Esophagogastric Cancer", "Head and Neck Cancer", "Melanoma", "Non-Small Cell Lung Cancer", "Renal Cell Carcinoma")),]
+
+#use only one sample per patient
+GENIEdata4 = GENIEdata3[which(GENIEdata3$`Number of Samples Per Patient` == 1),]
+
+#change column names
+colnames(GENIEdata4)[c(4,5, 10)] = c("Age", "CancerType", "MutationCount")
+
+#remove samples with incompletely specified or unspecified ages
+summary(as.factor(GENIEdata4$Age))
+GENIEdata5 = GENIEdata4[-which(GENIEdata4$Age %in% c("<18", ">89", "Unknown")),]
+
+#make age numeric
+GENIEdata5$Age = as.numeric(GENIEdata5$Age)
+
+#log the mutation counts
+GENIEdata5$logTMB = log(GENIEdata5$MutationCount+1)
+```
+
+
+linear models
+```{r}
+TMBLM = lm(logTMB~Age + Sex + CancerType, data = GENIEdata5)
+
+summary(TMBLM)
+
+write.csv(summary(TMBLM)$coefficients, "~/Fertig Lab/csv/GENIEMutationsAgeLM.csv")
+
+jtools::effect_plot(TMBLM, Age, data = GENIEdata5, interval = T, plot.points = T)
+
+#by cancer type
+GENIECT = split(GENIEdata5, GENIEdata5$CancerType)
+
+
+f = function(Data) {
+  tmpLM = lm(logTMB ~ Age, data = Data)
+  t = broom::tidy(tmpLM)
+  return(t)
+}
+
+CTLms = lapply(GENIECT, f)
+
+lmPvals = unlist(lapply(CTLms, function(x){x[2,5]}))
+p.adjust(lmPvals, "BH")
+
+lmStats = data.frame(lmPvals = -log10(lmPvals), CancerType = names(CTLms))
+lmStats$CancerType = as.character(lmStats$CancerType)
+
+x=reorder(lmStats[,2], -lmStats[,1])
+
+library(ggplot2)
+ggplot(lmStats, aes(x=x, y=lmPvals))+
+    geom_bar(stat="identity")+
+    theme_classic()+
+    ylab("-log10(p-value)")+
+    xlab("Cancer Type")
+
+lmES = unlist(lapply(CTLms, function(x){x[2,2]}))
+lmES = data.frame(lmES = lmES, CancerType = names(CTLms))
+lmES$CancerType = as.character(lmES$CancerType)
+
+x=reorder(lmES[,2], -lmES[,1])
+
+ggplot(lmES, aes(x=x, y=lmES))+
+    geom_bar(stat="identity")+
+    theme_classic()+
+    ylab("Coefficient Estimate")+
+    xlab("Cancer Type")
+```
+

@@ -1,0 +1,2375 @@
+Study ID	Patient ID	Sample ID	Cancer Type Detailed
+brca_metabric	MB-0000	MB-0000	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0002	MB-0002	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0005	MB-0005	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0006	MB-0006	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-0008	MB-0008	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-0010	MB-0010	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0014	MB-0014	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0020	MB-0020	Breast Invasive Lobular Carcinoma
+brca_metabric	MB-0022	MB-0022	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-0025	MB-0025	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0028	MB-0028	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0035	MB-0035	Breast Invasive Lobular Carcinoma
+brca_metabric	MB-0036	MB-0036	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0039	MB-0039	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0045	MB-0045	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0046	MB-0046	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0048	MB-0048	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0050	MB-0050	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-0053	MB-0053	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0054	MB-0054	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0056	MB-0056	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-0059	MB-0059	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0060	MB-0060	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0062	MB-0062	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0064	MB-0064	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0066	MB-0066	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0068	MB-0068	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0079	MB-0079	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0081	MB-0081	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0083	MB-0083	Breast Invasive Lobular Carcinoma
+brca_metabric	MB-0093	MB-0093	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-0095	MB-0095	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0097	MB-0097	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0099	MB-0099	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0100	MB-0100	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0101	MB-0101	Breast Invasive Lobular Carcinoma
+brca_metabric	MB-0102	MB-0102	Breast Invasive Lobular Carcinoma
+brca_metabric	MB-0106	MB-0106	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0107	MB-0107	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0108	MB-0108	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0109	MB-0109	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0111	MB-0111	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0112	MB-0112	Breast Invasive Lobular Carcinoma
+brca_metabric	MB-0113	MB-0113	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0114	MB-0114	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0115	MB-0115	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0116	MB-0116	Breast Invasive Lobular Carcinoma
+brca_metabric	MB-0117	MB-0117	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-0119	MB-0119	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0120	MB-0120	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0121	MB-0121	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0122	MB-0122	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0123	MB-0123	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0124	MB-0124	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-0125	MB-0125	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-0126	MB-0126	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0127	MB-0127	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0128	MB-0128	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0129	MB-0129	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0130	MB-0130	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0131	MB-0131	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0133	MB-0133	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-0134	MB-0134	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0135	MB-0135	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0136	MB-0136	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0138	MB-0138	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0139	MB-0139	Breast Invasive Lobular Carcinoma
+brca_metabric	MB-0140	MB-0140	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0142	MB-0142	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-0143	MB-0143	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0144	MB-0144	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0145	MB-0145	Breast Invasive Lobular Carcinoma
+brca_metabric	MB-0146	MB-0146	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0147	MB-0147	Breast Invasive Lobular Carcinoma
+brca_metabric	MB-0148	MB-0148	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0149	MB-0149	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0150	MB-0150	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0151	MB-0151	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0152	MB-0152	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0154	MB-0154	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0155	MB-0155	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0157	MB-0157	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0158	MB-0158	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0162	MB-0162	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-0163	MB-0163	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0164	MB-0164	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0165	MB-0165	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0166	MB-0166	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0167	MB-0167	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0168	MB-0168	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0169	MB-0169	Breast Invasive Lobular Carcinoma
+brca_metabric	MB-0170	MB-0170	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0171	MB-0171	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-0172	MB-0172	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0173	MB-0173	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0174	MB-0174	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0175	MB-0175	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0176	MB-0176	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0177	MB-0177	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-0178	MB-0178	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0179	MB-0179	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0180	MB-0180	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0181	MB-0181	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0184	MB-0184	Breast Invasive Mixed Mucinous Carcinoma
+brca_metabric	MB-0185	MB-0185	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0188	MB-0188	Breast Invasive Lobular Carcinoma
+brca_metabric	MB-0189	MB-0189	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0191	MB-0191	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0192	MB-0192	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-0193	MB-0193	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0194	MB-0194	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0195	MB-0195	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0197	MB-0197	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0198	MB-0198	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0199	MB-0199	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-0200	MB-0200	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0201	MB-0201	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0202	MB-0202	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0203	MB-0203	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0204	MB-0204	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0205	MB-0205	Breast Invasive Lobular Carcinoma
+brca_metabric	MB-0206	MB-0206	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0207	MB-0207	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-0209	MB-0209	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0211	MB-0211	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0214	MB-0214	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0215	MB-0215	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-0218	MB-0218	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0220	MB-0220	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0221	MB-0221	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0222	MB-0222	Breast Invasive Lobular Carcinoma
+brca_metabric	MB-0223	MB-0223	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0224	MB-0224	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0225	MB-0225	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0226	MB-0226	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0227	MB-0227	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0228	MB-0228	Breast Invasive Lobular Carcinoma
+brca_metabric	MB-0229	MB-0229	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-0230	MB-0230	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0231	MB-0231	Breast Invasive Mixed Mucinous Carcinoma
+brca_metabric	MB-0232	MB-0232	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0233	MB-0233	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0234	MB-0234	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-0235	MB-0235	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0236	MB-0236	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0238	MB-0238	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0239	MB-0239	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-0241	MB-0241	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0242	MB-0242	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0243	MB-0243	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0244	MB-0244	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0245	MB-0245	Breast Invasive Lobular Carcinoma
+brca_metabric	MB-0247	MB-0247	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0248	MB-0248	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0249	MB-0249	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0253	MB-0253	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0256	MB-0256	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0257	MB-0257	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0258	MB-0258	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0259	MB-0259	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0260	MB-0260	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0261	MB-0261	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0262	MB-0262	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0263	MB-0263	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-0264	MB-0264	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0265	MB-0265	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0266	MB-0266	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-0268	MB-0268	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0269	MB-0269	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0270	MB-0270	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0272	MB-0272	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0273	MB-0273	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0275	MB-0275	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0278	MB-0278	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0279	MB-0279	Breast Invasive Lobular Carcinoma
+brca_metabric	MB-0280	MB-0280	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0282	MB-0282	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-0283	MB-0283	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0284	MB-0284	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0285	MB-0285	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0286	MB-0286	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0287	MB-0287	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0288	MB-0288	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0289	MB-0289	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0290	MB-0290	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0291	MB-0291	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0292	MB-0292	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0293	MB-0293	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0294	MB-0294	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0295	MB-0295	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0301	MB-0301	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0302	MB-0302	Breast Invasive Lobular Carcinoma
+brca_metabric	MB-0303	MB-0303	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0304	MB-0304	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0305	MB-0305	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0306	MB-0306	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0307	MB-0307	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0308	MB-0308	Breast
+brca_metabric	MB-0309	MB-0309	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0310	MB-0310	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0311	MB-0311	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0312	MB-0312	Breast Invasive Lobular Carcinoma
+brca_metabric	MB-0313	MB-0313	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0314	MB-0314	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0315	MB-0315	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0316	MB-0316	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0317	MB-0317	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0318	MB-0318	Breast
+brca_metabric	MB-0319	MB-0319	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-0320	MB-0320	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-0321	MB-0321	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0322	MB-0322	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0324	MB-0324	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0325	MB-0325	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0329	MB-0329	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0333	MB-0333	Metaplastic Breast Cancer
+brca_metabric	MB-0336	MB-0336	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0339	MB-0339	Breast Invasive Mixed Mucinous Carcinoma
+brca_metabric	MB-0340	MB-0340	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0342	MB-0342	Breast Invasive Lobular Carcinoma
+brca_metabric	MB-0343	MB-0343	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0344	MB-0344	Breast Invasive Lobular Carcinoma
+brca_metabric	MB-0345	MB-0345	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0346	MB-0346	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0347	MB-0347	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0348	MB-0348	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0349	MB-0349	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0350	MB-0350	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0351	MB-0351	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-0352	MB-0352	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0353	MB-0353	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0354	MB-0354	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0356	MB-0356	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0358	MB-0358	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0359	MB-0359	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0360	MB-0360	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0361	MB-0361	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0362	MB-0362	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0363	MB-0363	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-0364	MB-0364	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0365	MB-0365	Breast Invasive Mixed Mucinous Carcinoma
+brca_metabric	MB-0366	MB-0366	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-0367	MB-0367	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-0368	MB-0368	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0369	MB-0369	Breast Invasive Lobular Carcinoma
+brca_metabric	MB-0370	MB-0370	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0371	MB-0371	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0372	MB-0372	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0373	MB-0373	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0374	MB-0374	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0375	MB-0375	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0377	MB-0377	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0378	MB-0378	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0379	MB-0379	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0380	MB-0380	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0381	MB-0381	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0382	MB-0382	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0383	MB-0383	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0384	MB-0384	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0385	MB-0385	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0386	MB-0386	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0388	MB-0388	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0389	MB-0389	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0390	MB-0390	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0391	MB-0391	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0392	MB-0392	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0393	MB-0393	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0394	MB-0394	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-0395	MB-0395	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0396	MB-0396	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0397	MB-0397	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0398	MB-0398	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0399	MB-0399	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0400	MB-0400	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0401	MB-0401	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0402	MB-0402	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0404	MB-0404	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0405	MB-0405	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0406	MB-0406	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0408	MB-0408	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0410	MB-0410	Breast Invasive Lobular Carcinoma
+brca_metabric	MB-0411	MB-0411	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-0412	MB-0412	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0413	MB-0413	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0414	MB-0414	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0417	MB-0417	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0418	MB-0418	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0419	MB-0419	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0420	MB-0420	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0421	MB-0421	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0422	MB-0422	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0423	MB-0423	Breast Invasive Lobular Carcinoma
+brca_metabric	MB-0424	MB-0424	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0425	MB-0425	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0426	MB-0426	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0427	MB-0427	Breast Invasive Lobular Carcinoma
+brca_metabric	MB-0428	MB-0428	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0429	MB-0429	Breast Invasive Lobular Carcinoma
+brca_metabric	MB-0431	MB-0431	Breast Invasive Lobular Carcinoma
+brca_metabric	MB-0432	MB-0432	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0434	MB-0434	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0435	MB-0435	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-0436	MB-0436	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0437	MB-0437	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-0438	MB-0438	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0439	MB-0439	Breast Invasive Mixed Mucinous Carcinoma
+brca_metabric	MB-0440	MB-0440	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0442	MB-0442	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0443	MB-0443	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0444	MB-0444	Breast Invasive Lobular Carcinoma
+brca_metabric	MB-0445	MB-0445	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0446	MB-0446	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0448	MB-0448	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0449	MB-0449	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0451	MB-0451	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0452	MB-0452	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0453	MB-0453	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0454	MB-0454	Breast Invasive Mixed Mucinous Carcinoma
+brca_metabric	MB-0455	MB-0455	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0458	MB-0458	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0459	MB-0459	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0460	MB-0460	Breast Invasive Lobular Carcinoma
+brca_metabric	MB-0462	MB-0462	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0463	MB-0463	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0464	MB-0464	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0465	MB-0465	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0466	MB-0466	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0467	MB-0467	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0468	MB-0468	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0469	MB-0469	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0470	MB-0470	Breast Invasive Lobular Carcinoma
+brca_metabric	MB-0471	MB-0471	Breast Invasive Mixed Mucinous Carcinoma
+brca_metabric	MB-0472	MB-0472	Breast Invasive Lobular Carcinoma
+brca_metabric	MB-0474	MB-0474	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0475	MB-0475	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0476	MB-0476	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0478	MB-0478	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0479	MB-0479	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0480	MB-0480	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0481	MB-0481	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0482	MB-0482	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0483	MB-0483	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0484	MB-0484	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0485	MB-0485	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-0486	MB-0486	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0487	MB-0487	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0488	MB-0488	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-0489	MB-0489	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0490	MB-0490	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0491	MB-0491	Breast Invasive Lobular Carcinoma
+brca_metabric	MB-0492	MB-0492	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-0494	MB-0494	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0495	MB-0495	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0496	MB-0496	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0497	MB-0497	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0500	MB-0500	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0501	MB-0501	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0502	MB-0502	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0503	MB-0503	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0504	MB-0504	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0505	MB-0505	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0506	MB-0506	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0507	MB-0507	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0508	MB-0508	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0509	MB-0509	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0510	MB-0510	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0511	MB-0511	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0512	MB-0512	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0513	MB-0513	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0516	MB-0516	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0517	MB-0517	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0519	MB-0519	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0521	MB-0521	Breast Invasive Lobular Carcinoma
+brca_metabric	MB-0524	MB-0524	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0525	MB-0525	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0526	MB-0526	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0527	MB-0527	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0528	MB-0528	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0529	MB-0529	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0531	MB-0531	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0532	MB-0532	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0534	MB-0534	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0535	MB-0535	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0536	MB-0536	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0537	MB-0537	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0538	MB-0538	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0540	MB-0540	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-0541	MB-0541	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0542	MB-0542	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0543	MB-0543	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0544	MB-0544	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0545	MB-0545	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0546	MB-0546	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0549	MB-0549	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0550	MB-0550	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0551	MB-0551	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0552	MB-0552	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0553	MB-0553	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0554	MB-0554	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0558	MB-0558	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0559	MB-0559	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0564	MB-0564	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0568	MB-0568	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0569	MB-0569	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0570	MB-0570	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0571	MB-0571	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0573	MB-0573	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0574	MB-0574	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0575	MB-0575	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0576	MB-0576	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0577	MB-0577	Breast Invasive Mixed Mucinous Carcinoma
+brca_metabric	MB-0578	MB-0578	Breast Invasive Lobular Carcinoma
+brca_metabric	MB-0579	MB-0579	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0580	MB-0580	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0581	MB-0581	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0582	MB-0582	Breast Invasive Lobular Carcinoma
+brca_metabric	MB-0583	MB-0583	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-0584	MB-0584	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0585	MB-0585	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0586	MB-0586	Breast Invasive Lobular Carcinoma
+brca_metabric	MB-0587	MB-0587	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-0588	MB-0588	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0589	MB-0589	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-0590	MB-0590	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0591	MB-0591	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0593	MB-0593	Breast Invasive Lobular Carcinoma
+brca_metabric	MB-0594	MB-0594	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0596	MB-0596	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-0597	MB-0597	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0598	MB-0598	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0599	MB-0599	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0600	MB-0600	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-0601	MB-0601	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0603	MB-0603	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0605	MB-0605	Breast Invasive Lobular Carcinoma
+brca_metabric	MB-0606	MB-0606	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-0607	MB-0607	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0608	MB-0608	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0609	MB-0609	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0610	MB-0610	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0611	MB-0611	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0613	MB-0613	Breast
+brca_metabric	MB-0614	MB-0614	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0615	MB-0615	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0616	MB-0616	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0617	MB-0617	Breast Invasive Mixed Mucinous Carcinoma
+brca_metabric	MB-0618	MB-0618	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0619	MB-0619	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0620	MB-0620	Breast
+brca_metabric	MB-0621	MB-0621	Breast Invasive Lobular Carcinoma
+brca_metabric	MB-0623	MB-0623	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0624	MB-0624	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0626	MB-0626	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0627	MB-0627	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0628	MB-0628	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0630	MB-0630	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0631	MB-0631	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0632	MB-0632	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0634	MB-0634	Breast Invasive Lobular Carcinoma
+brca_metabric	MB-0635	MB-0635	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0636	MB-0636	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0637	MB-0637	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0638	MB-0638	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-0639	MB-0639	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0640	MB-0640	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0641	MB-0641	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0642	MB-0642	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0643	MB-0643	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0644	MB-0644	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0646	MB-0646	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-0649	MB-0649	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0650	MB-0650	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0652	MB-0652	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0653	MB-0653	Breast Invasive Lobular Carcinoma
+brca_metabric	MB-0654	MB-0654	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0655	MB-0655	Breast
+brca_metabric	MB-0656	MB-0656	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0657	MB-0657	Breast Invasive Lobular Carcinoma
+brca_metabric	MB-0658	MB-0658	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0659	MB-0659	Breast
+brca_metabric	MB-0660	MB-0660	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0661	MB-0661	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0662	MB-0662	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0663	MB-0663	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0664	MB-0664	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0666	MB-0666	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0667	MB-0667	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0869	MB-0869	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0872	MB-0872	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0874	MB-0874	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0877	MB-0877	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0880	MB-0880	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0882	MB-0882	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0884	MB-0884	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0891	MB-0891	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0893	MB-0893	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0895	MB-0895	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0897	MB-0897	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0899	MB-0899	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0901	MB-0901	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0904	MB-0904	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-0906	MB-0906	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-2513	MB-2513	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-2517	MB-2517	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-2536	MB-2536	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-2556	MB-2556	Breast Invasive Lobular Carcinoma
+brca_metabric	MB-2564	MB-2564	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-2610	MB-2610	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-2613	MB-2613	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-2614	MB-2614	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-2616	MB-2616	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-2617	MB-2617	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-2618	MB-2618	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-2624	MB-2624	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-2626	MB-2626	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-2629	MB-2629	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-2632	MB-2632	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-2634	MB-2634	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-2642	MB-2642	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-2643	MB-2643	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-2645	MB-2645	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-2669	MB-2669	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-2686	MB-2686	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-2705	MB-2705	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-2708	MB-2708	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-2711	MB-2711	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-2712	MB-2712	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-2718	MB-2718	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-2721	MB-2721	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-2724	MB-2724	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-2725	MB-2725	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-2728	MB-2728	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-2730	MB-2730	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-2735	MB-2735	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-2742	MB-2742	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-2744	MB-2744	Breast Invasive Lobular Carcinoma
+brca_metabric	MB-2745	MB-2745	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-2747	MB-2747	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-2749	MB-2749	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-2750	MB-2750	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-2752	MB-2752	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-2753	MB-2753	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-2754	MB-2754	Breast Invasive Lobular Carcinoma
+brca_metabric	MB-2758	MB-2758	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-2760	MB-2760	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-2763	MB-2763	Breast Invasive Mixed Mucinous Carcinoma
+brca_metabric	MB-2764	MB-2764	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-2765	MB-2765	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-2767	MB-2767	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-2769	MB-2769	Breast Invasive Lobular Carcinoma
+brca_metabric	MB-2770	MB-2770	Breast Invasive Lobular Carcinoma
+brca_metabric	MB-2771	MB-2771	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-2772	MB-2772	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-2774	MB-2774	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-2778	MB-2778	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-2779	MB-2779	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-2781	MB-2781	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-2786	MB-2786	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-2790	MB-2790	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-2791	MB-2791	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-2792	MB-2792	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-2793	MB-2793	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-2795	MB-2795	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-2796	MB-2796	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-2797	MB-2797	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-2801	MB-2801	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-2803	MB-2803	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-2814	MB-2814	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-2815	MB-2815	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-2819	MB-2819	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-2820	MB-2820	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-2821	MB-2821	Metaplastic Breast Cancer
+brca_metabric	MB-2823	MB-2823	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-2827	MB-2827	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-2833	MB-2833	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-2834	MB-2834	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-2835	MB-2835	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-2838	MB-2838	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-2840	MB-2840	Breast Invasive Lobular Carcinoma
+brca_metabric	MB-2842	MB-2842	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-2843	MB-2843	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-2844	MB-2844	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-2845	MB-2845	Breast Invasive Lobular Carcinoma
+brca_metabric	MB-2846	MB-2846	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-2847	MB-2847	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-2848	MB-2848	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-2849	MB-2849	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-2850	MB-2850	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-2851	MB-2851	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-2853	MB-2853	Breast Invasive Mixed Mucinous Carcinoma
+brca_metabric	MB-2854	MB-2854	Breast Invasive Lobular Carcinoma
+brca_metabric	MB-2857	MB-2857	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-2858	MB-2858	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-2863	MB-2863	Breast Invasive Mixed Mucinous Carcinoma
+brca_metabric	MB-2867	MB-2867	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-2895	MB-2895	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-2896	MB-2896	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-2900	MB-2900	Breast Invasive Lobular Carcinoma
+brca_metabric	MB-2901	MB-2901	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-2904	MB-2904	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-2912	MB-2912	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-2916	MB-2916	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-2917	MB-2917	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-2919	MB-2919	Breast Invasive Mixed Mucinous Carcinoma
+brca_metabric	MB-2922	MB-2922	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-2923	MB-2923	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-2927	MB-2927	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-2929	MB-2929	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-2931	MB-2931	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-2932	MB-2932	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-2933	MB-2933	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-2939	MB-2939	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-2944	MB-2944	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-2947	MB-2947	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-2951	MB-2951	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-2952	MB-2952	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-2953	MB-2953	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-2954	MB-2954	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-2957	MB-2957	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-2960	MB-2960	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-2963	MB-2963	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-2964	MB-2964	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-2966	MB-2966	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-2969	MB-2969	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-2970	MB-2970	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-2971	MB-2971	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-2977	MB-2977	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-2983	MB-2983	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-2984	MB-2984	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-2990	MB-2990	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-2993	MB-2993	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-2994	MB-2994	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-2996	MB-2996	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-2999	MB-2999	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-3001	MB-3001	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-3002	MB-3002	Breast Invasive Lobular Carcinoma
+brca_metabric	MB-3005	MB-3005	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-3006	MB-3006	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-3007	MB-3007	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-3008	MB-3008	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-3013	MB-3013	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-3014	MB-3014	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-3016	MB-3016	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-3021	MB-3021	Breast Invasive Lobular Carcinoma
+brca_metabric	MB-3025	MB-3025	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-3026	MB-3026	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-3028	MB-3028	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-3031	MB-3031	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-3032	MB-3032	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-3033	MB-3033	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-3035	MB-3035	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-3037	MB-3037	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-3046	MB-3046	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-3049	MB-3049	Breast Invasive Lobular Carcinoma
+brca_metabric	MB-3050	MB-3050	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-3057	MB-3057	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-3058	MB-3058	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-3060	MB-3060	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-3062	MB-3062	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-3063	MB-3063	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-3064	MB-3064	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-3067	MB-3067	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-3079	MB-3079	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-3083	MB-3083	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-3085	MB-3085	Breast Invasive Lobular Carcinoma
+brca_metabric	MB-3088	MB-3088	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-3092	MB-3092	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-3102	MB-3102	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-3103	MB-3103	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-3104	MB-3104	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-3105	MB-3105	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-3110	MB-3110	Breast Invasive Lobular Carcinoma
+brca_metabric	MB-3121	MB-3121	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-3122	MB-3122	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-3123	MB-3123	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-3153	MB-3153	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-3165	MB-3165	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-3167	MB-3167	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-3171	MB-3171	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-3181	MB-3181	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-3211	MB-3211	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-3218	MB-3218	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-3222	MB-3222	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-3228	MB-3228	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-3235	MB-3235	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-3252	MB-3252	Breast Invasive Mixed Mucinous Carcinoma
+brca_metabric	MB-3253	MB-3253	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-3254	MB-3254	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-3266	MB-3266	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-3271	MB-3271	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-3272	MB-3272	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-3275	MB-3275	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-3277	MB-3277	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-3292	MB-3292	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-3295	MB-3295	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-3297	MB-3297	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-3298	MB-3298	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-3300	MB-3300	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-3301	MB-3301	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-3303	MB-3303	Breast
+brca_metabric	MB-3328	MB-3328	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-3329	MB-3329	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-3341	MB-3341	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-3344	MB-3344	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-3350	MB-3350	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-3351	MB-3351	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-3355	MB-3355	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-3357	MB-3357	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-3360	MB-3360	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-3361	MB-3361	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-3363	MB-3363	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-3365	MB-3365	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-3367	MB-3367	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-3371	MB-3371	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-3378	MB-3378	Breast Invasive Lobular Carcinoma
+brca_metabric	MB-3379	MB-3379	Breast Invasive Lobular Carcinoma
+brca_metabric	MB-3381	MB-3381	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-3382	MB-3382	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-3383	MB-3383	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-3386	MB-3386	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-3388	MB-3388	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-3389	MB-3389	Breast Invasive Lobular Carcinoma
+brca_metabric	MB-3395	MB-3395	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-3396	MB-3396	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-3402	MB-3402	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-3403	MB-3403	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-3412	MB-3412	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-3417	MB-3417	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-3429	MB-3429	Breast Invasive Lobular Carcinoma
+brca_metabric	MB-3430	MB-3430	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-3435	MB-3435	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-3436	MB-3436	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-3437	MB-3437	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-3439	MB-3439	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-3450	MB-3450	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-3452	MB-3452	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-3453	MB-3453	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-3459	MB-3459	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-3462	MB-3462	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-3466	MB-3466	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-3467	MB-3467	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-3470	MB-3470	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-3476	MB-3476	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-3479	MB-3479	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-3487	MB-3487	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-3488	MB-3488	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-3490	MB-3490	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-3492	MB-3492	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-3497	MB-3497	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-3500	MB-3500	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-3502	MB-3502	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-3506	MB-3506	Breast
+brca_metabric	MB-3510	MB-3510	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-3525	MB-3525	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-3526	MB-3526	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-3528	MB-3528	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-3530	MB-3530	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-3536	MB-3536	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-3545	MB-3545	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-3547	MB-3547	Breast Invasive Mixed Mucinous Carcinoma
+brca_metabric	MB-3548	MB-3548	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-3556	MB-3556	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-3567	MB-3567	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-3576	MB-3576	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-3582	MB-3582	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-3600	MB-3600	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-3606	MB-3606	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-3614	MB-3614	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-3702	MB-3702	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-3706	MB-3706	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-3707	MB-3707	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-3711	MB-3711	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-3748	MB-3748	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-3752	MB-3752	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-3754	MB-3754	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-3781	MB-3781	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-3797	MB-3797	Breast
+brca_metabric	MB-3823	MB-3823	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-3824	MB-3824	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-3838	MB-3838	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-3840	MB-3840	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-3842	MB-3842	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-3850	MB-3850	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-3852	MB-3852	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-3854	MB-3854	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-3865	MB-3865	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-3866	MB-3866	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-3871	MB-3871	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-3874	MB-3874	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-3978	MB-3978	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4000	MB-4000	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4001	MB-4001	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4003	MB-4003	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4004	MB-4004	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4005	MB-4005	Breast Invasive Lobular Carcinoma
+brca_metabric	MB-4008	MB-4008	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4010	MB-4010	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4011	MB-4011	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4012	MB-4012	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4015	MB-4015	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4017	MB-4017	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-4018	MB-4018	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-4024	MB-4024	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4033	MB-4033	Breast Invasive Lobular Carcinoma
+brca_metabric	MB-4046	MB-4046	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-4059	MB-4059	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4079	MB-4079	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4091	MB-4091	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4098	MB-4098	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4119	MB-4119	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4120	MB-4120	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4126	MB-4126	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4127	MB-4127	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4139	MB-4139	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4140	MB-4140	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4141	MB-4141	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4145	MB-4145	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4146	MB-4146	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4148	MB-4148	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4154	MB-4154	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4171	MB-4171	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-4173	MB-4173	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4189	MB-4189	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4212	MB-4212	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4213	MB-4213	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4222	MB-4222	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4224	MB-4224	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4230	MB-4230	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4233	MB-4233	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4234	MB-4234	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4235	MB-4235	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4236	MB-4236	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4250	MB-4250	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4254	MB-4254	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4264	MB-4264	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4266	MB-4266	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4270	MB-4270	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4274	MB-4274	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4276	MB-4276	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4278	MB-4278	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4281	MB-4281	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4282	MB-4282	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4283	MB-4283	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4289	MB-4289	Breast Invasive Lobular Carcinoma
+brca_metabric	MB-4292	MB-4292	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4293	MB-4293	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-4298	MB-4298	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4300	MB-4300	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4303	MB-4303	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4306	MB-4306	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-4310	MB-4310	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4313	MB-4313	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-4317	MB-4317	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4318	MB-4318	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4322	MB-4322	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4323	MB-4323	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4324	MB-4324	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4328	MB-4328	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4329	MB-4329	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4331	MB-4331	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4332	MB-4332	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4333	MB-4333	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4339	MB-4339	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4341	MB-4341	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4342	MB-4342	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4343	MB-4343	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-4348	MB-4348	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4350	MB-4350	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4351	MB-4351	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4353	MB-4353	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4354	MB-4354	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4357	MB-4357	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4360	MB-4360	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4362	MB-4362	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4368	MB-4368	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4374	MB-4374	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4375	MB-4375	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4381	MB-4381	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4390	MB-4390	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4395	MB-4395	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4407	MB-4407	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4408	MB-4408	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4416	MB-4416	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4417	MB-4417	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4418	MB-4418	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4421	MB-4421	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4426	MB-4426	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4434	MB-4434	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4442	MB-4442	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4484	MB-4484	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-4529	MB-4529	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4548	MB-4548	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4557	MB-4557	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-4564	MB-4564	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4578	MB-4578	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4591	MB-4591	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4593	MB-4593	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4598	MB-4598	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4599	MB-4599	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4601	MB-4601	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4602	MB-4602	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4603	MB-4603	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4607	MB-4607	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4616	MB-4616	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4618	MB-4618	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-4621	MB-4621	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4622	MB-4622	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4623	MB-4623	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-4626	MB-4626	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4627	MB-4627	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-4630	MB-4630	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4633	MB-4633	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-4634	MB-4634	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-4639	MB-4639	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4640	MB-4640	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4641	MB-4641	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4642	MB-4642	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4643	MB-4643	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4644	MB-4644	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4648	MB-4648	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4649	MB-4649	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4651	MB-4651	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4653	MB-4653	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4654	MB-4654	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4655	MB-4655	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4660	MB-4660	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4661	MB-4661	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4663	MB-4663	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4665	MB-4665	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4666	MB-4666	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4667	MB-4667	Breast Invasive Lobular Carcinoma
+brca_metabric	MB-4669	MB-4669	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4670	MB-4670	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4671	MB-4671	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4672	MB-4672	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4673	MB-4673	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4674	MB-4674	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4675	MB-4675	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4679	MB-4679	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4681	MB-4681	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4682	MB-4682	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4685	MB-4685	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4686	MB-4686	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4687	MB-4687	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4688	MB-4688	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4691	MB-4691	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4692	MB-4692	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4694	MB-4694	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4695	MB-4695	Breast Invasive Lobular Carcinoma
+brca_metabric	MB-4696	MB-4696	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4697	MB-4697	Breast Invasive Lobular Carcinoma
+brca_metabric	MB-4698	MB-4698	Breast Invasive Lobular Carcinoma
+brca_metabric	MB-4701	MB-4701	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4702	MB-4702	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4704	MB-4704	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-4705	MB-4705	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4706	MB-4706	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4707	MB-4707	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4708	MB-4708	Breast Invasive Lobular Carcinoma
+brca_metabric	MB-4709	MB-4709	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4710	MB-4710	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4711	MB-4711	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4712	MB-4712	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4714	MB-4714	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4715	MB-4715	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4716	MB-4716	Breast Invasive Lobular Carcinoma
+brca_metabric	MB-4717	MB-4717	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4718	MB-4718	Breast Invasive Lobular Carcinoma
+brca_metabric	MB-4719	MB-4719	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4721	MB-4721	Breast Invasive Lobular Carcinoma
+brca_metabric	MB-4722	MB-4722	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4723	MB-4723	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4724	MB-4724	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4725	MB-4725	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4729	MB-4729	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4730	MB-4730	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-4731	MB-4731	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4732	MB-4732	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4733	MB-4733	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4735	MB-4735	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4737	MB-4737	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4738	MB-4738	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-4739	MB-4739	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-4741	MB-4741	Breast Invasive Lobular Carcinoma
+brca_metabric	MB-4742	MB-4742	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-4743	MB-4743	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-4744	MB-4744	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4745	MB-4745	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4746	MB-4746	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4749	MB-4749	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-4750	MB-4750	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4752	MB-4752	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4757	MB-4757	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4758	MB-4758	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4760	MB-4760	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4762	MB-4762	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4763	MB-4763	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4764	MB-4764	Breast Invasive Lobular Carcinoma
+brca_metabric	MB-4767	MB-4767	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4769	MB-4769	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4770	MB-4770	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4771	MB-4771	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4778	MB-4778	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-4779	MB-4779	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4782	MB-4782	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4784	MB-4784	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4785	MB-4785	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4787	MB-4787	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4790	MB-4790	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4791	MB-4791	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4792	MB-4792	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4793	MB-4793	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4794	MB-4794	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4796	MB-4796	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4797	MB-4797	Breast Invasive Lobular Carcinoma
+brca_metabric	MB-4798	MB-4798	Breast Invasive Lobular Carcinoma
+brca_metabric	MB-4800	MB-4800	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4801	MB-4801	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4802	MB-4802	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4805	MB-4805	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4806	MB-4806	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4809	MB-4809	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4814	MB-4814	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4818	MB-4818	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-4820	MB-4820	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4822	MB-4822	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-4825	MB-4825	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4827	MB-4827	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4828	MB-4828	Breast Invasive Lobular Carcinoma
+brca_metabric	MB-4829	MB-4829	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-4832	MB-4832	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4834	MB-4834	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4836	MB-4836	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4838	MB-4838	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4839	MB-4839	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4843	MB-4843	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4845	MB-4845	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4846	MB-4846	Breast Invasive Lobular Carcinoma
+brca_metabric	MB-4849	MB-4849	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4851	MB-4851	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4853	MB-4853	Breast Invasive Lobular Carcinoma
+brca_metabric	MB-4855	MB-4855	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4858	MB-4858	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4859	MB-4859	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4860	MB-4860	Breast Invasive Lobular Carcinoma
+brca_metabric	MB-4862	MB-4862	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4865	MB-4865	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4866	MB-4866	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4867	MB-4867	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4869	MB-4869	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4870	MB-4870	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4871	MB-4871	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4872	MB-4872	Breast Invasive Lobular Carcinoma
+brca_metabric	MB-4873	MB-4873	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4876	MB-4876	Breast Invasive Lobular Carcinoma
+brca_metabric	MB-4878	MB-4878	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4879	MB-4879	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4880	MB-4880	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4881	MB-4881	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4882	MB-4882	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4883	MB-4883	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4886	MB-4886	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4887	MB-4887	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4888	MB-4888	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4893	MB-4893	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4894	MB-4894	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4896	MB-4896	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4897	MB-4897	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-4898	MB-4898	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4899	MB-4899	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4900	MB-4900	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4904	MB-4904	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4906	MB-4906	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4908	MB-4908	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4911	MB-4911	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4912	MB-4912	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4925	MB-4925	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4928	MB-4928	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4929	MB-4929	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4930	MB-4930	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4931	MB-4931	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4933	MB-4933	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4934	MB-4934	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4935	MB-4935	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4937	MB-4937	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4938	MB-4938	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4941	MB-4941	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4942	MB-4942	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4944	MB-4944	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4945	MB-4945	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4949	MB-4949	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4950	MB-4950	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4952	MB-4952	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4956	MB-4956	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4957	MB-4957	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-4959	MB-4959	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4961	MB-4961	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4962	MB-4962	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4965	MB-4965	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-4966	MB-4966	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-4967	MB-4967	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4968	MB-4968	Breast Invasive Lobular Carcinoma
+brca_metabric	MB-4969	MB-4969	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4970	MB-4970	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4974	MB-4974	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4976	MB-4976	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4977	MB-4977	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4978	MB-4978	Breast Invasive Lobular Carcinoma
+brca_metabric	MB-4981	MB-4981	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-4982	MB-4982	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4986	MB-4986	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4987	MB-4987	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4991	MB-4991	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4992	MB-4992	Breast Invasive Lobular Carcinoma
+brca_metabric	MB-4993	MB-4993	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4994	MB-4994	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4996	MB-4996	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-4998	MB-4998	Breast Invasive Lobular Carcinoma
+brca_metabric	MB-4999	MB-4999	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5001	MB-5001	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5004	MB-5004	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5008	MB-5008	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5011	MB-5011	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-5013	MB-5013	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5014	MB-5014	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5015	MB-5015	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5017	MB-5017	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5018	MB-5018	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5019	MB-5019	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5020	MB-5020	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-5022	MB-5022	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-5027	MB-5027	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-5033	MB-5033	Breast Invasive Mixed Mucinous Carcinoma
+brca_metabric	MB-5035	MB-5035	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-5039	MB-5039	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5040	MB-5040	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5041	MB-5041	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5043	MB-5043	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-5044	MB-5044	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5045	MB-5045	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5048	MB-5048	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5049	MB-5049	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-5050	MB-5050	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-5052	MB-5052	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5053	MB-5053	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5054	MB-5054	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5057	MB-5057	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5058	MB-5058	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-5059	MB-5059	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-5060	MB-5060	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5061	MB-5061	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5062	MB-5062	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5063	MB-5063	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5064	MB-5064	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5065	MB-5065	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-5066	MB-5066	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5068	MB-5068	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5070	MB-5070	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5072	MB-5072	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5073	MB-5073	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5074	MB-5074	Breast Invasive Lobular Carcinoma
+brca_metabric	MB-5076	MB-5076	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5078	MB-5078	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5079	MB-5079	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5081	MB-5081	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5084	MB-5084	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5086	MB-5086	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5088	MB-5088	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5092	MB-5092	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5093	MB-5093	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5097	MB-5097	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5098	MB-5098	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5100	MB-5100	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5101	MB-5101	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5102	MB-5102	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5104	MB-5104	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5105	MB-5105	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5106	MB-5106	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5107	MB-5107	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5109	MB-5109	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5110	MB-5110	Breast Invasive Lobular Carcinoma
+brca_metabric	MB-5113	MB-5113	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5114	MB-5114	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5115	MB-5115	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5116	MB-5116	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5117	MB-5117	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5118	MB-5118	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5119	MB-5119	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5120	MB-5120	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5121	MB-5121	Breast Invasive Lobular Carcinoma
+brca_metabric	MB-5122	MB-5122	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-5123	MB-5123	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5124	MB-5124	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5126	MB-5126	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5127	MB-5127	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-5130	MB-5130	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5131	MB-5131	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5134	MB-5134	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5135	MB-5135	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5136	MB-5136	Breast Invasive Lobular Carcinoma
+brca_metabric	MB-5137	MB-5137	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5138	MB-5138	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5139	MB-5139	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5140	MB-5140	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5143	MB-5143	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5144	MB-5144	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5145	MB-5145	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-5147	MB-5147	Breast Invasive Lobular Carcinoma
+brca_metabric	MB-5148	MB-5148	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5150	MB-5150	Breast Invasive Lobular Carcinoma
+brca_metabric	MB-5152	MB-5152	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5154	MB-5154	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5155	MB-5155	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5157	MB-5157	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5158	MB-5158	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5160	MB-5160	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5161	MB-5161	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5162	MB-5162	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5163	MB-5163	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5164	MB-5164	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5166	MB-5166	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5167	MB-5167	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5169	MB-5169	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5171	MB-5171	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5172	MB-5172	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5173	MB-5173	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5174	MB-5174	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5175	MB-5175	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5177	MB-5177	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5178	MB-5178	Breast Invasive Lobular Carcinoma
+brca_metabric	MB-5179	MB-5179	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-5182	MB-5182	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-5183	MB-5183	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5184	MB-5184	Breast Invasive Lobular Carcinoma
+brca_metabric	MB-5185	MB-5185	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5186	MB-5186	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5188	MB-5188	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5189	MB-5189	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5191	MB-5191	Breast Invasive Lobular Carcinoma
+brca_metabric	MB-5193	MB-5193	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5195	MB-5195	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5196	MB-5196	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5197	MB-5197	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5199	MB-5199	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5200	MB-5200	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5201	MB-5201	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5204	MB-5204	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5205	MB-5205	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5206	MB-5206	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-5208	MB-5208	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5209	MB-5209	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5211	MB-5211	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5212	MB-5212	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5213	MB-5213	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5214	MB-5214	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5215	MB-5215	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5218	MB-5218	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5221	MB-5221	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5222	MB-5222	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5223	MB-5223	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5224	MB-5224	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5225	MB-5225	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5226	MB-5226	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5227	MB-5227	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5228	MB-5228	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5229	MB-5229	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5230	MB-5230	Breast Invasive Mixed Mucinous Carcinoma
+brca_metabric	MB-5231	MB-5231	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5232	MB-5232	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5233	MB-5233	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5235	MB-5235	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5236	MB-5236	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5238	MB-5238	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5239	MB-5239	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-5240	MB-5240	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-5243	MB-5243	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5244	MB-5244	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5251	MB-5251	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5253	MB-5253	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-5255	MB-5255	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5256	MB-5256	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5258	MB-5258	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5259	MB-5259	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5260	MB-5260	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-5261	MB-5261	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5264	MB-5264	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5266	MB-5266	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5267	MB-5267	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5268	MB-5268	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-5270	MB-5270	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-5271	MB-5271	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5272	MB-5272	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5273	MB-5273	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5275	MB-5275	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5277	MB-5277	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5278	MB-5278	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-5279	MB-5279	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5280	MB-5280	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-5281	MB-5281	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5284	MB-5284	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-5287	MB-5287	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5288	MB-5288	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5289	MB-5289	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5290	MB-5290	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5291	MB-5291	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5292	MB-5292	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5293	MB-5293	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-5294	MB-5294	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5295	MB-5295	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5296	MB-5296	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5298	MB-5298	Breast Invasive Lobular Carcinoma
+brca_metabric	MB-5299	MB-5299	Breast Invasive Lobular Carcinoma
+brca_metabric	MB-5300	MB-5300	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5305	MB-5305	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-5306	MB-5306	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5308	MB-5308	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5310	MB-5310	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-5311	MB-5311	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5312	MB-5312	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5313	MB-5313	Breast Invasive Lobular Carcinoma
+brca_metabric	MB-5315	MB-5315	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5317	MB-5317	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-5318	MB-5318	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5322	MB-5322	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-5323	MB-5323	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5324	MB-5324	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-5326	MB-5326	Breast Invasive Lobular Carcinoma
+brca_metabric	MB-5327	MB-5327	Breast Invasive Lobular Carcinoma
+brca_metabric	MB-5328	MB-5328	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5329	MB-5329	Breast Invasive Lobular Carcinoma
+brca_metabric	MB-5330	MB-5330	Breast Invasive Lobular Carcinoma
+brca_metabric	MB-5331	MB-5331	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5332	MB-5332	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5334	MB-5334	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5335	MB-5335	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5338	MB-5338	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5339	MB-5339	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5341	MB-5341	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5345	MB-5345	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5346	MB-5346	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5347	MB-5347	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5348	MB-5348	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5350	MB-5350	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-5351	MB-5351	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5358	MB-5358	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-5360	MB-5360	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-5361	MB-5361	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5364	MB-5364	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5365	MB-5365	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5366	MB-5366	Breast Invasive Lobular Carcinoma
+brca_metabric	MB-5369	MB-5369	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-5370	MB-5370	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5373	MB-5373	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5377	MB-5377	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5378	MB-5378	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5381	MB-5381	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5382	MB-5382	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5383	MB-5383	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5386	MB-5386	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5388	MB-5388	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-5389	MB-5389	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5390	MB-5390	Breast Invasive Lobular Carcinoma
+brca_metabric	MB-5392	MB-5392	Breast Invasive Lobular Carcinoma
+brca_metabric	MB-5393	MB-5393	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-5395	MB-5395	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5396	MB-5396	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5397	MB-5397	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5398	MB-5398	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5399	MB-5399	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5401	MB-5401	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-5402	MB-5402	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5403	MB-5403	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5404	MB-5404	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5406	MB-5406	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-5407	MB-5407	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5408	MB-5408	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5409	MB-5409	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5410	MB-5410	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5411	MB-5411	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5412	MB-5412	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5413	MB-5413	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5414	MB-5414	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5417	MB-5417	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5418	MB-5418	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5420	MB-5420	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5421	MB-5421	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5422	MB-5422	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5424	MB-5424	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-5425	MB-5425	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5426	MB-5426	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5427	MB-5427	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5428	MB-5428	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-5429	MB-5429	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5431	MB-5431	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5432	MB-5432	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5433	MB-5433	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5434	MB-5434	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5435	MB-5435	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5440	MB-5440	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5441	MB-5441	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5442	MB-5442	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5444	MB-5444	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-5446	MB-5446	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5447	MB-5447	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5450	MB-5450	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5451	MB-5451	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-5452	MB-5452	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5453	MB-5453	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5454	MB-5454	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5455	MB-5455	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-5457	MB-5457	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5458	MB-5458	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5459	MB-5459	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5460	MB-5460	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-5463	MB-5463	Breast Invasive Lobular Carcinoma
+brca_metabric	MB-5464	MB-5464	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5465	MB-5465	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5467	MB-5467	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5468	MB-5468	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5470	MB-5470	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-5471	MB-5471	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5472	MB-5472	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5473	MB-5473	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5474	MB-5474	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5475	MB-5475	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5477	MB-5477	Breast
+brca_metabric	MB-5478	MB-5478	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-5481	MB-5481	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5482	MB-5482	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5483	MB-5483	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5484	MB-5484	Breast Invasive Lobular Carcinoma
+brca_metabric	MB-5485	MB-5485	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5486	MB-5486	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5489	MB-5489	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5490	MB-5490	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5491	MB-5491	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5492	MB-5492	Breast Invasive Lobular Carcinoma
+brca_metabric	MB-5493	MB-5493	Breast Invasive Lobular Carcinoma
+brca_metabric	MB-5495	MB-5495	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5497	MB-5497	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5498	MB-5498	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5499	MB-5499	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5502	MB-5502	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5505	MB-5505	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-5510	MB-5510	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-5511	MB-5511	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5513	MB-5513	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5514	MB-5514	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5518	MB-5518	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5519	MB-5519	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5520	MB-5520	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-5521	MB-5521	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5525	MB-5525	Breast Invasive Mixed Mucinous Carcinoma
+brca_metabric	MB-5526	MB-5526	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5527	MB-5527	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5529	MB-5529	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5530	MB-5530	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5531	MB-5531	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5532	MB-5532	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5533	MB-5533	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-5534	MB-5534	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5535	MB-5535	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5540	MB-5540	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-5541	MB-5541	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5543	MB-5543	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5547	MB-5547	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5548	MB-5548	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5549	MB-5549	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5550	MB-5550	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5551	MB-5551	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5552	MB-5552	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5553	MB-5553	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5554	MB-5554	Breast Invasive Lobular Carcinoma
+brca_metabric	MB-5556	MB-5556	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5558	MB-5558	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5560	MB-5560	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5562	MB-5562	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5563	MB-5563	Breast Invasive Lobular Carcinoma
+brca_metabric	MB-5565	MB-5565	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5566	MB-5566	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5567	MB-5567	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-5571	MB-5571	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5572	MB-5572	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5575	MB-5575	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5576	MB-5576	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-5577	MB-5577	Breast Invasive Lobular Carcinoma
+brca_metabric	MB-5579	MB-5579	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-5580	MB-5580	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5582	MB-5582	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5583	MB-5583	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5584	MB-5584	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5585	MB-5585	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5588	MB-5588	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-5589	MB-5589	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5590	MB-5590	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5591	MB-5591	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5592	MB-5592	Breast Invasive Lobular Carcinoma
+brca_metabric	MB-5593	MB-5593	Breast Invasive Lobular Carcinoma
+brca_metabric	MB-5596	MB-5596	Breast Invasive Lobular Carcinoma
+brca_metabric	MB-5597	MB-5597	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5599	MB-5599	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5601	MB-5601	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5602	MB-5602	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5603	MB-5603	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5604	MB-5604	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5605	MB-5605	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5613	MB-5613	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5614	MB-5614	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5616	MB-5616	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5617	MB-5617	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5620	MB-5620	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5622	MB-5622	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5623	MB-5623	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5624	MB-5624	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5625	MB-5625	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5626	MB-5626	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5628	MB-5628	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5629	MB-5629	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5632	MB-5632	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5633	MB-5633	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5634	MB-5634	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5635	MB-5635	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5636	MB-5636	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5638	MB-5638	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5640	MB-5640	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5641	MB-5641	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5642	MB-5642	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5645	MB-5645	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5646	MB-5646	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-5647	MB-5647	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5648	MB-5648	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5651	MB-5651	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-5652	MB-5652	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5653	MB-5653	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5654	MB-5654	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5655	MB-5655	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-5656	MB-5656	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-6001	MB-6001	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-6006	MB-6006	Breast Invasive Lobular Carcinoma
+brca_metabric	MB-6007	MB-6007	Breast Invasive Lobular Carcinoma
+brca_metabric	MB-6008	MB-6008	Breast Invasive Lobular Carcinoma
+brca_metabric	MB-6010	MB-6010	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-6011	MB-6011	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-6012	MB-6012	Breast Invasive Lobular Carcinoma
+brca_metabric	MB-6014	MB-6014	Breast Invasive Lobular Carcinoma
+brca_metabric	MB-6016	MB-6016	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-6017	MB-6017	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-6018	MB-6018	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-6019	MB-6019	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-6020	MB-6020	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-6021	MB-6021	Breast Invasive Lobular Carcinoma
+brca_metabric	MB-6022	MB-6022	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-6023	MB-6023	Breast Invasive Lobular Carcinoma
+brca_metabric	MB-6024	MB-6024	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-6026	MB-6026	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-6029	MB-6029	Breast
+brca_metabric	MB-6030	MB-6030	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-6036	MB-6036	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-6039	MB-6039	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-6042	MB-6042	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-6044	MB-6044	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-6047	MB-6047	Breast
+brca_metabric	MB-6048	MB-6048	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-6049	MB-6049	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-6050	MB-6050	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-6051	MB-6051	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-6052	MB-6052	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-6053	MB-6053	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-6055	MB-6055	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-6058	MB-6058	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-6059	MB-6059	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-6060	MB-6060	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-6062	MB-6062	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-6063	MB-6063	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-6065	MB-6065	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-6068	MB-6068	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-6069	MB-6069	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-6071	MB-6071	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-6075	MB-6075	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-6077	MB-6077	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-6079	MB-6079	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-6080	MB-6080	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-6082	MB-6082	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-6083	MB-6083	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-6085	MB-6085	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-6092	MB-6092	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-6097	MB-6097	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-6098	MB-6098	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-6100	MB-6100	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-6101	MB-6101	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-6103	MB-6103	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-6105	MB-6105	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-6107	MB-6107	Breast Invasive Lobular Carcinoma
+brca_metabric	MB-6108	MB-6108	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-6113	MB-6113	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-6114	MB-6114	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-6116	MB-6116	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-6118	MB-6118	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-6122	MB-6122	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-6124	MB-6124	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-6125	MB-6125	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-6131	MB-6131	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-6133	MB-6133	Breast Invasive Lobular Carcinoma
+brca_metabric	MB-6135	MB-6135	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-6138	MB-6138	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-6141	MB-6141	Breast Invasive Lobular Carcinoma
+brca_metabric	MB-6143	MB-6143	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-6144	MB-6144	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-6145	MB-6145	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-6146	MB-6146	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-6147	MB-6147	Breast Invasive Lobular Carcinoma
+brca_metabric	MB-6149	MB-6149	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-6150	MB-6150	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-6152	MB-6152	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-6154	MB-6154	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-6156	MB-6156	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-6157	MB-6157	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-6160	MB-6160	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-6163	MB-6163	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-6164	MB-6164	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-6167	MB-6167	Breast Invasive Lobular Carcinoma
+brca_metabric	MB-6168	MB-6168	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-6169	MB-6169	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-6171	MB-6171	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-6178	MB-6178	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-6179	MB-6179	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-6181	MB-6181	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-6182	MB-6182	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-6183	MB-6183	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-6184	MB-6184	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-6185	MB-6185	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-6187	MB-6187	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-6188	MB-6188	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-6189	MB-6189	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-6190	MB-6190	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-6192	MB-6192	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-6194	MB-6194	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-6195	MB-6195	Breast Invasive Lobular Carcinoma
+brca_metabric	MB-6200	MB-6200	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-6201	MB-6201	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-6204	MB-6204	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-6206	MB-6206	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-6207	MB-6207	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-6208	MB-6208	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-6211	MB-6211	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-6212	MB-6212	Breast
+brca_metabric	MB-6213	MB-6213	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-6214	MB-6214	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-6217	MB-6217	Breast Invasive Mixed Mucinous Carcinoma
+brca_metabric	MB-6218	MB-6218	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-6223	MB-6223	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-6224	MB-6224	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-6225	MB-6225	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-6226	MB-6226	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-6228	MB-6228	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-6229	MB-6229	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-6230	MB-6230	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-6231	MB-6231	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-6232	MB-6232	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-6233	MB-6233	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-6234	MB-6234	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-6237	MB-6237	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-6238	MB-6238	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-6239	MB-6239	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-6242	MB-6242	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-6245	MB-6245	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-6246	MB-6246	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-6248	MB-6248	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-6251	MB-6251	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-6253	MB-6253	Breast Invasive Lobular Carcinoma
+brca_metabric	MB-6254	MB-6254	Breast Invasive Mixed Mucinous Carcinoma
+brca_metabric	MB-6256	MB-6256	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-6257	MB-6257	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-6263	MB-6263	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-6271	MB-6271	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-6272	MB-6272	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-6273	MB-6273	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-6280	MB-6280	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-6281	MB-6281	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-6283	MB-6283	Breast Invasive Lobular Carcinoma
+brca_metabric	MB-6284	MB-6284	Breast
+brca_metabric	MB-6286	MB-6286	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-6287	MB-6287	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-6288	MB-6288	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-6297	MB-6297	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-6300	MB-6300	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-6302	MB-6302	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-6305	MB-6305	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-6306	MB-6306	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-6308	MB-6308	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-6312	MB-6312	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-6314	MB-6314	Breast Invasive Mixed Mucinous Carcinoma
+brca_metabric	MB-6317	MB-6317	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-6318	MB-6318	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-6319	MB-6319	Breast Invasive Lobular Carcinoma
+brca_metabric	MB-6322	MB-6322	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-6327	MB-6327	Breast Invasive Mixed Mucinous Carcinoma
+brca_metabric	MB-6328	MB-6328	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-6329	MB-6329	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-6330	MB-6330	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-6334	MB-6334	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-6336	MB-6336	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-6337	MB-6337	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-6344	MB-6344	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-6346	MB-6346	Breast Invasive Mixed Mucinous Carcinoma
+brca_metabric	MB-6358	MB-6358	Breast Invasive Lobular Carcinoma
+brca_metabric	MB-6359	MB-6359	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-6363	MB-6363	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7000	MB-7000	Breast
+brca_metabric	MB-7001	MB-7001	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7002	MB-7002	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7003	MB-7003	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7004	MB-7004	Breast Invasive Lobular Carcinoma
+brca_metabric	MB-7005	MB-7005	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7006	MB-7006	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7007	MB-7007	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7008	MB-7008	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7009	MB-7009	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7010	MB-7010	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7011	MB-7011	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-7012	MB-7012	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7013	MB-7013	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7014	MB-7014	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-7015	MB-7015	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7017	MB-7017	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-7018	MB-7018	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7019	MB-7019	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7020	MB-7020	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7022	MB-7022	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7023	MB-7023	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7024	MB-7024	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7025	MB-7025	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7026	MB-7026	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7027	MB-7027	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7028	MB-7028	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7029	MB-7029	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7030	MB-7030	Breast
+brca_metabric	MB-7031	MB-7031	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7034	MB-7034	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7035	MB-7035	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7036	MB-7036	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7037	MB-7037	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7038	MB-7038	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7039	MB-7039	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-7040	MB-7040	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7041	MB-7041	Breast Invasive Lobular Carcinoma
+brca_metabric	MB-7042	MB-7042	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7043	MB-7043	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7044	MB-7044	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7045	MB-7045	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7046	MB-7046	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7048	MB-7048	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7049	MB-7049	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7050	MB-7050	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7051	MB-7051	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7052	MB-7052	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7053	MB-7053	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7054	MB-7054	Breast Invasive Lobular Carcinoma
+brca_metabric	MB-7055	MB-7055	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7056	MB-7056	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7057	MB-7057	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7058	MB-7058	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7060	MB-7060	Breast Invasive Lobular Carcinoma
+brca_metabric	MB-7061	MB-7061	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7062	MB-7062	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7063	MB-7063	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7065	MB-7065	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7066	MB-7066	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7067	MB-7067	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7068	MB-7068	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7069	MB-7069	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7070	MB-7070	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7071	MB-7071	Breast Invasive Lobular Carcinoma
+brca_metabric	MB-7072	MB-7072	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-7073	MB-7073	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7074	MB-7074	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7075	MB-7075	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-7076	MB-7076	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7077	MB-7077	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7078	MB-7078	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7079	MB-7079	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7080	MB-7080	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7081	MB-7081	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7082	MB-7082	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7083	MB-7083	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7085	MB-7085	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7086	MB-7086	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-7087	MB-7087	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7088	MB-7088	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7089	MB-7089	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7090	MB-7090	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7091	MB-7091	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7092	MB-7092	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-7093	MB-7093	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7094	MB-7094	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7095	MB-7095	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7096	MB-7096	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7097	MB-7097	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7099	MB-7099	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7100	MB-7100	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7101	MB-7101	Breast Invasive Lobular Carcinoma
+brca_metabric	MB-7102	MB-7102	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-7104	MB-7104	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7106	MB-7106	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7107	MB-7107	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7109	MB-7109	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7111	MB-7111	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7112	MB-7112	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7113	MB-7113	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7114	MB-7114	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7115	MB-7115	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7116	MB-7116	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7118	MB-7118	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7119	MB-7119	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7121	MB-7121	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7122	MB-7122	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7123	MB-7123	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7124	MB-7124	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7127	MB-7127	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7130	MB-7130	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7131	MB-7131	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7132	MB-7132	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7133	MB-7133	Breast Invasive Lobular Carcinoma
+brca_metabric	MB-7135	MB-7135	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7137	MB-7137	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7138	MB-7138	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7140	MB-7140	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7141	MB-7141	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7142	MB-7142	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7143	MB-7143	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7144	MB-7144	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7145	MB-7145	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7147	MB-7147	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-7149	MB-7149	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7150	MB-7150	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7151	MB-7151	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7152	MB-7152	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7153	MB-7153	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7154	MB-7154	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7155	MB-7155	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7157	MB-7157	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7158	MB-7158	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7159	MB-7159	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7160	MB-7160	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7161	MB-7161	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7162	MB-7162	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7163	MB-7163	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7164	MB-7164	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7165	MB-7165	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7167	MB-7167	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7168	MB-7168	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7170	MB-7170	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7171	MB-7171	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7172	MB-7172	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7173	MB-7173	Breast Invasive Lobular Carcinoma
+brca_metabric	MB-7174	MB-7174	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7176	MB-7176	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7181	MB-7181	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7182	MB-7182	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7185	MB-7185	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7186	MB-7186	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7187	MB-7187	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7189	MB-7189	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7193	MB-7193	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7194	MB-7194	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7195	MB-7195	Breast Invasive Lobular Carcinoma
+brca_metabric	MB-7196	MB-7196	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7197	MB-7197	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7198	MB-7198	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7199	MB-7199	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7200	MB-7200	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7201	MB-7201	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7205	MB-7205	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7207	MB-7207	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7208	MB-7208	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7212	MB-7212	Breast Invasive Lobular Carcinoma
+brca_metabric	MB-7215	MB-7215	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7216	MB-7216	Breast Invasive Lobular Carcinoma
+brca_metabric	MB-7217	MB-7217	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7218	MB-7218	Breast Invasive Lobular Carcinoma
+brca_metabric	MB-7219	MB-7219	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7220	MB-7220	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7225	MB-7225	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7226	MB-7226	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7227	MB-7227	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7228	MB-7228	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7229	MB-7229	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MB-7230	MB-7230	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7231	MB-7231	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7232	MB-7232	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7233	MB-7233	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7234	MB-7234	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7235	MB-7235	Breast
+brca_metabric	MB-7237	MB-7237	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7238	MB-7238	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7241	MB-7241	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7243	MB-7243	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7244	MB-7244	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7249	MB-7249	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7250	MB-7250	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7251	MB-7251	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7252	MB-7252	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7253	MB-7253	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7254	MB-7254	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7256	MB-7256	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7258	MB-7258	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7260	MB-7260	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7262	MB-7262	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7263	MB-7263	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7264	MB-7264	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7266	MB-7266	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7267	MB-7267	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7268	MB-7268	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7269	MB-7269	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7270	MB-7270	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7273	MB-7273	Breast Invasive Lobular Carcinoma
+brca_metabric	MB-7275	MB-7275	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7276	MB-7276	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7277	MB-7277	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7278	MB-7278	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7279	MB-7279	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7280	MB-7280	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7281	MB-7281	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7283	MB-7283	Breast Invasive Lobular Carcinoma
+brca_metabric	MB-7284	MB-7284	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7285	MB-7285	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7286	MB-7286	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7287	MB-7287	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7288	MB-7288	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7289	MB-7289	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7291	MB-7291	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7292	MB-7292	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7293	MB-7293	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7294	MB-7294	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7295	MB-7295	Breast Invasive Lobular Carcinoma
+brca_metabric	MB-7296	MB-7296	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7297	MB-7297	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7298	MB-7298	Breast Invasive Ductal Carcinoma
+brca_metabric	MB-7299	MB-7299	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0035	MTS-T0035	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0058	MTS-T0058	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0059	MTS-T0059	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0061	MTS-T0061	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0062	MTS-T0062	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0063	MTS-T0063	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0064	MTS-T0064	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0065	MTS-T0065	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MTS-T0066	MTS-T0066	Breast Invasive Lobular Carcinoma
+brca_metabric	MTS-T0067	MTS-T0067	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0068	MTS-T0068	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0069	MTS-T0069	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0070	MTS-T0070	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0071	MTS-T0071	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0072	MTS-T0072	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0073	MTS-T0073	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0074	MTS-T0074	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MTS-T0075	MTS-T0075	Breast Invasive Lobular Carcinoma
+brca_metabric	MTS-T0076	MTS-T0076	Breast Invasive Lobular Carcinoma
+brca_metabric	MTS-T0077	MTS-T0077	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MTS-T0078	MTS-T0078	Breast Invasive Lobular Carcinoma
+brca_metabric	MTS-T0079	MTS-T0079	Breast Invasive Lobular Carcinoma
+brca_metabric	MTS-T0080	MTS-T0080	Breast Invasive Lobular Carcinoma
+brca_metabric	MTS-T0081	MTS-T0081	Breast Invasive Lobular Carcinoma
+brca_metabric	MTS-T0082	MTS-T0082	Breast Invasive Lobular Carcinoma
+brca_metabric	MTS-T0083	MTS-T0083	Breast Invasive Lobular Carcinoma
+brca_metabric	MTS-T0084	MTS-T0084	Breast Invasive Lobular Carcinoma
+brca_metabric	MTS-T0085	MTS-T0085	Breast Invasive Lobular Carcinoma
+brca_metabric	MTS-T0086	MTS-T0086	Breast Invasive Lobular Carcinoma
+brca_metabric	MTS-T0087	MTS-T0087	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MTS-T0088	MTS-T0088	Breast Invasive Lobular Carcinoma
+brca_metabric	MTS-T0089	MTS-T0089	Breast Invasive Lobular Carcinoma
+brca_metabric	MTS-T0090	MTS-T0090	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0091	MTS-T0091	Breast Invasive Lobular Carcinoma
+brca_metabric	MTS-T0092	MTS-T0092	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0093	MTS-T0093	Breast Invasive Lobular Carcinoma
+brca_metabric	MTS-T0094	MTS-T0094	Breast Invasive Lobular Carcinoma
+brca_metabric	MTS-T0095	MTS-T0095	Breast Invasive Lobular Carcinoma
+brca_metabric	MTS-T0131	MTS-T0131	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0132	MTS-T0132	Breast Invasive Lobular Carcinoma
+brca_metabric	MTS-T0134	MTS-T0134	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0135	MTS-T0135	Breast Invasive Lobular Carcinoma
+brca_metabric	MTS-T0137	MTS-T0137	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0138	MTS-T0138	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0139	MTS-T0139	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0141	MTS-T0141	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0142	MTS-T0142	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0144	MTS-T0144	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0145	MTS-T0145	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0146	MTS-T0146	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0147	MTS-T0147	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0148	MTS-T0148	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0149	MTS-T0149	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0150	MTS-T0150	Breast Invasive Lobular Carcinoma
+brca_metabric	MTS-T0151	MTS-T0151	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0152	MTS-T0152	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0153	MTS-T0153	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MTS-T0154	MTS-T0154	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0155	MTS-T0155	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0156	MTS-T0156	Breast Invasive Lobular Carcinoma
+brca_metabric	MTS-T0163	MTS-T0163	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0164	MTS-T0164	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0165	MTS-T0165	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0166	MTS-T0166	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0167	MTS-T0167	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0168	MTS-T0168	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0169	MTS-T0169	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0170	MTS-T0170	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0171	MTS-T0171	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0172	MTS-T0172	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0173	MTS-T0173	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0174	MTS-T0174	Breast Invasive Lobular Carcinoma
+brca_metabric	MTS-T0175	MTS-T0175	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MTS-T0176	MTS-T0176	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0177	MTS-T0177	Breast Invasive Lobular Carcinoma
+brca_metabric	MTS-T0178	MTS-T0178	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0179	MTS-T0179	Breast
+brca_metabric	MTS-T0180	MTS-T0180	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0181	MTS-T0181	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0182	MTS-T0182	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MTS-T0183	MTS-T0183	Breast Invasive Lobular Carcinoma
+brca_metabric	MTS-T0184	MTS-T0184	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0185	MTS-T0185	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0186	MTS-T0186	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MTS-T0187	MTS-T0187	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0188	MTS-T0188	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0189	MTS-T0189	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0190	MTS-T0190	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0192	MTS-T0192	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0193	MTS-T0193	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0194	MTS-T0194	Breast Invasive Lobular Carcinoma
+brca_metabric	MTS-T0195	MTS-T0195	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MTS-T0196	MTS-T0196	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0197	MTS-T0197	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0198	MTS-T0198	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0199	MTS-T0199	Breast Invasive Lobular Carcinoma
+brca_metabric	MTS-T0200	MTS-T0200	Breast Invasive Lobular Carcinoma
+brca_metabric	MTS-T0201	MTS-T0201	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0202	MTS-T0202	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0203	MTS-T0203	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0204	MTS-T0204	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0205	MTS-T0205	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0206	MTS-T0206	Breast Invasive Lobular Carcinoma
+brca_metabric	MTS-T0207	MTS-T0207	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0208	MTS-T0208	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0209	MTS-T0209	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0210	MTS-T0210	Breast Invasive Lobular Carcinoma
+brca_metabric	MTS-T0211	MTS-T0211	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MTS-T0212	MTS-T0212	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0214	MTS-T0214	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0215	MTS-T0215	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MTS-T0216	MTS-T0216	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MTS-T0217	MTS-T0217	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0218	MTS-T0218	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0219	MTS-T0219	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0220	MTS-T0220	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0221	MTS-T0221	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0222	MTS-T0222	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0223	MTS-T0223	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0224	MTS-T0224	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0225	MTS-T0225	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0226	MTS-T0226	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0227	MTS-T0227	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0228	MTS-T0228	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0229	MTS-T0229	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0230	MTS-T0230	Breast Invasive Lobular Carcinoma
+brca_metabric	MTS-T0231	MTS-T0231	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0232	MTS-T0232	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0233	MTS-T0233	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0234	MTS-T0234	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0235	MTS-T0235	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0236	MTS-T0236	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0237	MTS-T0237	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0238	MTS-T0238	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0239	MTS-T0239	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0240	MTS-T0240	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0241	MTS-T0241	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0242	MTS-T0242	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0243	MTS-T0243	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0244	MTS-T0244	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0245	MTS-T0245	Breast Invasive Lobular Carcinoma
+brca_metabric	MTS-T0246	MTS-T0246	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0247	MTS-T0247	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0248	MTS-T0248	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0249	MTS-T0249	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0252	MTS-T0252	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0253	MTS-T0253	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0254	MTS-T0254	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MTS-T0255	MTS-T0255	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0256	MTS-T0256	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0257	MTS-T0257	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0258	MTS-T0258	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0259	MTS-T0259	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0260	MTS-T0260	Breast Invasive Lobular Carcinoma
+brca_metabric	MTS-T0261	MTS-T0261	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0262	MTS-T0262	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0266	MTS-T0266	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0273	MTS-T0273	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0275	MTS-T0275	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0276	MTS-T0276	Breast Invasive Lobular Carcinoma
+brca_metabric	MTS-T0279	MTS-T0279	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0281	MTS-T0281	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0285	MTS-T0285	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MTS-T0286	MTS-T0286	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0299	MTS-T0299	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0303	MTS-T0303	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0304	MTS-T0304	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0305	MTS-T0305	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0312	MTS-T0312	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0313	MTS-T0313	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0325	MTS-T0325	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0327	MTS-T0327	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MTS-T0329	MTS-T0329	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0330	MTS-T0330	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0331	MTS-T0331	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MTS-T0333	MTS-T0333	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0336	MTS-T0336	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0337	MTS-T0337	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0338	MTS-T0338	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MTS-T0339	MTS-T0339	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0341	MTS-T0341	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0342	MTS-T0342	Breast Invasive Lobular Carcinoma
+brca_metabric	MTS-T0343	MTS-T0343	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MTS-T0344	MTS-T0344	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MTS-T0345	MTS-T0345	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MTS-T0346	MTS-T0346	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0347	MTS-T0347	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0348	MTS-T0348	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0349	MTS-T0349	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MTS-T0350	MTS-T0350	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MTS-T0351	MTS-T0351	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MTS-T0352	MTS-T0352	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MTS-T0355	MTS-T0355	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MTS-T0356	MTS-T0356	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0357	MTS-T0357	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MTS-T0359	MTS-T0359	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MTS-T0360	MTS-T0360	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0361	MTS-T0361	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0362	MTS-T0362	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MTS-T0363	MTS-T0363	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0364	MTS-T0364	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MTS-T0365	MTS-T0365	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0367	MTS-T0367	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MTS-T0368	MTS-T0368	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0369	MTS-T0369	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MTS-T0370	MTS-T0370	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MTS-T0371	MTS-T0371	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0372	MTS-T0372	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0373	MTS-T0373	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0375	MTS-T0375	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0376	MTS-T0376	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0377	MTS-T0377	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0378	MTS-T0378	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0379	MTS-T0379	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MTS-T0380	MTS-T0380	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0381	MTS-T0381	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0382	MTS-T0382	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0383	MTS-T0383	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0384	MTS-T0384	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MTS-T0385	MTS-T0385	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MTS-T0386	MTS-T0386	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0389	MTS-T0389	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0390	MTS-T0390	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0391	MTS-T0391	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0392	MTS-T0392	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0393	MTS-T0393	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MTS-T0394	MTS-T0394	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MTS-T0395	MTS-T0395	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MTS-T0396	MTS-T0396	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MTS-T0397	MTS-T0397	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MTS-T0398	MTS-T0398	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0400	MTS-T0400	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0401	MTS-T0401	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0402	MTS-T0402	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0403	MTS-T0403	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0404	MTS-T0404	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MTS-T0405	MTS-T0405	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0406	MTS-T0406	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MTS-T0407	MTS-T0407	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MTS-T0409	MTS-T0409	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0456	MTS-T0456	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0466	MTS-T0466	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0468	MTS-T0468	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0479	MTS-T0479	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0490	MTS-T0490	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0508	MTS-T0508	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0515	MTS-T0515	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0516	MTS-T0516	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0525	MTS-T0525	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0528	MTS-T0528	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0558	MTS-T0558	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0600	MTS-T0600	Breast Invasive Lobular Carcinoma
+brca_metabric	MTS-T0602	MTS-T0602	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0646	MTS-T0646	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0652	MTS-T0652	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0673	MTS-T0673	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0685	MTS-T0685	Breast Invasive Lobular Carcinoma
+brca_metabric	MTS-T0689	MTS-T0689	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0690	MTS-T0690	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0691	MTS-T0691	Breast Invasive Mixed Mucinous Carcinoma
+brca_metabric	MTS-T0693	MTS-T0693	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0694	MTS-T0694	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0695	MTS-T0695	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0696	MTS-T0696	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0697	MTS-T0697	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0698	MTS-T0698	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0699	MTS-T0699	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0700	MTS-T0700	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0701	MTS-T0701	Breast Invasive Lobular Carcinoma
+brca_metabric	MTS-T0702	MTS-T0702	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0703	MTS-T0703	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0704	MTS-T0704	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0705	MTS-T0705	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0707	MTS-T0707	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0708	MTS-T0708	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0709	MTS-T0709	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0710	MTS-T0710	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0712	MTS-T0712	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0713	MTS-T0713	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0714	MTS-T0714	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0715	MTS-T0715	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0716	MTS-T0716	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0717	MTS-T0717	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0719	MTS-T0719	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0720	MTS-T0720	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0722	MTS-T0722	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0723	MTS-T0723	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0724	MTS-T0724	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0725	MTS-T0725	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0726	MTS-T0726	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0737	MTS-T0737	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0788	MTS-T0788	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0824	MTS-T0824	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0877	MTS-T0877	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0883	MTS-T0883	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0911	MTS-T0911	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T0927	MTS-T0927	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T1020	MTS-T1020	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T1088	MTS-T1088	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T1134	MTS-T1134	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T1138	MTS-T1138	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T1185	MTS-T1185	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T1189	MTS-T1189	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T1191	MTS-T1191	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T1203	MTS-T1203	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T1213	MTS-T1213	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MTS-T1223	MTS-T1223	Breast
+brca_metabric	MTS-T1240	MTS-T1240	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T1248	MTS-T1248	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T1259	MTS-T1259	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T1264	MTS-T1264	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T1269	MTS-T1269	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T1270	MTS-T1270	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T1272	MTS-T1272	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MTS-T1273	MTS-T1273	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T1275	MTS-T1275	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T1276	MTS-T1276	Breast Invasive Lobular Carcinoma
+brca_metabric	MTS-T1277	MTS-T1277	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MTS-T1278	MTS-T1278	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T1280	MTS-T1280	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T1283	MTS-T1283	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T1284	MTS-T1284	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T1285	MTS-T1285	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T1286	MTS-T1286	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T1287	MTS-T1287	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T1290	MTS-T1290	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T1291	MTS-T1291	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T1292	MTS-T1292	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T1293	MTS-T1293	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T1294	MTS-T1294	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T1296	MTS-T1296	Breast Invasive Lobular Carcinoma
+brca_metabric	MTS-T1298	MTS-T1298	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T1299	MTS-T1299	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T1301	MTS-T1301	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T1302	MTS-T1302	Breast Invasive Lobular Carcinoma
+brca_metabric	MTS-T1304	MTS-T1304	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T1306	MTS-T1306	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T1307	MTS-T1307	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T1308	MTS-T1308	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T1310	MTS-T1310	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T1311	MTS-T1311	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T1313	MTS-T1313	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T1326	MTS-T1326	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T1329	MTS-T1329	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T1366	MTS-T1366	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T1454	MTS-T1454	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T1501	MTS-T1501	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T1502	MTS-T1502	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T1503	MTS-T1503	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T1504	MTS-T1504	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T1515	MTS-T1515	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T1516	MTS-T1516	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MTS-T1517	MTS-T1517	Breast
+brca_metabric	MTS-T1522	MTS-T1522	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T1525	MTS-T1525	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T1526	MTS-T1526	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T1537	MTS-T1537	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T1548	MTS-T1548	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T1549	MTS-T1549	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T1560	MTS-T1560	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T1561	MTS-T1561	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T1571	MTS-T1571	Breast Invasive Lobular Carcinoma
+brca_metabric	MTS-T1576	MTS-T1576	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T1582	MTS-T1582	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T1583	MTS-T1583	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T1605	MTS-T1605	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T1616	MTS-T1616	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T1633	MTS-T1633	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T1659	MTS-T1659	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T1706	MTS-T1706	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T1774	MTS-T1774	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T1800	MTS-T1800	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T1829	MTS-T1829	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MTS-T1847	MTS-T1847	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T1865	MTS-T1865	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T1872	MTS-T1872	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T1922	MTS-T1922	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T1945	MTS-T1945	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MTS-T1954	MTS-T1954	Breast Invasive Lobular Carcinoma
+brca_metabric	MTS-T1962	MTS-T1962	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T1971	MTS-T1971	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T1973	MTS-T1973	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MTS-T1983	MTS-T1983	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MTS-T1991	MTS-T1991	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MTS-T2018	MTS-T2018	Breast
+brca_metabric	MTS-T2030	MTS-T2030	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MTS-T2031	MTS-T2031	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T2043	MTS-T2043	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T2044	MTS-T2044	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T2047	MTS-T2047	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MTS-T2053	MTS-T2053	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T2054	MTS-T2054	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T2055	MTS-T2055	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T2064	MTS-T2064	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MTS-T2065	MTS-T2065	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T2066	MTS-T2066	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T2068	MTS-T2068	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T2074	MTS-T2074	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T2083	MTS-T2083	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T2084	MTS-T2084	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T2085	MTS-T2085	Breast Invasive Lobular Carcinoma
+brca_metabric	MTS-T2086	MTS-T2086	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T2087	MTS-T2087	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MTS-T2090	MTS-T2090	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T2094	MTS-T2094	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T2095	MTS-T2095	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T2096	MTS-T2096	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MTS-T2097	MTS-T2097	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T2104	MTS-T2104	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T2105	MTS-T2105	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T2106	MTS-T2106	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T2107	MTS-T2107	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T2115	MTS-T2115	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T2116	MTS-T2116	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T2117	MTS-T2117	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T2118	MTS-T2118	Breast Mixed Ductal and Lobular Carcinoma
+brca_metabric	MTS-T2126	MTS-T2126	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T2127	MTS-T2127	Breast Invasive Lobular Carcinoma
+brca_metabric	MTS-T2128	MTS-T2128	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T2129	MTS-T2129	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T2393	MTS-T2393	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T2398	MTS-T2398	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T2403	MTS-T2403	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T2406	MTS-T2406	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T2407	MTS-T2407	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T2408	MTS-T2408	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T2409	MTS-T2409	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T2410	MTS-T2410	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T2412	MTS-T2412	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T2413	MTS-T2413	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T2414	MTS-T2414	Breast Invasive Lobular Carcinoma
+brca_metabric	MTS-T2415	MTS-T2415	Breast Invasive Mixed Mucinous Carcinoma
+brca_metabric	MTS-T2416	MTS-T2416	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T2424	MTS-T2424	Breast Invasive Ductal Carcinoma
+brca_metabric	MTS-T2425	MTS-T2425	Breast Invasive Ductal Carcinoma

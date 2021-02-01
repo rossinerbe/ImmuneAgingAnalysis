@@ -1,0 +1,352 @@
+---
+title: "TCR"
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r}
+miTCR = data.table::fread("Data/mitcr_sampleStatistics_20160714.tsv")
+head(miTCR)
+
+#format sampleID
+miTCR$SampleID = unlist(lapply(miTCR$SampleBarcode, stringr::str_sub, start = 1, end = 15))
+
+#add patient clinical data
+pheno = data.table::fread("Data/tcga_clinical_data.tsv")
+
+miTCR$DiagnosisAge = NA
+miTCR$CancerType = NA
+miTCR$MutationCount = NA
+miTCRSub = miTCR[which(miTCR$SampleID %in% pheno$`Sample ID`)]
+
+for(i in 1:nrow(miTCRSub)){
+  matched_pheno_ind = which(pheno$`Sample ID` == miTCRSub$SampleID[i])
+  miTCRSub$DiagnosisAge[i] = pheno$`Diagnosis Age`[matched_pheno_ind]
+  miTCRSub$CancerType[i] = pheno$`TCGA PanCanAtlas Cancer Type Acronym`[matched_pheno_ind]
+  miTCRSub$MutationCount[i] = pheno$`Mutation Count`[matched_pheno_ind]
+}
+
+#remove observations without known patient age or cancer type
+nainds = which(is.na(miTCRSub$DiagnosisAge))
+which(is.na(miTCRSub$CancerType))
+miTCRSub = miTCRSub[-nainds,]
+miTCRSub$CancerType = as.factor(miTCRSub$CancerType)
+
+#normalize number of TCR clones by total TCR reads
+miTCRSub$CPR = miTCRSub$numClones/miTCRSub$totTCR_reads
+
+
+#normalize Shannon by nClones/nTotReads
+miTCRSub$NormShannon = miTCRSub$shannon * (miTCRSub$numClones/miTCRSub$totTCR_reads)
+
+
+miTCRAgeModel = lm(NormShannon~DiagnosisAge, miTCRSub)
+summary(miTCRAgeModel)
+
+
+#we've been only using indviduals 30+ in age for other analyses, due to concerns about patients younger being highly abnormal in some regard that is not easy to account for, so filter those out
+miTCRSub = miTCRSub[which(miTCRSub$DiagnosisAge >= 30),]
+
+miTCRAgeModel = lm(NormShannon~DiagnosisAge, miTCRSub)
+summary(miTCRAgeModel)
+
+#include cancer type
+miTCR2 = lm(NormShannon~DiagnosisAge+CancerType, miTCRSub)
+summary(miTCR2)
+
+saveRDS(summary(miTCR2)$coefficients[2,], "Data/TCGA_TMB_LM_Age_term.rds")
+
+
+jtools::effect_plot(miTCR2, pred = DiagnosisAge, interval = T, plot.points = T)
+
+
+#plot
+miTCRSub$ageGroup = NA
+miTCRSub$ageGroup[which(miTCRSub$DiagnosisAge >= 30 & miTCRSub$DiagnosisAge < 40)] = "30-39"
+miTCRSub$ageGroup[which(miTCRSub$DiagnosisAge >= 40 & miTCRSub$DiagnosisAge < 50)] = "40-49"
+miTCRSub$ageGroup[which(miTCRSub$DiagnosisAge >= 50 & miTCRSub$DiagnosisAge < 60)] = "50-59"
+miTCRSub$ageGroup[which(miTCRSub$DiagnosisAge >= 60 & miTCRSub$DiagnosisAge < 70)] = "60-69"
+miTCRSub$ageGroup[which(miTCRSub$DiagnosisAge >= 70 & miTCRSub$DiagnosisAge < 80)] = "70-79"
+miTCRSub$ageGroup[which(miTCRSub$DiagnosisAge >= 80 & miTCRSub$DiagnosisAge <= 90)] = "80-90"
+
+miTCRSub$ageGroup =as.factor(miTCRSub$ageGroup)
+
+means = aggregate(miTCRSub$NormShannon~miTCRSub$ageGroup, FUN = mean)
+
+df = data.frame(age = means[1:6,1], PC = means[1:6,2])
+
+library(ggplot2)
+ggplot(data = df, aes(x = age, y = PC)) +
+  geom_col(fill = "steelblue")+
+  labs(title="TCR Normalized Clonality", 
+         x="Age Group", y = "TCR Normalized Clonality") +
+  theme_minimal()
+
+dfbox = data.frame(age = miTCRSub$ageGroup, NormClonality = miTCRSub$NormShannon)
+
+ggplot(data = dfbox, aes(x = age, y = NormClonality)) +
+  geom_boxplot(fill = "steelblue")
+```
+
+
+TCR Prognostic
+```{r}
+library(survival)
+#add survival data
+miTCRSub$OSS = NA
+miTCRSub$OSM = NA
+
+for(i in 1:nrow(miTCRSub)){
+  matched_pheno_ind = which(pheno$`Sample ID` == miTCRSub$SampleID[i])
+  miTCRSub$OSS[i] = pheno$`Overall Survival Status`[matched_pheno_ind]
+  miTCRSub$OSM[i] = pheno$`Overall Survival (Months)`[matched_pheno_ind]
+}
+
+liveinds = which(miTCRSub$OSS == "LIVING")
+deadinds = which(miTCRSub$OSS == "DECEASED")
+
+miTCRSub$OSS[liveinds] = 0
+miTCRSub$OSS[deadinds] = 1
+miTCRSub$OSS = as.numeric(miTCRSub$OSS)
+
+length(which(miTCRSub$OSS == 0 | miTCRSub$OSS == 1))
+miTCRSub3 = miTCRSub[-which(is.na(miTCRSub$OSS)),]
+
+#coxph model
+coxph(Surv(OSM, OSS)~NormShannon + DiagnosisAge, miTCRSub3)
+
+#include cancer type
+coxph(Surv(OSM, OSS)~NormShannon+ DiagnosisAge + strata(CancerType), miTCRSub3) # p = 3.34e-05
+
+#unnormalized shannon
+coxph(Surv(OSM, OSS)~shannon + DiagnosisAge + strata(CancerType), miTCRSub3)
+#p = 1.92e-05
+
+#nClones/nReads
+coxph(Surv(OSM, OSS)~CPR+ DiagnosisAge + strata(CancerType), miTCRSub3)
+#p = 0.756
+
+#examine where there has been expansion of TCR clones, indicating recognition of antigen
+miTCRSub$Expansion = miTCRSub$CPR < 1
+
+log = glm(Expansion ~ DiagnosisAge, family = binomial(link = "logit"), data = miTCRSub)
+summary(log)
+#p = 1.28e-04
+
+countByAgeGroup = aggregate(miTCRSub$Expansion~miTCRSub$ageGroup, FUN = sum)
+
+#divide by total
+summary(miTCRSub$ageGroup)
+
+barplot(countByAgeGroup[,2]/summary(miTCRSub$ageGroup))
+
+library(ggplot2)
+ggplot(as.data.frame(countByAgeGroup[,2]/summary(miTCRSub$ageGroup)), aes(x=names(summary(miTCRSub$ageGroup)), y=countByAgeGroup[,2]/summary(miTCRSub$ageGroup)))+
+    geom_bar(stat="identity", fill = "steelblue")+
+    labs(title="Proportion of TCR Clonal Expansion by Age", x="Age Group", y = "TCR Expansion Proportion")+
+    theme_classic()
+
+#what if you don't include the 30-39 year olds
+no3039 = miTCRSub[-which(miTCRSub$ageGroup == "30-39"),]
+log2 = glm(Expansion ~ DiagnosisAge, family = binomial(link = "logit"), data = no3039)
+summary(log2)
+#no longer significant
+
+#cox
+miTCRSub3$Expansion = miTCRSub3$CPR < 1
+coxph(Surv(OSM, OSS)~Expansion + DiagnosisAge + strata(CancerType), miTCRSub3)
+#this small an effect on a binary characterstic is essentially nothing
+```
+
+
+TCR by cancer type
+```{r}
+summary(miTCRSub$CancerType)
+
+lmList = list()
+cancerTypes= list()
+for(i in seq_along(levels(miTCRSub$CancerType))) {
+  cancerObs = miTCRSub[which(miTCRSub$CancerType == levels(miTCRSub$CancerType)[i]),]
+  lm = lm(NormShannon~DiagnosisAge, cancerObs)
+  print(levels(miTCRSub$CancerType)[i])
+  print(summary(lm))
+  lmList[[i]] = lm
+  cancerTypes[[i]] = levels(miTCRSub$CancerType)[i]
+}
+
+
+unlist(cancerTypes)
+pvals = unlist(lapply(lmList, function(x){
+  if(!is.null(x)){
+  return(summary(x)$coefficients[2,4])
+  }
+}))
+
+padj = p.adjust(pvals, "BH")
+names(padj) = unlist(cancerTypes)
+padj
+
+lmAgeTerms = lapply(lmList, function(x){
+  summary(x)$coefficients[2,]
+  })
+
+for(i in seq_along(lmAgeTerms)){
+  x = lmAgeTerms[[i]]
+  x = c(x,padj[i])
+  names(x)[5] = "p.adj"
+  lmAgeTerms[[i]] = x
+}
+
+names(lmAgeTerms) = levels(miTCRSub$CancerType)
+saveRDS(lmAgeTerms, "TCRLMAgeTerms_TCGA_CT.rds")
+
+effectSizes = unlist(lapply(lmList, function(x){
+  if(!is.null(x)){
+  return(summary(x)$coefficients[2,1])
+  }
+}))
+
+effectSizes
+
+lmLogPvals = unlist(lapply(lmList, function(x){
+  if(!is.null(x)){
+  return(-log10(summary(x)$coefficients[2,4]))
+  }
+}))
+
+#plot
+cancerTypes = levels(miTCRSub$CancerType)
+library(ggplot2)
+ggplot(as.data.frame(lmLogPvals), aes(x=reorder(cancerTypes, -lmLogPvals), y=lmLogPvals))+
+    geom_bar(stat="identity")+
+    labs(x="Cancer Type", y = "-log10(p-value)")+
+    theme_classic()
+
+ggplot(as.data.frame(effectSizes), aes(x=reorder(cancerTypes, -effectSizes), y=effectSizes))+
+    geom_bar(stat="identity")+
+    labs(x="Cancer Type", y = "Coefficient Estimate")+
+    theme_classic()
+
+
+#coxph model
+coxphList = list()
+pvals = c()
+for(i in seq_along(levels(miTCRSub3$CancerType))) {
+  cancerObs = miTCRSub3[which(miTCRSub3$CancerType == levels(miTCRSub$CancerType)[i]),]
+  coxph = coxph(Surv(OSM, OSS)~NormShannon + DiagnosisAge, cancerObs)
+  print(levels(miTCRSub$CancerType)[i])
+  print(coxph)
+  pval = summary(coxph)$coefficients[1,5]
+  pvals = c(pvals, pval)
+  coxphList[[i]] = coxph
+
+}
+
+p.adjust(pvals, "BH") 
+
+coxStats = unlist(lapply(coxphList, function(x){
+  if(!is.null(x)){
+  return(summary(x)$coefficients[1,4])
+  }
+}))
+
+#plot
+cancerTypes = levels(miTCRSub3$CancerType)
+ggplot(as.data.frame(coxStats), aes(x=reorder(cancerTypes, -coxStats), y=coxStats))+
+    geom_bar(stat="identity")+
+    labs(title="Cox Statistic for Normalized Clonality", x="Cancer Type", y = "Statistic")+
+    theme_classic()
+```
+
+
+age and TMB
+```{r}
+#TMB and age
+pheno$LogTMB = log(pheno$`Mutation Count`)
+
+tmblm = lm(LogTMB~`Diagnosis Age` +`TCGA PanCanAtlas Cancer Type Acronym`, pheno)
+summary(tmblm)
+
+write.csv(summary(tmblm)$coefficients, "~/Fertig Lab/csv/TCGAMutationsAgeLM.csv")
+
+jtools::effect_plot(tmblm, `Diagnosis Age`, interval = T, plot.points = T)
+
+pheno$`Overall Survival Status`[which(pheno$`Overall Survival Status` == "LIVING")] = 0
+pheno$`Overall Survival Status`[which(pheno$`Overall Survival Status` == "DECEASED")] = 1
+pheno$`Overall Survival Status` = as.numeric(pheno$`Overall Survival Status`)
+
+mCox = coxph(Surv(pheno$`Overall Survival (Months)`, pheno$`Overall Survival Status`)~log(pheno$`Mutation Count`)+ pheno$`Diagnosis Age` + strata(pheno$`TCGA PanCanAtlas Cancer Type Acronym`))
+
+write.csv(summary(mCox)$coefficients, "~/Fertig Lab/csv/TCGAMutationsCoxModel.csv")
+
+#by cancer type
+#split by cancer type
+phenoSub = pheno[-which(is.na(pheno$`Mutation Count`) | is.na(pheno$`Diagnosis Age`)),]
+
+phenoCT = split(phenoSub, phenoSub$`TCGA PanCanAtlas Cancer Type Acronym`)
+nSamples = lapply(phenoCT, nrow)
+
+phenoCT = phenoCT[-which(nSamples < 100)]
+
+
+f = function(phenoData) {
+  tmpLM = lm(log(`Mutation Count`) ~ `Diagnosis Age`, data = phenoData)
+  t = broom::tidy(tmpLM)
+  return(t)
+}
+
+phenoLms = lapply(phenoCT, f)
+
+lmPvals = unlist(lapply(phenoLms, function(x){x[2,5]}))
+p.adjust(lmPvals, "BH")
+
+lmStats = data.frame(lmPvals = -log10(lmPvals), CancerType = names(phenoCT))
+lmStats$CancerType = as.character(lmStats$CancerType)
+
+x=reorder(lmStats[,2], -lmStats[,1])
+
+ggplot(lmStats, aes(x=x, y=lmPvals))+
+    geom_bar(stat="identity")+
+    theme_classic()+
+    ylab("-log10(p-value)")+
+    xlab("Cancer Type")
+
+lmES = unlist(lapply(phenoLms, function(x){x[2,2]}))
+lmES = data.frame(lmES = lmES, CancerType = names(phenoCT))
+lmES$CancerType = as.character(lmES$CancerType)
+
+x=reorder(lmES[,2], -lmES[,1])
+
+ggplot(lmES, aes(x=x, y=lmES))+
+    geom_bar(stat="identity")+
+    theme_classic()+
+    ylab("Coefficient Estimate")+
+    xlab("Cancer Type")
+
+
+tmbData = lapply(phenoLms, function(x){x[2,]})
+saveRDS(tmbData, "Data/tmbCT_LMResults.rds")
+
+
+#age alone cox
+aCox = coxph(Surv(pheno$`Overall Survival (Months)`, pheno$`Overall Survival Status`)~pheno$`Diagnosis Age` + pheno$Sex + pheno$`TCGA PanCanAtlas Cancer Type Acronym`)
+
+write.csv(summary(aCox)$coefficients, "~/Fertig Lab/csv/TCGAAgeCoxModel.csv")
+
+#age among hn, nsclc, kidney, melanoma, urothelial
+phenoSub = pheno[which(pheno$`TCGA PanCanAtlas Cancer Type Acronym` %in% c("BLCA", "HNSC", "KIRC", "LUAD", "SKCM"))]
+
+aCox2 = coxph(Surv(phenoSub$`Overall Survival (Months)`, phenoSub$`Overall Survival Status`)~phenoSub$`Diagnosis Age` + phenoSub$Sex + phenoSub$`TCGA PanCanAtlas Cancer Type Acronym`)
+
+write.csv(summary(aCox2)$coefficients, "~/Fertig Lab/csv/TCGAAgeCoxModel_ICBcancers.csv")
+
+phenoSub$AgeGroup = cut(phenoSub$`Diagnosis Age`, c(29,65,90), labels = c("65Under", "Over65"))
+
+library(survminer)
+
+kmFit <- survfit(Surv(`Overall Survival (Months)`, `Overall Survival Status`)~AgeGroup, data = phenoSub)
+
+ggsurvplot(kmFit, risk.table = T, pval = T, conf.int = T, xlim = c(0, 350))
+```
+
