@@ -178,6 +178,27 @@ GTExDESub[which(rownames(GTExDESub) %in% ICBGenes),]
 
 write.csv(GTExDESub[which(rownames(GTExDESub) %in% ICBGenes),], "Data/ICBGenesDEAgeGTEx.csv")
 
+#dot plot of ICB genes pan-cancer and pan-tissue
+toPlot = as.data.frame(matrix(nrow = 20, ncol = 4))
+colnames(toPlot) = c("gene", "db", "ES", "padj")
+toPlot[1:11, c(3,4)] = TCGADESub[which(rownames(TCGADESub) %in% ICBGenes),c(1,5)]
+toPlot[1:11, 1] = rownames(TCGADESub[which(rownames(TCGADESub) %in% ICBGenes),])
+toPlot[1:11, 2] = rep("TCGA", 11)
+toPlot[12:20, c(3,4)] = GTExDESub[which(rownames(GTExDESub) %in% ICBGenes),c(1,5)]
+toPlot[12:20, 1] = rownames(GTExDESub[which(rownames(GTExDESub) %in% ICBGenes),])
+toPlot[12:20, 2] = rep("GTEx", 9)
+
+colorPal = grDevices::colorRampPalette(c("brown1", 
+          "darkorchid1","dodgerblue"))
+library(ggplot2)
+ggplot(data = toPlot, mapping = aes(x = as.factor(toPlot$db), y = toPlot$gene)) +
+  geom_point(mapping = aes(size = toPlot$ES, color = toPlot$padj)) +
+  scale_radius(range = c(2, 10)) +
+  scale_colour_gradientn(colors = colorPal(10)) + 
+  theme_bw() +
+  theme(axis.title.x = element_blank(), axis.title.y = element_blank(), axis.text.x = element_text(angle = 90, hjust = 1)) +
+  labs(colour = "Adj. P-Value", size = "Effect Size Per Year")
+
 #volcano plots
 EnhancedVolcano::EnhancedVolcano(TCGADESub, lab = rownames(TCGADESub), x = 'logFC', y = 'adj.P.Val', FCcutoff = 0.004, title = NULL, subtitle = NULL, xlim = c(-0.035, 0.035))
 

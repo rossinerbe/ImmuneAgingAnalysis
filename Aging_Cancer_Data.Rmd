@@ -69,6 +69,7 @@ saveRDS(GTExDE, "Data/GTExDE.rds")
 immuneList = readRDS("TCGAAgeImmuneLM_CT.rds")
 TCGAimmune = read.csv("Data/HOICsByAgeTCGA.csv")
 colnames(TCGAimmune) = colnames(immuneList[[1]])
+TCGAimmune = TCGAimmune[c(3,1,4,6,2,5),]
 immuneList[["Pan-cancer"]] = TCGAimmune
 names = names(immuneList)
 immuneList = lapply(immuneList, function(x){
@@ -84,6 +85,11 @@ GTEximmune = read.csv("Data/HOICsByAgeGTEx.csv")
 colnames(GTEximmune) = colnames(immuneList[[1]])
 
 saveRDS(GTEximmune, "Data/GTEximmune.rds")
+
+#METABRIC immune
+metabricSummary = read.csv("~/Fertig Lab/csv/HOICsByAgeMETABRIC.csv")
+colnames(metabricSummary) = colnames(GTEximmune)
+saveRDS(metabricSummary, "Data/METABRICImmune.rds")
 
 #tmb data
 tmbList = readRDS("Data/tmbCT_LMResults.rds")
@@ -112,6 +118,29 @@ names(TCGATMB) = c("Effect Estimate (per year)", "Standard Error", "t-statistic"
 tmbList[["Pan-cancer"]] = TCGATMB
 
 saveRDS(tmbList, "Data/TCGATMBList.rds")
+
+##GENIE TMB
+genieLMs = readRDS("GENIETMB_lms.rds")
+genieTMB = lapply(genieLMs, function(x){x[2, c(2:5)]})
+
+#add adjusted pvals
+adjPvals = p.adjust(unlist(lapply(genieTMB, function(x){x[,4]})), "BH")
+for(i in seq_along(genieTMB)){
+  tmp = genieTMB[[i]]
+  tmp$p.adj = adjPvals[i]
+  genieTMB[[i]] = tmp
+}
+
+names = names(genieTMB)
+genieTMB = lapply(genieTMB, function(x){
+  names(x) = c("Effect Estimate (per year)", "Standard Error", "t-statistic", "p-value", "adjusted p-value")
+  x = as.data.frame(x)
+  return(x)
+})
+names(genieTMB) = names
+
+saveRDS(genieTMB, "Data/GENIE_TMB.rds")
+
 
 #TCR data
 TCRList = readRDS("TCRLMAgeTerms_TCGA_CT.rds")

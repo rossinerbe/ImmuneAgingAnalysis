@@ -58,6 +58,8 @@ f = function(Data) {
 
 CTLms = lapply(GENIECT, f)
 
+saveRDS(CTLms, "GENIETMB_lms.rds")
+
 lmPvals = unlist(lapply(CTLms, function(x){x[2,5]}))
 p.adjust(lmPvals, "BH")
 

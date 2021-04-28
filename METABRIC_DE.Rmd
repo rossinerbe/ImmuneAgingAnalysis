@@ -1,0 +1,63 @@
+---
+title: "METABRIC_DE"
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r}
+mb = data.table::fread("D:/FertigLabLargeData/ImmuneAging/data_expression_median.txt")
+
+genes = unlist(mb[,1])
+
+mb = mb[,-c(1,2)]
+
+mb = as.data.frame(mb)
+rownames(mb) = genes
+
+#make NA entries 0
+mb[is.na(mb)] = 0
+
+pheno = data.table::fread("D:/FertigLabLargeData/ImmuneAging/data_clinical_patient.txt")
+
+pheno = pheno[-c(1:4),]
+
+pheno$`Age at Diagnosis` = as.numeric(pheno$`Age at Diagnosis`)
+summary(pheno$`Age at Diagnosis`) 
+
+```
+
+Differential Expression - already normalized and raw counts are not available, so use linear models instead of edgeR
+```{r}
+#sort phenotype information to make age groups
+PhenoFilt = pheno[which(pheno$`#Patient Identifier` %in% colnames(mb)),]
+PhenoSorted = PhenoFilt[match(colnames(mb), pheno$`#Patient Identifier`),]
+
+
+#remove observations without age data
+mb1 = mb[, -which(is.na(PhenoSorted$`Age at Diagnosis`))]
+
+
+PhenoSorted = PhenoSorted[-which(is.na(PhenoSorted$`Age at Diagnosis`)),]
+
+#linear modeling
+geneLMsAge = apply(mb1, 1, function(x){
+  tmpLM = lm(x ~ PhenoSorted$`Age at Diagnosis`)
+  ageTmp = summary(tmpLM)$coefficients[2,]
+  return(ageTmp)
+})
+
+ageTermList = t(geneLMsAge)
+rownames(ageTermList) = rownames(mb1)
+
+ageTermList = as.data.frame(ageTermList)
+ageTermList$PAdj = p.adjust(ageTermList$`Pr(>|t|)`, "BH")
+
+saveRDS(ageTermList, "Data/METABRIC_DE_Results.rds")
+write.csv(ageTermList, "Data/METABRIC_DE_Results.csv")
+
+ICBGenes = c("PDCD1", "CD274", "CTLA4", "CD80", "CD86", "LAG3", "TGFB1", "JAK2", "PDCD1LG2", "CXCL9")
+ageTermList[ICBGenes,]
+
+```
+

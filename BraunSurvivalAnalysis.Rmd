@@ -1,0 +1,56 @@
+---
+title: "BraunSurvivalModel"
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r}
+clinicalData = readxl::read_xlsx("D:/FertigLabLargeData/Network_Cancer/Braun2020/41591_2020_839_MOESM2_ESM.xlsx", sheet = 1, skip = 1)
+
+clinicalData$Age = as.numeric(clinicalData$Age)
+#remove NA age
+clinicalDataSub = clinicalData[-which(is.na(clinicalData$Age)),]
+
+hist(clinicalDataSub$Age)
+
+#cox model for PFS
+library(survival)
+coxUni = coxph(Surv(PFS,PFS_CNSR)~Age, clinicalDataSub)
+coxUni
+
+#for OS
+coxUniOS = coxph(Surv(OS,OS_CNSR)~Age, clinicalDataSub)
+coxUniOS
+
+#multivariate model
+clinicalDataSub$Sex[which(clinicalDataSub$Sex %in% c("Female", "FEMALE"))] = "F"
+clinicalDataSub$Sex[which(clinicalDataSub$Sex %in% c("Male", "MALE"))] = "M"
+
+clinicalDataSub$Number_of_Prior_Therapies = as.numeric(clinicalDataSub$Number_of_Prior_Therapies)
+
+
+
+coxMVar = coxph(Surv(PFS,PFS_CNSR)~Age + Sex + Number_of_Prior_Therapies + Tumor_Sample_Primary_or_Metastasis, clinicalDataSub)
+summary(coxMVar)
+write.csv(summary(coxMVar)$coefficients, "Data/coxPFS_Braun.csv")
+
+coxMVarOS = coxph(Surv(OS,OS_CNSR)~Age + Sex + Number_of_Prior_Therapies + Tumor_Sample_Primary_or_Metastasis, clinicalDataSub)
+summary(coxMVarOS)
+write.csv(summary(coxMVarOS)$coefficients, "Data/coxOS_Braun.csv")
+
+
+#KM curve
+clinicalDataSub$AgeGroup = cut(clinicalDataSub$Age, c(20,65,90), labels = c("65Under", "Over65"))
+
+library(survminer)
+
+kmFit <- survfit(Surv(PFS,PFS_CNSR)~AgeGroup, data = clinicalDataSub)
+
+ggsurvplot(kmFit, risk.table = T, pval = F, conf.int = T, xlim = c(0, 70))
+
+#for OS
+kmFitOS <- survfit(Surv(OS,OS_CNSR)~AgeGroup, data = clinicalDataSub)
+
+ggsurvplot(kmFitOS, risk.table = T, pval = F, conf.int = T, xlim = c(0, 72))
+```

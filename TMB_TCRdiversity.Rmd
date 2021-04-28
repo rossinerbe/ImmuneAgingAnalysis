@@ -264,7 +264,7 @@ age and TMB
 ```{r}
 #TMB and age
 pheno$LogTMB = log(pheno$`Mutation Count`)
-
+  
 tmblm = lm(LogTMB~`Diagnosis Age` +`TCGA PanCanAtlas Cancer Type Acronym`, pheno)
 summary(tmblm)
 
@@ -348,5 +348,21 @@ library(survminer)
 kmFit <- survfit(Surv(`Overall Survival (Months)`, `Overall Survival Status`)~AgeGroup, data = phenoSub)
 
 ggsurvplot(kmFit, risk.table = T, pval = T, conf.int = T, xlim = c(0, 350))
+```
+
+
+TMB - TCR correlation
+```{r}
+#filter and match
+phenoSub = pheno[which(pheno$`Sample ID` %in% miTCRSub$SampleID),]
+
+#remove miTCR duplicate samples
+miTCRSub2 = miTCRSub[-which(duplicated(miTCRSub$SampleID)),]
+
+phenoMatched = phenoSub[match(miTCRSub2$SampleID, phenoSub$`Sample ID`),]
+
+#correlation
+cor(phenoMatched$LogTMB, miTCRSub2$NormShannon, use = "complete.obs", method = "spearman")
+
 ```
 

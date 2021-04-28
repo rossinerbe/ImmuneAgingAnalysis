@@ -1,0 +1,198 @@
+---
+title: "TCGAMIXTURE_50to80"
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r}
+mixResult = readRDS("Data/MIXTURE_result.rds")
+
+#get absolute proportions
+absMix = (mixResult$Subjects)$MIXabs 
+sum(is.na(absMix))
+pvals = mixResult$p.values
+
+#filter to observations with significant deconvolution
+rpFiltAbsMix = absMix[which(pvals[,4] < 0.05),]
+nainds = which(is.na(rpFiltAbsMix[,1]))
+mixtureFiltered = rpFiltAbsMix[-nainds,]
+
+#remove samples that had received treatment prior to collection, as this could bias result
+mixtureIDs = rownames(mixtureFiltered)
+
+mixtureIDs = unlist(lapply(mixtureIDs, function(x){
+  stringr::str_sub(x, 1, 12)
+}))
+
+treatedIDs = readRDS("Data/treatedBeforeResectionIDs.rds")
+mixtureFiltered = mixtureFiltered[-which(mixtureIDs %in% treatedIDs),]
+
+#get phenotype data
+pheno = data.table::fread("Data/tcga_clinical_data.tsv")
+
+sampleIDs = rownames(mixtureFiltered)
+case_IDs = lapply(sampleIDs, stringr::str_sub, start = 1, end = 12)
+
+rownames(mixtureFiltered) = case_IDs
+mixtureFiltered = cbind(as.data.frame(mixtureFiltered), sampleIDs)
+
+#function to add phenotype data
+source("Functions/mixture_pheno_filter.R")
+
+all_surv_usable_cancer_types = c("ACC", "BLCA", "BRCA", "CESC", "CHOL", "COAD", 
+                                 "ESCA", "GBM", "HNSC", "KICH", "KIRC", "KIRP", 
+                                 "LGG", "LIHC", "LUAD", "LUSC", "MESO", "OV", 
+                                 "PAAD", "PRAD", "READ", "SARC", "SKCM", "STAD",                                   "THCA", "UCEC", "UCS", "UVM")
+
+mixtureWithPheno = mixture_pheno_filter(mixtureFiltered, pheno, cancer_types = all_surv_usable_cancer_types)
+
+#format OSS for eventual use with cox proportional hazards model
+liveinds = which(mixtureWithPheno$Overall.Survival.Status == "LIVING")
+deadinds = which(mixtureWithPheno$Overall.Survival.Status == "DECEASED")
+mixtureWithPheno$Overall.Survival.Status = as.numeric(mixtureWithPheno$Overall.Survival.Status)
+mixtureWithPheno$Overall.Survival.Status[liveinds] = 0
+mixtureWithPheno$Overall.Survival.Status[deadinds] = 1
+
+#remove samples with NA values for Age
+mixtureData = mixtureWithPheno[-which(is.na(mixtureWithPheno$Diagnosis.Age)), ]
+
+
+#add cancer type and smoking years
+cancerType = vector("character", length(nrow(mixtureData)))
+notPrimary = c()
+for(i in seq(nrow(mixtureData))) {
+  cancerType[i] = pheno$`TCGA PanCanAtlas Cancer Type Acronym`[which(pheno$`Sample ID` == mixtureData$Sample.ID[i])]
+  if(pheno$`Sample Type`[which(pheno$`Sample ID` == mixtureData$Sample.ID[i])] != "Primary") {
+    notPrimary = c(notPrimary, i)
+    }
+}
+
+mixtureData$Cancer.Type = as.factor(cancerType)
+summary(mixtureData$Cancer.Type)
+
+#remove those that are not primary samples
+mixDataSub = mixtureData[-notPrimary,]
+
+
+#filter to ages 50 to 80
+mixDataSub = mixDataSub[-which(mixDataSub$Diagnosis.Age < 50),]
+mixDataSub = mixDataSub[-which(mixDataSub$Diagnosis.Age > 80),]
+```
+
+
+Test if higher order cell types are associated with age
+```{r}
+##T cells##
+TCellProps = apply(mixDataSub, 1, function(x) {sum(as.numeric(x[4:10]))})/apply(mixDataSub, 1, function(x) {sum(as.numeric(x[1:22]))})
+
+TcellLm = lm(TCellProps~Diagnosis.Age+Sex+Cancer.Type, data = mixDataSub)
+
+summary(TcellLm)
+
+#save info for table
+write.csv(summary(TcellLm)$coefficients, "~/Fertig Lab/csv/TcellLM_50to80.csv")
+
+#plot lm
+jtools::effect_plot(TcellLm, pred = Diagnosis.Age, interval = T, plot.points = T, y.label = "T cell Absolute Proportion")
+
+
+##Macrophages
+MacrCellProps = apply(mixDataSub, 1, function(x) {sum(as.numeric(x[14:16]))})/apply(mixDataSub, 1, function(x) {sum(as.numeric(x[1:22]))})
+
+MacrophageLm = lm(MacrCellProps~Diagnosis.Age+Sex+Cancer.Type, data = mixDataSub)
+
+summary(MacrophageLm)
+
+#save info for table
+write.csv(summary(MacrophageLm)$coefficients, "~/Fertig Lab/csv/MacrophageLM_50to80.csv")
+
+#plot lm
+jtools::effect_plot(MacrophageLm, pred = Diagnosis.Age, interval = T, plot.points = T, y.label = "Macrophage Absolute Proportion")
+
+##B cells
+BCellProps = apply(mixDataSub, 1, function(x) {sum(as.numeric(x[1:3]))})/apply(mixDataSub, 1, function(x) {sum(as.numeric(x[1:22]))})
+
+BcellLm = lm(BCellProps~Diagnosis.Age+Sex+Cancer.Type, data = mixDataSub)
+
+summary(BcellLm)
+
+#save info for table
+write.csv(summary(BcellLm)$coefficients, "~/Fertig Lab/csv/BcellLM_50to80.csv")
+
+#plot lm
+jtools::effect_plot(BcellLm, pred = Diagnosis.Age, interval = T)
+
+
+##NK cells
+NKCellProps = apply(mixDataSub, 1, function(x) {sum(as.numeric(x[11:12]))})/apply(mixDataSub, 1, function(x) {sum(as.numeric(x[1:22]))})
+
+NKcellLm = lm(NKCellProps~Diagnosis.Age+Sex+Cancer.Type, data = mixDataSub)
+
+summary(NKcellLm)
+
+
+#save info for table
+write.csv(summary(NKcellLm)$coefficients, "~/Fertig Lab/csv/NKcellLM_50to80.csv")
+
+#plot lm
+jtools::effect_plot(NKcellLm, pred = Diagnosis.Age, interval = T)
+
+##Dendritic cells
+DCellProps = apply(mixDataSub, 1, function(x) {sum(as.numeric(x[17:18]))})/apply(mixDataSub, 1, function(x) {sum(as.numeric(x[1:22]))})
+
+DcellLm = lm(DCellProps~Diagnosis.Age+Sex+Cancer.Type, data = mixDataSub)
+
+summary(DcellLm)
+
+#save info for table
+write.csv(summary(DcellLm)$coefficients, "~/Fertig Lab/csv/DcellLM_50to80.csv")
+
+#plot lm
+jtools::effect_plot(DcellLm, pred = Diagnosis.Age, interval = T)
+
+##Misc. Myeloid
+MMCellProps = apply(mixDataSub, 1, function(x) {sum(as.numeric(x[c(13,19:22)]))})/apply(mixDataSub, 1, function(x) {sum(as.numeric(x[1:22]))})
+
+MMcellLm = lm(MMCellProps~Diagnosis.Age+Sex+Cancer.Type, data = mixDataSub)
+
+summary(MMcellLm)
+
+#save info for table
+write.csv(summary(MMcellLm)$coefficients, "~/Fertig Lab/csv/MMcellLM_50to80.csv")
+
+#plot lm
+jtools::effect_plot(MMcellLm, pred = Diagnosis.Age, interval = T)
+
+
+##summary stats
+lmList = list(TcellLm, MacrophageLm, BcellLm, NKcellLm, DcellLm, MMcellLm)
+
+ageStats = lapply(lmList, function(x){
+  summary(x)$coefficients[2,]
+})
+
+names(ageStats) = c("T cells", "Macrophages", "B cells", "NK cells", "Dendritic cells", "Misc. Myeloid")
+
+ageStatsDf = do.call(rbind, ageStats)
+
+#adjusted pvals
+p.adjust(ageStatsDf[,4], "BH")
+
+ageStatsDf = as.data.frame(cbind(ageStatsDf, p.adjust(ageStatsDf[,4], "BH")))
+colnames(ageStatsDf)[5] = "PAdj"
+
+write.csv(ageStatsDf, "~/Fertig Lab/csv/HOICsByAgeTCGA_50to80.csv")
+
+
+ageStatsDf = as.data.frame(ageStatsDf)
+
+#plot
+ggplot(ageStatsDf, aes(x=reorder(rownames(ageStatsDf), -`t value`), y=`t value`, fill = reorder(rownames(ageStatsDf), -`t value`)))+
+    geom_bar(stat="identity")+
+    labs(title="Linear Relationship of Age and Immune Infiltration Pan-Cancer", x="Cell Type", y = "T Statistic")+
+    scale_fill_hue(c=50) +
+    theme_minimal()+
+    theme(legend.position = "none")
+
+```
